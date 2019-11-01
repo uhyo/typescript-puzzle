@@ -1,0 +1,36 @@
+{
+  "name": "typescript-puzzle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "uhyo",
+  "license": "MIT",
+  "dependencies": {
+    "react": "0.0.0-experimental-f6b8d31a7",
+    "react-dom": "0.0.0-experimental-f6b8d31a7"
+  },
+  "devDependencies": {
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.1-rc",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
