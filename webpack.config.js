@@ -15,7 +15,12 @@ module.exports = {
   module: {
     rules: [{ test: /\.tsx?$/, loader: "ts-loader" }],
   },
-  plugins: [new HtmlWebpackPlugin(), new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "html/index.html",
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ],
   devServer: {
     hot: true,
   },
