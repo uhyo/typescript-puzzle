@@ -4,4 +4,5 @@ import { OneOption } from "../OneOption";
 
 export const FilledHole: FC<{
   content: Option;
-}> = ({ content }) => <OneOption option={content} />;
+  onClick?: () => void;
+}> = ({ content, onClick }) => <OneOption onClick={onClick} option={content} />;

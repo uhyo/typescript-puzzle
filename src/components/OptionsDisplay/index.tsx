@@ -5,11 +5,21 @@ import { OneOption as OneOptionOrig } from "../OneOption";
 
 export const OptionsDisplay: FC<{
   options: Option[];
-}> = ({ options }) => {
+  onOptionSelect?: (index: number) => void;
+}> = ({ options, onOptionSelect }) => {
   return (
     <OptionsWrapper>
       {options.map((option, i) => (
-        <OneOption key={i} option={option} />
+        <OneOption
+          key={i}
+          option={option}
+          onClick={
+            onOptionSelect &&
+            (() => {
+              onOptionSelect(i);
+            })
+          }
+        />
       ))}
     </OptionsWrapper>
   );

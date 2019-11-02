@@ -6,8 +6,9 @@ import { ProblemHole } from "../../problems/problemDefinition";
 
 export const OpenHole: FC<{
   hole: ProblemHole;
-}> = () => {
-  return <HoleSpan />;
+  onClick?: () => void;
+}> = ({ onClick }) => {
+  return <HoleSpan onClick={onClick} />;
 };
 
 const HoleSpan = styled.span`

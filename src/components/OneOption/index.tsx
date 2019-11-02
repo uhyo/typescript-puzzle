@@ -8,8 +8,9 @@ import { Option } from "../../problems/options";
 export const OneOption: FC<{
   option: Option;
   className?: string;
-}> = ({ option, className }) => (
-  <OneOptionW className={className} type={option.type}>
+  onClick?: () => void;
+}> = ({ option, className, onClick }) => (
+  <OneOptionW className={className} onClick={onClick} type={option.type}>
     {option.value}
   </OneOptionW>
 );
@@ -22,8 +23,9 @@ const OneOptionW = styled.code<{
   border: 1px solid ${lightGrayBorderColor};
   padding: 3px;
   border-radius: ${smallRoundedBoxRadius};
+  background-color: white;
   color: ${props => syntaxColor[props.type]};
 
-  cursor: default;
+  cursor: pointer;
   user-select: none;
 `;

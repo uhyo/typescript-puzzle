@@ -10,9 +10,16 @@ export const StageComponent: FC<{
   options: Option[];
   answer: AnswerState;
 }> = ({ problem, options, answer }) => {
+  const holeSelectHandler = (holeId: string) => {
+    console.log(holeId);
+  };
   return (
     <>
-      <ProblemDisplay problem={problem} answer={answer} />
+      <ProblemDisplay
+        problem={problem}
+        answer={answer}
+        onHoleSelect={holeSelectHandler}
+      />
       <OptionsDisplay options={options} />
     </>
   );
