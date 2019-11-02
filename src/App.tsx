@@ -1,6 +1,5 @@
 import React from "react";
-import { OptionsDisplay } from "./components/OptionsDisplay";
-import { ProblemDisplay } from "./components/ProblemDisplay";
+import { Stage } from "./containers/Stage";
 import { problems } from "./problems";
 import { Option } from "./problems/options";
 
@@ -21,8 +20,7 @@ export const App = () => {
   ];
   return (
     <>
-      <ProblemDisplay problem={problems.level1[0]} />
-      <OptionsDisplay options={options} />
+      <Stage problem={problems.level1[0]} options={options} />
     </>
   );
 };

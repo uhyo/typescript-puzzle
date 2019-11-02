@@ -4,7 +4,7 @@ import { lightGrayBackgroundColor } from "../../design/color";
 import { smallRoundedBoxRadius } from "../../design/length";
 import { ProblemHole } from "../../problems/problemDefinition";
 
-export const Hole: FC<{
+export const OpenHole: FC<{
   hole: ProblemHole;
 }> = () => {
   return <HoleSpan />;
