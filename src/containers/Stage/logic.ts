@@ -1,9 +1,12 @@
 import { Option, typeOption } from "~/problems/options";
+import { Problem } from "~/problems/problemDefinition/problem";
 import { AnswerState, setHoleContent } from "./answer";
+import { getNextFocus } from "./focus";
 
 export type StageState = {
-  answer: AnswerState;
-  focus: string | undefined;
+  readonly problem: Problem;
+  readonly answer: AnswerState;
+  readonly focus: string | undefined;
 };
 
 export type StageAction =
@@ -16,12 +19,18 @@ export type StageAction =
       option: Option;
     };
 
-export const initialState: StageState = {
+type InitialStateParams = {
+  problem: Problem;
+};
+export const getInitialState = ({
+  problem,
+}: InitialStateParams): StageState => ({
+  problem,
   answer: {
     0: typeOption("string"),
   },
   focus: undefined,
-};
+});
 
 export const reducer = (state: StageState, action: StageAction): StageState => {
   switch (action.type) {
@@ -47,7 +56,7 @@ export const reducer = (state: StageState, action: StageAction): StageState => {
       }
     }
     case "selectOption": {
-      const { focus } = state;
+      const { focus, problem } = state;
       const { option } = action;
       if (focus === undefined) {
         return state;
@@ -55,7 +64,7 @@ export const reducer = (state: StageState, action: StageAction): StageState => {
       return {
         ...state,
         answer: setHoleContent(state.answer, focus, option),
-        focus: undefined,
+        focus: getNextFocus(problem, focus),
       };
     }
   }
