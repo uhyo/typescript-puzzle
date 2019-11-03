@@ -1,6 +1,6 @@
 import React, { FC, Fragment } from "react";
 import styled from "styled-components";
-import { AnswerState } from "~/containers/Stage";
+import { AnswerState } from "~/containers/Stage/logic";
 import { sourceCodeFontFamily } from "../../design/font";
 import { Problem } from "../../problems/problemDefinition/problem";
 import { FilledHole } from "./FilledHole";
@@ -9,12 +9,14 @@ import { OpenHole } from "./OpenHole";
 interface Props {
   problem: Problem;
   answer: AnswerState;
+  focus: string | undefined;
   onHoleSelect?: (holeId: string) => void;
 }
 
 export const ProblemDisplay: FC<Props> = ({
   problem,
   answer,
+  focus,
   onHoleSelect,
 }) => {
   const { holes, texts } = problem;
@@ -29,16 +31,18 @@ export const ProblemDisplay: FC<Props> = ({
         result.push(
           <FilledHole
             key={`filledhole-${i}`}
-            onClick={onClickHandler}
+            focused={holeId === focus}
             content={a}
+            onClick={onClickHandler}
           />,
         );
       } else {
         result.push(
           <OpenHole
             key={`openhole-${i}`}
-            onClick={onClickHandler}
+            focused={holeId === focus}
             hole={holes[i]}
+            onClick={onClickHandler}
           />,
         );
       }

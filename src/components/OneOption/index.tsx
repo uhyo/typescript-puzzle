@@ -1,30 +1,43 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { lightGrayBorderColor, syntaxColor } from "../../design/color";
+import {
+  lightGrayBorderColor,
+  mainBorderColor,
+  syntaxColor,
+} from "../../design/color";
 import { sourceCodeFontFamily } from "../../design/font";
 import { smallRoundedBoxRadius } from "../../design/length";
 import { Option } from "../../problems/options";
 
 export const OneOption: FC<{
   option: Option;
+  focused?: boolean;
   className?: string;
   onClick?: () => void;
-}> = ({ option, className, onClick }) => (
-  <OneOptionW className={className} onClick={onClick} type={option.type}>
+}> = ({ option, focused, className, onClick }) => (
+  <OneOptionW
+    className={className}
+    onClick={onClick}
+    type={option.type}
+    focused={!!focused}
+  >
     {option.value}
   </OneOptionW>
 );
 
 const OneOptionW = styled.code<{
   type: Option["type"];
+  focused: boolean;
 }>`
   display: inline-block;
   font-family: ${sourceCodeFontFamily};
-  border: 1px solid ${lightGrayBorderColor};
+  border: 1px solid
+    ${props => (props.focused ? mainBorderColor : lightGrayBorderColor)};
   padding: 3px;
   border-radius: ${smallRoundedBoxRadius};
   background-color: white;
   color: ${props => syntaxColor[props.type]};
+  vertical-align: middle;
 
   cursor: pointer;
   user-select: none;

@@ -1,17 +1,29 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useReducer } from "react";
 import { StageComponent } from "~/components/Stage";
-import { Option, typeOption } from "~/problems/options";
+import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
-
-export type AnswerState = Partial<Record<string, Option>>;
+import { initialState, reducer } from "./logic";
 
 export const Stage: FC<{
   problem: Problem;
   options: Option[];
 }> = ({ problem, options }) => {
-  const [answer, setAnswer] = useState({
-    0: typeOption("string"),
-  });
+  const [{ answer, focus }, dispatch] = useReducer(reducer, initialState);
 
-  return <StageComponent problem={problem} options={options} answer={answer} />;
+  const selectHole = useCallback((holeId: string) => {
+    dispatch({
+      type: "holeSelect",
+      holeId,
+    });
+  }, []);
+
+  return (
+    <StageComponent
+      problem={problem}
+      options={options}
+      answer={answer}
+      focus={focus}
+      onHoleSelect={selectHole}
+    />
+  );
 };

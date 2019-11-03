@@ -6,6 +6,11 @@
 export const lightGrayBorderColor = "#bbbbbb";
 
 /**
+ * Main color for border
+ */
+export const mainBorderColor = "#037acc";
+
+/**
  * Gray Background color
  */
 export const lightGrayBackgroundColor = "#dddddd";
