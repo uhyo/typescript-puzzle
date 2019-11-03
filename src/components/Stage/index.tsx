@@ -11,7 +11,8 @@ export const StageComponent: FC<{
   answer: AnswerState;
   focus: string | undefined;
   onHoleSelect?: (holeId: string) => void;
-}> = ({ problem, options, answer, focus, onHoleSelect }) => {
+  onOptionSelect?: (optionIndex: number) => void;
+}> = ({ problem, options, answer, focus, onHoleSelect, onOptionSelect }) => {
   return (
     <>
       <ProblemDisplay
@@ -20,7 +21,7 @@ export const StageComponent: FC<{
         focus={focus}
         onHoleSelect={onHoleSelect}
       />
-      <OptionsDisplay options={options} />
+      <OptionsDisplay options={options} onOptionSelect={onOptionSelect} />
     </>
   );
 };

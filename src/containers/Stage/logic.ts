@@ -1,4 +1,4 @@
-import { typeOption } from "~/problems/options";
+import { Option, typeOption } from "~/problems/options";
 import { AnswerState, setHoleContent } from "./answer";
 
 export type StageState = {
@@ -6,10 +6,15 @@ export type StageState = {
   focus: string | undefined;
 };
 
-export type StageAction = {
-  type: "holeSelect";
-  holeId: string;
-};
+export type StageAction =
+  | {
+      type: "holeSelect";
+      holeId: string;
+    }
+  | {
+      type: "selectOption";
+      option: Option;
+    };
 
 export const initialState: StageState = {
   answer: {
@@ -40,6 +45,18 @@ export const reducer = (state: StageState, action: StageAction): StageState => {
           focus: action.holeId,
         };
       }
+    }
+    case "selectOption": {
+      const { focus } = state;
+      const { option } = action;
+      if (focus === undefined) {
+        return state;
+      }
+      return {
+        ...state,
+        answer: setHoleContent(state.answer, focus, option),
+        focus: undefined,
+      };
     }
   }
 };

@@ -17,6 +17,17 @@ export const Stage: FC<{
     });
   }, []);
 
+  const selectOption = useCallback(
+    (optionIndex: number) => {
+      const option = options[optionIndex];
+      dispatch({
+        type: "selectOption",
+        option,
+      });
+    },
+    [options],
+  );
+
   return (
     <StageComponent
       problem={problem}
@@ -24,6 +35,7 @@ export const Stage: FC<{
       answer={answer}
       focus={focus}
       onHoleSelect={selectHole}
+      onOptionSelect={selectOption}
     />
   );
 };
