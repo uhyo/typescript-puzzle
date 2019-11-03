@@ -5,6 +5,7 @@ import { StageDefinition } from "./stageDefinition";
 
 const stages: StageDefinition[] = [
   {
+    id: "v1.l1.s1",
     problem: problem`
         const value: ${typeHole("string")} = "foobar";
     `,
