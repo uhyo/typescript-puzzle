@@ -1,4 +1,5 @@
 import level1 from "~/problems/level1";
+import { Level, levels } from "~/problems/levels";
 import { StageDefinition } from "~/problems/stageDefinition";
 
 /**
@@ -8,10 +9,14 @@ export class StageStore {
   /**
    * Loaded problems.
    */
-  private stageMap = new Map<string, StageDefinition>();
+  private levels: Partial<Record<Level, StageDefinition[]>> = {};
+  /**
+   * Map from stage ID to level.
+   */
+  private stageToLevel: Map<string, Level> = new Map();
 
   constructor() {
-    this.loadStages(level1);
+    this.loadStages(levels[1], level1);
   }
 
   /**
@@ -19,17 +24,22 @@ export class StageStore {
    * If such a stage does not exist, throws a Promise.
    */
   public getStage(id: string) {
-    const s = this.stageMap.get(id);
-    if (s) {
-      return s;
+    const level = this.stageToLevel.get(id);
+    const stages = level && this.levels[level];
+    if (stages) {
+      const s = stages.find(s => s.id === id);
+      if (s) {
+        return s;
+      }
     }
     // TODO
     throw new Error("Stage does not exist");
   }
 
-  private loadStages(stages: StageDefinition[]) {
+  private loadStages(level: Level, stages: StageDefinition[]) {
+    this.levels[level] = [...stages];
     for (const stage of stages) {
-      this.stageMap.set(stage.id, stage);
+      this.stageToLevel.set(stage.id, level);
     }
   }
 }
