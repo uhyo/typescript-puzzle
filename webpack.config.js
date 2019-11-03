@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = {
@@ -23,6 +24,7 @@ module.exports = {
       template: "html/index.html",
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new CopyWebpackPlugin(["css/ress.min.css"]),
   ],
   devServer: {
     hot: true,

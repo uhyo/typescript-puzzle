@@ -1,7 +1,8 @@
-import React, { FC, useCallback, useReducer } from "react";
+import React, { FC, useCallback, useMemo, useReducer } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
+import { checkAnswer } from "./check";
 import { getInitialState, reducer } from "./logic";
 
 export const Stage: FC<{
@@ -21,6 +22,11 @@ export const Stage: FC<{
     });
   }, []);
 
+  const answerIsCorrect = useMemo(() => checkAnswer(problem, answer), [
+    problem,
+    answer,
+  ]);
+
   const selectOption = useCallback(
     (optionIndex: number) => {
       const option = options[optionIndex];
@@ -38,6 +44,7 @@ export const Stage: FC<{
       options={options}
       answer={answer}
       focus={focus}
+      answerIsCorrect={answerIsCorrect}
       onHoleSelect={selectHole}
       onOptionSelect={selectOption}
     />
