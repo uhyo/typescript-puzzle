@@ -1,7 +1,7 @@
-import { Option, typeOption } from "~/problems/options";
+import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { AnswerState, setHoleContent } from "./answer";
-import { getNextFocus } from "./focus";
+import { getInitialFocus, getNextFocus } from "./focus";
 
 export type StageState = {
   readonly problem: Problem;
@@ -26,10 +26,8 @@ export const getInitialState = ({
   problem,
 }: InitialStateParams): StageState => ({
   problem,
-  answer: {
-    0: typeOption("string"),
-  },
-  focus: undefined,
+  answer: {},
+  focus: getInitialFocus(problem),
 });
 
 export const reducer = (state: StageState, action: StageAction): StageState => {

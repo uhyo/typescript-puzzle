@@ -3,6 +3,6 @@ import { typeHole } from "./problemDefinition/hole";
 
 export default [
   problem`
-        const value: ${typeHole("string")} = ${typeHole("number")} "foobar";
+        const value: ${typeHole("string")} = "foobar";
     `,
 ];

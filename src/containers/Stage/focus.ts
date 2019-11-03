@@ -1,5 +1,8 @@
 import { Problem } from "~/problems/problemDefinition/problem";
 
+export const getInitialFocus = (problem: Problem): string | undefined =>
+  problem.holes.length > 0 ? "0" : undefined;
+
 export const getNextFocus = (
   problem: Problem,
   currentFocus: string | undefined,
