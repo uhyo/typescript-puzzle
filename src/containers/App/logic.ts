@@ -11,6 +11,10 @@ export type AppPage =
       type: "levelSelect";
     }
   | {
+      type: "levelLoading";
+      level: Level;
+    }
+  | {
       type: "stage";
       /**
        * ID of stage.
@@ -34,9 +38,19 @@ export type AppPage =
       level: Level;
     };
 
-export type AppAction = {
-  type: "goToNext";
-};
+export type AppAction =
+  | {
+      type: "goToLevel";
+      level: Level;
+    }
+  | {
+      type: "stageLoaded";
+      level: Level;
+      stageId: string;
+    }
+  | {
+      type: "goToNext";
+    };
 
 export const reducer = (state: AppState, action: AppAction): AppState => {
   switch (action.type) {
@@ -72,6 +86,29 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
         }
         console.log("ahh", current);
       }
+      break;
+    }
+    case "goToLevel": {
+      const { level } = action;
+      return {
+        ...state,
+        page: {
+          type: "levelLoading",
+          level,
+        },
+      };
+    }
+    case "stageLoaded": {
+      const { level, stageId } = action;
+      return {
+        ...state,
+        page: {
+          type: "stage",
+          level,
+          id: stageId,
+          problemNumber: 1,
+        },
+      };
     }
   }
   return state;

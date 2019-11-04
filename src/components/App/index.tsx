@@ -1,5 +1,6 @@
-import React, { Dispatch, FC } from "react";
+import React, { Dispatch, FC, useTransition } from "react";
 import { AppAction, AppPage } from "~/containers/App/logic";
+import { LevelLoading } from "~/containers/LevelLoading";
 import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
 import { LevelComplete } from "../LevelComplete";
@@ -10,9 +11,31 @@ export const AppComponent: FC<{
   stageStore: StageStore;
   dispatch: Dispatch<AppAction>;
 }> = ({ page, stageStore, dispatch }) => {
+  const [startTransition] = useTransition();
+
   switch (page.type) {
     case "levelSelect": {
-      return <LevelSelect />;
+      return (
+        <LevelSelect
+          onSelect={level => {
+            startTransition(() => {
+              dispatch({
+                type: "goToLevel",
+                level,
+              });
+            });
+          }}
+        />
+      );
+    }
+    case "levelLoading": {
+      return (
+        <LevelLoading
+          level={page.level}
+          stageStore={stageStore}
+          dispatch={dispatch}
+        />
+      );
     }
     case "stage": {
       const stage = stageStore.getStage(page.id);
