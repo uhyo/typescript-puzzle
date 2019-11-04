@@ -9,7 +9,7 @@ export class StageStore {
   /**
    * Loaded problems.
    */
-  private levels: Partial<Record<Level, StageDefinition[]>> = {};
+  private levels: Partial<Record<Level, readonly StageDefinition[]>> = {};
   /**
    * Map from stage ID to level.
    */
@@ -34,6 +34,13 @@ export class StageStore {
     }
     // TODO
     throw new Error("Stage does not exist");
+  }
+
+  /**
+   * Returns the list of stages of given level.
+   */
+  public getStagesInLevel(level: Level) {
+    return this.levels[level] ?? [];
   }
 
   private loadStages(level: Level, stages: StageDefinition[]) {

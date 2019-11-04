@@ -14,6 +14,7 @@ export const StageComponent: FC<{
   answerIsCorrect: boolean;
   onHoleSelect?: (holeId: string) => void;
   onOptionSelect?: (optionIndex: number) => void;
+  onNext?: () => void;
 }> = ({
   problem,
   options,
@@ -22,6 +23,7 @@ export const StageComponent: FC<{
   answerIsCorrect,
   onHoleSelect,
   onOptionSelect,
+  onNext,
 }) => {
   return (
     <>
@@ -32,7 +34,7 @@ export const StageComponent: FC<{
         onHoleSelect={onHoleSelect}
       />
       <OptionsDisplay options={options} onOptionSelect={onOptionSelect} />
-      <StageNavigation answerIsCorrect={answerIsCorrect} />
+      <StageNavigation answerIsCorrect={answerIsCorrect} onNext={onNext} />
     </>
   );
 };
