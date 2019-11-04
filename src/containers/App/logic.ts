@@ -1,22 +1,38 @@
 import { StageStore } from "~/dataStore/stages";
-import { Level, levels } from "~/problems/levels";
+import { Level, levelMetadata } from "~/problems/levels";
 
 export type AppState = {
   stageStore: StageStore;
   page: AppPage;
 };
 
-export type AppPage = {
-  type: "stage";
-  /**
-   * ID of stage.
-   */
-  id: string;
-  /**
-   * Current level.
-   */
-  level: Level;
-};
+export type AppPage =
+  | {
+      type: "levelSelect";
+    }
+  | {
+      type: "stage";
+      /**
+       * ID of stage.
+       */
+      id: string;
+      /**
+       * Current level.
+       */
+      level: Level;
+      /**
+       * current number of problems.
+       * Starts from 1.
+       */
+      problemNumber: number;
+    }
+  | {
+      type: "complete";
+      /**
+       * Level which the user completed.
+       */
+      level: Level;
+    };
 
 export type AppAction = {
   type: "goToNext";
@@ -27,6 +43,16 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
     case "goToNext": {
       const { stageStore, page } = state;
       if (page.type === "stage") {
+        if (page.problemNumber >= levelMetadata[page.level].numberOfStages) {
+          // レベルクリア
+          return {
+            ...state,
+            page: {
+              type: "complete",
+              level: page.level,
+            },
+          };
+        }
         // go to the next stage.
         const levels = stageStore.getStagesInLevel(page.level);
         const current = levels.findIndex(s => s.id === page.id);
@@ -38,8 +64,9 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
           return {
             ...state,
             page: {
-              ...state.page,
+              ...page,
               id: nextStage.id,
+              problemNumber: page.problemNumber + 1,
             },
           };
         }
@@ -55,9 +82,13 @@ export const getInitialState = (options: {}): AppState => {
   return {
     stageStore,
     page: {
+      /*
       type: "stage",
       id: "v1.l1.s1",
       level: levels[1],
+      problemNumber: 1,
+      */
+      type: "levelSelect",
     },
   };
 };

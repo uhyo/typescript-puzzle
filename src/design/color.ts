@@ -16,6 +16,11 @@ export const mainBorderColor = "#037acc";
 export const lightGrayBackgroundColor = "#dddddd";
 
 /**
+ * Main color for background
+ */
+export const mainBackgroundColor = "#037acc";
+
+/**
  * Background color for affirmative
  */
 export const affirmativeBackgroundColor = "#27b850";

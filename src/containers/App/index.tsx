@@ -12,7 +12,7 @@ export const App: FC = () => {
   // TODO: suspense fallback
   return (
     <Suspense fallback={null}>
-      <AppComponent page={page} stageStore={stageStore} dispatch={dispatch} />;
+      <AppComponent page={page} stageStore={stageStore} dispatch={dispatch} />
     </Suspense>
   );
 };

@@ -15,6 +15,17 @@ const stages: StageDefinition[] = [
       typeOption("boolean"),
     ],
   },
+  {
+    id: "v1.l1.s2",
+    problem: problem`
+        const num: ${typeHole("number")} = 3.1415;
+    `,
+    options: [
+      typeOption("string"),
+      typeOption("number"),
+      typeOption("boolean"),
+    ],
+  },
 ];
 
 export default stages;
