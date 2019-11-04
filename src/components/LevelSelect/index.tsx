@@ -16,7 +16,11 @@ export const LevelSelect: FC<{
           (() => {
             onSelect(level);
           });
-        return <LevelButton onClick={clickHandler}>{meta.name}</LevelButton>;
+        return (
+          <LevelButton key={level} onClick={clickHandler}>
+            {meta.name}
+          </LevelButton>
+        );
       })}
     </div>
   );
