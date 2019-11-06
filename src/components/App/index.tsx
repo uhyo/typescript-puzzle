@@ -1,30 +1,22 @@
-import React, { Dispatch, FC, useTransition } from "react";
+import React, { Dispatch, FC } from "react";
 import { AppAction, AppPage } from "~/containers/App/logic";
+import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
+import { LevelSelect } from "~/containers/LevelSelect";
 import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
-import { LevelComplete } from "../LevelComplete";
-import { LevelSelect } from "../LevelSelect";
 
 export const AppComponent: FC<{
   page: AppPage;
   stageStore: StageStore;
   dispatch: Dispatch<AppAction>;
 }> = ({ page, stageStore, dispatch }) => {
-  const [startTransition] = useTransition();
-
   switch (page.type) {
     case "levelSelect": {
       return (
         <LevelSelect
-          onSelect={level => {
-            startTransition(() => {
-              dispatch({
-                type: "goToLevel",
-                level,
-              });
-            });
-          }}
+          dispatch={dispatch}
+          clearedLevelsFetcher={page.clearedLevelsFetcher}
         />
       );
     }
@@ -49,7 +41,12 @@ export const AppComponent: FC<{
       );
     }
     case "complete": {
-      return <LevelComplete level={page.level} />;
+      return (
+        <LevelComplete
+          level={page.level}
+          saveScoreFetcher={page.saveScoreFetcher}
+        />
+      );
     }
   }
 };

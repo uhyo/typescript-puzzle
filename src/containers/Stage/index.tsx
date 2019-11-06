@@ -1,4 +1,11 @@
-import React, { Dispatch, FC, useCallback, useMemo, useReducer } from "react";
+import React, {
+  Dispatch,
+  FC,
+  useCallback,
+  useMemo,
+  useReducer,
+  useTransition,
+} from "react";
 import { StageComponent } from "~/components/Stage";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
@@ -16,6 +23,7 @@ export const Stage: FC<{
     { problem },
     getInitialState,
   );
+  const [startTransition] = useTransition();
 
   const selectHole = useCallback((holeId: string) => {
     dispatch({
@@ -41,8 +49,10 @@ export const Stage: FC<{
   );
 
   const goToNext = useCallback(() => {
-    appDispatch({
-      type: "goToNext",
+    startTransition(() => {
+      appDispatch({
+        type: "goToNext",
+      });
     });
   }, [appDispatch]);
 

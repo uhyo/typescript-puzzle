@@ -1,5 +1,7 @@
 import { StageStore } from "~/dataStore/stages";
+import { getClearedLevels, putClearedLevel } from "~/db/level";
 import { Level, levelMetadata } from "~/problems/levels";
+import { Fetcher } from "~/util/Fetcher";
 
 export type AppState = {
   stageStore: StageStore;
@@ -9,6 +11,7 @@ export type AppState = {
 export type AppPage =
   | {
       type: "levelSelect";
+      clearedLevelsFetcher: Fetcher<Level[]>;
     }
   | {
       type: "levelLoading";
@@ -36,6 +39,10 @@ export type AppPage =
        * Level which the user completed.
        */
       level: Level;
+      /**
+       * Fetcher for saving score.
+       */
+      saveScoreFetcher: Fetcher<void>;
     };
 
 export type AppAction =
@@ -64,6 +71,7 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
             page: {
               type: "complete",
               level: page.level,
+              saveScoreFetcher: new Fetcher(() => putClearedLevel(page.level)),
             },
           };
         }
@@ -126,6 +134,7 @@ export const getInitialState = (options: {}): AppState => {
       problemNumber: 1,
       */
       type: "levelSelect",
+      clearedLevelsFetcher: new Fetcher(getClearedLevels),
     },
   };
 };

@@ -27,7 +27,7 @@ export const getClearedLevels = async (): Promise<Level[]> => {
 /**
  * Add given level to cleared list.
  */
-export const putClearedLevel = async (level: Level) => {
+export const putClearedLevel = async (level: Level): Promise<void> => {
   const db = await openDb();
   return new Promise((resolve, reject) => {
     const t = db.transaction(levelStore.name, "readwrite");
@@ -39,6 +39,6 @@ export const putClearedLevel = async (level: Level) => {
       cleared: true,
     };
     const req = store.put(doc);
-    req.onsuccess = resolve;
+    req.onsuccess = () => resolve();
   });
 };

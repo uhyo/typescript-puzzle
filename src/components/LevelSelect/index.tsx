@@ -4,7 +4,7 @@ import { mainBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
 import { Level, levelList, levelMetadata } from "~/problems/levels";
 
-export const LevelSelect: FC<{
+export const LevelSelectComponent: FC<{
   onSelect?: (level: Level) => void;
 }> = ({ onSelect }) => {
   return (
