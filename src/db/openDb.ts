@@ -23,9 +23,11 @@ export const openDb = (): Promise<IDBDatabase> => {
         keyPath: "level",
       });
 
-      db.createObjectStore(stageStore.name, {
+      const ss = db.createObjectStore(stageStore.name, {
         keyPath: "id",
       });
+
+      ss.createIndex(stageStore.levelIndex, "level");
 
       db.onerror = null;
     };

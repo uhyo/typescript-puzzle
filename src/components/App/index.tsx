@@ -30,7 +30,8 @@ export const AppComponent: FC<{
       );
     }
     case "stage": {
-      const stage = stageStore.getStage(page.id);
+      const stageId = page.stages[page.stageIndex];
+      const stage = stageStore.getStage(stageId);
       return (
         <Stage
           key={stage.id} // <- TODO: bad practice

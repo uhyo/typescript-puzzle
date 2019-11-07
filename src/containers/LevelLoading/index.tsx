@@ -12,11 +12,11 @@ export const LevelLoading: FC<{
   level: Level;
   dispatch: Dispatch<AppAction>;
 }> = ({ stageStore, level, dispatch }) => {
-  throw loadLevel(stageStore, level).then(stageId => {
+  throw loadLevel(stageStore, level).then(stages => {
     dispatch({
       type: "stageLoaded",
       level,
-      stageId,
+      stages,
     });
   });
 };

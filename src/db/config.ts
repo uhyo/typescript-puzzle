@@ -19,4 +19,8 @@ export const stageStore = {
    * Name of stage score store.
    */
   name: "stage",
+  /**
+   * Neme of index by level.
+   */
+  levelIndex: "level",
 } as const;

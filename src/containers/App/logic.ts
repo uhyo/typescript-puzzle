@@ -1,5 +1,6 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedLevels, putClearedLevel } from "~/db/level";
+import { putClearedStages } from "~/db/stage";
 import { Level, levelMetadata } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 
@@ -20,18 +21,17 @@ export type AppPage =
   | {
       type: "stage";
       /**
-       * ID of stage.
+       * List of all stages
        */
-      id: string;
+      stages: string[];
+      /**
+       * Current index of stage.
+       */
+      stageIndex: number;
       /**
        * Current level.
        */
       level: Level;
-      /**
-       * current number of problems.
-       * Starts from 1.
-       */
-      problemNumber: number;
     }
   | {
       type: "complete";
@@ -53,7 +53,7 @@ export type AppAction =
   | {
       type: "stageLoaded";
       level: Level;
-      stageId: string;
+      stages: string[];
     }
   | {
       type: "goToNext";
@@ -64,35 +64,32 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
     case "goToNext": {
       const { stageStore, page } = state;
       if (page.type === "stage") {
-        if (page.problemNumber >= levelMetadata[page.level].numberOfStages) {
+        const nextIndex = page.stageIndex + 1;
+        if (nextIndex >= levelMetadata[page.level].numberOfStages) {
           // レベルクリア
+          const save = async () => {
+            await Promise.all([
+              putClearedLevel(page.level),
+              putClearedStages(page.level, page.stages),
+            ]);
+          };
           return {
             ...state,
             page: {
               type: "complete",
               level: page.level,
-              saveScoreFetcher: new Fetcher(() => putClearedLevel(page.level)),
+              saveScoreFetcher: new Fetcher(save),
             },
           };
         }
         // go to the next stage.
-        const levels = stageStore.getStagesInLevel(page.level);
-        const current = levels.findIndex(s => s.id === page.id);
-        if (current < 0) {
-          break;
-        }
-        const nextStage = levels[current + 1];
-        if (nextStage) {
-          return {
-            ...state,
-            page: {
-              ...page,
-              id: nextStage.id,
-              problemNumber: page.problemNumber + 1,
-            },
-          };
-        }
-        console.log("ahh", current);
+        return {
+          ...state,
+          page: {
+            ...page,
+            stageIndex: page.stageIndex + 1,
+          },
+        };
       }
       break;
     }
@@ -107,14 +104,14 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
       };
     }
     case "stageLoaded": {
-      const { level, stageId } = action;
+      const { level, stages } = action;
       return {
         ...state,
         page: {
           type: "stage",
           level,
-          id: stageId,
-          problemNumber: 1,
+          stages,
+          stageIndex: 0,
         },
       };
     }
