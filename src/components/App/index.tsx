@@ -1,5 +1,5 @@
 import React, { ComponentProps, Dispatch, FC } from "react";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { AppAction, AppPage } from "~/containers/App/logic";
 import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
@@ -54,12 +54,19 @@ const AppContent: FC<{
   }
 };
 
+const GlobalStyle = createGlobalStyle`
+  html, body, #root {
+    height: 100%;
+  }
+`;
+
 const AppWrapper = styled.div`
   display: flex;
   flex-flow: nowrap column;
   justify-content: center;
   width: 600px;
-  height: 100vh;
+  height: 860px;
+  max-height: 100%;
   max-width: 100%;
   padding: 0 20px;
   margin: 0 auto;
@@ -70,5 +77,6 @@ const AppWrapper = styled.div`
 export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
   <AppWrapper>
     <AppContent {...props} />
+    <GlobalStyle />
   </AppWrapper>
 );
