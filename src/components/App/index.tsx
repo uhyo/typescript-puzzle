@@ -37,6 +37,8 @@ const AppContent: FC<{
       return (
         <Stage
           key={stage.id} // <- TODO: bad practice
+          level={page.level}
+          stageNumber={page.stageIndex + 1}
           problem={stage.problem}
           options={stage.options}
           appDispatch={dispatch}

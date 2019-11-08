@@ -7,6 +7,7 @@ import React, {
   useTransition,
 } from "react";
 import { StageComponent } from "~/components/Stage";
+import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { AppAction } from "../App/logic";
@@ -14,10 +15,12 @@ import { checkAnswer } from "./check";
 import { getInitialState, reducer } from "./logic";
 
 export const Stage: FC<{
+  level: Level;
+  stageNumber: number;
   problem: Problem;
   options: Option[];
   appDispatch: Dispatch<AppAction>;
-}> = ({ problem, options, appDispatch }) => {
+}> = ({ level, stageNumber, problem, options, appDispatch }) => {
   const [{ answer, focus }, dispatch] = useReducer(
     reducer,
     { problem },
@@ -58,6 +61,8 @@ export const Stage: FC<{
 
   return (
     <StageComponent
+      level={level}
+      stageNumber={stageNumber}
       problem={problem}
       options={options}
       answer={answer}

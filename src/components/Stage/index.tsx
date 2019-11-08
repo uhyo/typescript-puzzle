@@ -1,12 +1,16 @@
 import React, { FC } from "react";
 import { AnswerState } from "~/containers/Stage/logic";
+import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { OptionsDisplay } from "../OptionsDisplay";
 import { ProblemDisplay } from "../ProblemDisplay";
+import { StageHeader } from "../StageHeader";
 import { StageNavigation } from "../StageNavigation";
 
 export const StageComponent: FC<{
+  level: Level;
+  stageNumber: number;
   problem: Problem;
   options: Option[];
   answer: AnswerState;
@@ -16,6 +20,8 @@ export const StageComponent: FC<{
   onOptionSelect?: (optionIndex: number) => void;
   onNext?: () => void;
 }> = ({
+  level,
+  stageNumber,
   problem,
   options,
   answer,
@@ -27,6 +33,7 @@ export const StageComponent: FC<{
 }) => {
   return (
     <>
+      <StageHeader level={level} stageNumber={stageNumber} />
       <ProblemDisplay
         problem={problem}
         answer={answer}
