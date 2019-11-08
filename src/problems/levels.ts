@@ -25,7 +25,7 @@ export type LevelMetadata = {
 export const levelMetadata: Record<Level, LevelMetadata> = {
   [levels[1]]: {
     name: "LEVEL 1",
-    numberOfStages: 2,
+    numberOfStages: 1,
   },
 };
 

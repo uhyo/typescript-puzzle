@@ -1,16 +1,18 @@
+import { StageStore } from "~/dataStore/stages";
 import { Level } from "~/problems/levels";
 import { levelStore } from "./config";
 import { openDb } from "./openDb";
+import { getClearedStagesInLevel } from "./stage";
 
-interface LevelDoc {
+export interface LevelDoc {
   level: Level;
-  cleared: boolean;
+  status: "cleared" | "completed";
 }
 
 /**
  * Get the list of cleared levels.
  */
-export const getClearedLevels = async (): Promise<Level[]> => {
+export const getClearedLevels = async (): Promise<LevelDoc[]> => {
   const db = await openDb();
 
   return new Promise((resolve, reject) => {
@@ -19,7 +21,7 @@ export const getClearedLevels = async (): Promise<Level[]> => {
     const store = t.objectStore(levelStore.name);
     const req: IDBRequest<LevelDoc[]> = store.getAll();
     req.onsuccess = () => {
-      resolve(req.result.filter(doc => doc.cleared).map(doc => doc.level));
+      resolve(req.result);
     };
   });
 };
@@ -27,18 +29,32 @@ export const getClearedLevels = async (): Promise<Level[]> => {
 /**
  * Add given level to cleared list.
  */
-export const putClearedLevel = async (level: Level): Promise<void> => {
+export const putClearedLevel = async (
+  stageStore: StageStore,
+  level: Level,
+): Promise<void> => {
+  const stageInLevel = new Set(
+    stageStore.getStagesInLevel(level).map(d => d.id),
+  );
+  const clearedStageDocs = await getClearedStagesInLevel(level);
+  const clearedValidStages = clearedStageDocs.filter(doc =>
+    stageInLevel.has(doc.id),
+  );
   const db = await openDb();
   return new Promise((resolve, reject) => {
     const t = db.transaction(levelStore.name, "readwrite");
     t.onerror = reject;
-    const store = t.objectStore(levelStore.name);
+    const ls = t.objectStore(levelStore.name);
 
     const doc: LevelDoc = {
       level,
-      cleared: true,
+      status:
+        clearedValidStages.length >= stageInLevel.size
+          ? "completed"
+          : "cleared",
     };
-    const req = store.put(doc);
+
+    const req = ls.put(doc);
     req.onsuccess = () => resolve();
   });
 };

@@ -1,12 +1,14 @@
-import React, { Dispatch, FC } from "react";
+import React, { ComponentProps, Dispatch, FC } from "react";
+import styled from "styled-components";
 import { AppAction, AppPage } from "~/containers/App/logic";
 import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
 import { LevelSelect } from "~/containers/LevelSelect";
 import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
+import { uiFontFamily } from "~/design/font";
 
-export const AppComponent: FC<{
+const AppContent: FC<{
   page: AppPage;
   stageStore: StageStore;
   dispatch: Dispatch<AppAction>;
@@ -51,3 +53,22 @@ export const AppComponent: FC<{
     }
   }
 };
+
+const AppWrapper = styled.div`
+  display: flex;
+  flex-flow: nowrap column;
+  justify-content: center;
+  width: 600px;
+  height: 100vh;
+  max-width: 100%;
+  padding: 0 20px;
+  margin: 0 auto;
+
+  font-family: ${uiFontFamily};
+`;
+
+export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
+  <AppWrapper>
+    <AppContent {...props} />
+  </AppWrapper>
+);

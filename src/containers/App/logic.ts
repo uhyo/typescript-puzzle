@@ -1,5 +1,5 @@
 import { StageStore } from "~/dataStore/stages";
-import { getClearedLevels, putClearedLevel } from "~/db/level";
+import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { putClearedStages } from "~/db/stage";
 import { Level, levelMetadata } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
@@ -12,7 +12,7 @@ export type AppState = {
 export type AppPage =
   | {
       type: "levelSelect";
-      clearedLevelsFetcher: Fetcher<Level[]>;
+      clearedLevelsFetcher: Fetcher<LevelDoc[]>;
     }
   | {
       type: "levelLoading";
@@ -68,10 +68,8 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
         if (nextIndex >= levelMetadata[page.level].numberOfStages) {
           // レベルクリア
           const save = async () => {
-            await Promise.all([
-              putClearedLevel(page.level),
-              putClearedStages(page.level, page.stages),
-            ]);
+            await putClearedStages(page.level, page.stages);
+            await putClearedLevel(stageStore, page.level);
           };
           return {
             ...state,
