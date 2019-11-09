@@ -3,10 +3,11 @@ import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
-import { OptionsDisplay } from "../OptionsDisplay";
-import { ProblemDisplay } from "../ProblemDisplay";
-import { StageHeader } from "../StageHeader";
-import { StageNavigation } from "../StageNavigation";
+import { PageWrapper } from "../PageWrapper";
+import { OptionsDisplay } from "./OptionsDisplay";
+import { ProblemDisplay } from "./ProblemDisplay";
+import { StageHeader } from "./StageHeader";
+import { StageNavigation } from "./StageNavigation";
 
 export const StageComponent: FC<{
   level: Level;
@@ -19,6 +20,7 @@ export const StageComponent: FC<{
   onHoleSelect?: (holeId: string) => void;
   onOptionSelect?: (optionIndex: number) => void;
   onNext?: () => void;
+  onQuitStage?: () => void;
 }> = ({
   level,
   stageNumber,
@@ -30,10 +32,15 @@ export const StageComponent: FC<{
   onHoleSelect,
   onOptionSelect,
   onNext,
+  onQuitStage,
 }) => {
   return (
-    <>
-      <StageHeader level={level} stageNumber={stageNumber} />
+    <Wrapper>
+      <StageHeader
+        level={level}
+        stageNumber={stageNumber}
+        onQuitStage={onQuitStage}
+      />
       <ProblemDisplay
         problem={problem}
         answer={answer}
@@ -42,6 +49,8 @@ export const StageComponent: FC<{
       />
       <OptionsDisplay options={options} onOptionSelect={onOptionSelect} />
       <StageNavigation answerIsCorrect={answerIsCorrect} onNext={onNext} />
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = PageWrapper;

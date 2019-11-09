@@ -1,8 +1,8 @@
 import React, { FC, Fragment } from "react";
 import styled from "styled-components";
 import { AnswerState } from "~/containers/Stage/logic";
-import { sourceCodeFontFamily } from "../../design/font";
-import { Problem } from "../../problems/problemDefinition/problem";
+import { sourceCodeFontFamily } from "../../../design/font";
+import { Problem } from "../../../problems/problemDefinition/problem";
 import { FilledHole } from "./FilledHole";
 import { OpenHole } from "./OpenHole";
 

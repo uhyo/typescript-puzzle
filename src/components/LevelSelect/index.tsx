@@ -26,11 +26,11 @@ export const LevelSelectComponent: FC<{
           <LevelButton key={level} onClick={clickHandler}>
             {meta.name}
             {status === "completed" ? (
-              <Crown>
+              <Crown title="You solved all the problems in this level">
                 <FontAwesomeIcon icon={faCrown} />
               </Crown>
             ) : status === "cleared" ? (
-              <Check>
+              <Check title="You cleared this level">
                 <FontAwesomeIcon icon={faCheck} />
               </Check>
             ) : null}

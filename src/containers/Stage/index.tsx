@@ -59,6 +59,14 @@ export const Stage: FC<{
     });
   }, [appDispatch]);
 
+  const quitStage = useCallback(() => {
+    startTransition(() => {
+      appDispatch({
+        type: "goToTop",
+      });
+    });
+  }, [appDispatch]);
+
   return (
     <StageComponent
       level={level}
@@ -71,6 +79,7 @@ export const Stage: FC<{
       onHoleSelect={selectHole}
       onOptionSelect={selectOption}
       onNext={goToNext}
+      onQuitStage={quitStage}
     />
   );
 };

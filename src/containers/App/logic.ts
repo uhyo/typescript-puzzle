@@ -1,7 +1,7 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { putClearedStages } from "~/db/stage";
-import { Level, levelMetadata } from "~/problems/levels";
+import { Level, levelMetadata, levels } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 
 export type AppState = {
@@ -57,6 +57,9 @@ export type AppAction =
     }
   | {
       type: "goToNext";
+    }
+  | {
+      type: "goToTop";
     };
 
 export const reducer = (state: AppState, action: AppAction): AppState => {
@@ -113,6 +116,15 @@ export const reducer = (state: AppState, action: AppAction): AppState => {
         },
       };
     }
+    case "goToTop": {
+      return {
+        ...state,
+        page: {
+          type: "levelSelect",
+          clearedLevelsFetcher: new Fetcher(getClearedLevels),
+        },
+      };
+    }
   }
   return state;
 };
@@ -123,13 +135,11 @@ export const getInitialState = (options: {}): AppState => {
     stageStore,
     page: {
       /*
-      type: "stage",
-      id: "v1.l1.s1",
-      level: levels[1],
-      problemNumber: 1,
-      */
       type: "levelSelect",
       clearedLevelsFetcher: new Fetcher(getClearedLevels),
+      */
+      type: "levelLoading",
+      level: levels[1],
     },
   };
 };

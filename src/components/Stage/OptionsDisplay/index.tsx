@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { Option } from "~/problems/options";
-import { OneOption as OneOptionOrig } from "../OneOption";
+import { OneOption as OneOptionOrig } from "../../OneOption";
 
 export const OptionsDisplay: FC<{
   options: Option[];

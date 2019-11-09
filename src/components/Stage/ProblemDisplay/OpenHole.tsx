@@ -1,8 +1,11 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { lightGrayBackgroundColor, mainBorderColor } from "../../design/color";
-import { smallRoundedBoxRadius } from "../../design/length";
-import { ProblemHole } from "../../problems/problemDefinition";
+import {
+  lightGrayBackgroundColor,
+  mainBorderColor,
+} from "../../../design/color";
+import { smallRoundedBoxRadius } from "../../../design/length";
+import { ProblemHole } from "../../../problems/problemDefinition";
 
 export const OpenHole: FC<{
   hole: ProblemHole;
