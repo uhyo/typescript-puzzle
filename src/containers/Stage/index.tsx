@@ -1,17 +1,11 @@
-import React, {
-  FC,
-  useCallback,
-  useMemo,
-  useReducer,
-  useTransition,
-} from "react";
+import React, { FC, useCallback, useMemo, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { useAppActions } from "../App/logic";
 import { checkAnswer } from "./check";
-import { getInitialState, reducer } from "./logic";
+import { useStageState } from "./logic";
 
 export const Stage: FC<{
   level: Level;
@@ -19,36 +13,14 @@ export const Stage: FC<{
   problem: Problem;
   options: Option[];
 }> = ({ level, stageNumber, problem, options }) => {
-  const [{ answer, focus }, dispatch] = useReducer(
-    reducer,
-    { problem },
-    getInitialState,
-  );
+  const [{ answer, focus }, Provider] = useStageState({ problem });
   const [startTransition] = useTransition();
   const { goToNext, goToTop } = useAppActions();
-
-  const selectHole = useCallback((holeId: string) => {
-    dispatch({
-      type: "holeSelect",
-      holeId,
-    });
-  }, []);
 
   const answerIsCorrect = useMemo(() => checkAnswer(problem, answer), [
     problem,
     answer,
   ]);
-
-  const selectOption = useCallback(
-    (optionIndex: number) => {
-      const option = options[optionIndex];
-      dispatch({
-        type: "selectOption",
-        option,
-      });
-    },
-    [options],
-  );
 
   const goToNext2 = useCallback(() => {
     startTransition(() => {
@@ -63,18 +35,18 @@ export const Stage: FC<{
   }, [goToTop]);
 
   return (
-    <StageComponent
-      level={level}
-      stageNumber={stageNumber}
-      problem={problem}
-      options={options}
-      answer={answer}
-      focus={focus}
-      answerIsCorrect={answerIsCorrect}
-      onHoleSelect={selectHole}
-      onOptionSelect={selectOption}
-      onNext={goToNext2}
-      onQuitStage={quitStage}
-    />
+    <Provider>
+      <StageComponent
+        level={level}
+        stageNumber={stageNumber}
+        problem={problem}
+        options={options}
+        answer={answer}
+        focus={focus}
+        answerIsCorrect={answerIsCorrect}
+        onNext={goToNext2}
+        onQuitStage={quitStage}
+      />
+    </Provider>
   );
 };

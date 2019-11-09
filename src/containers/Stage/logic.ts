@@ -1,5 +1,6 @@
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
+import { generateStateManagenentTools } from "~/util/states";
 import { AnswerState, setHoleContent } from "./answer";
 import { getInitialFocus, getNextFocus } from "./focus";
 
@@ -30,42 +31,50 @@ export const getInitialState = ({
   focus: getInitialFocus(problem),
 });
 
-export const reducer = (state: StageState, action: StageAction): StageState => {
-  switch (action.type) {
-    case "holeSelect": {
-      const { holeId } = action;
-      if (state.answer[holeId]) {
-        return {
-          ...state,
-          answer: setHoleContent(state.answer, holeId, undefined),
-          focus: holeId,
-        };
-      }
-      if (state.focus === action.holeId) {
-        return {
-          ...state,
-          focus: undefined,
-        };
-      } else {
-        return {
-          ...state,
-          focus: action.holeId,
-        };
-      }
-    }
-    case "selectOption": {
-      const { focus, problem } = state;
-      const { option } = action;
-      if (focus === undefined) {
-        return state;
-      }
-      return {
-        ...state,
-        answer: setHoleContent(state.answer, focus, option),
-        focus: getNextFocus(problem, focus),
-      };
-    }
-  }
-};
+export const {
+  useManagedState: useStageState,
+  useActions: useStageActions,
+} = generateStateManagenentTools({
+  getInitialState,
+  getActions(setState) {
+    return {
+      holeSelect(holeId: string) {
+        setState(state => {
+          if (state.answer[holeId]) {
+            return {
+              ...state,
+              answer: setHoleContent(state.answer, holeId, undefined),
+              focus: holeId,
+            };
+          }
+          if (state.focus === holeId) {
+            return {
+              ...state,
+              focus: undefined,
+            };
+          } else {
+            return {
+              ...state,
+              focus: holeId,
+            };
+          }
+        });
+      },
+      selectOption(option: Option) {
+        setState(state => {
+          const { focus, problem } = state;
+          if (focus === undefined) {
+            return state;
+          }
+          return {
+            ...state,
+            answer: setHoleContent(state.answer, focus, option),
+            focus: getNextFocus(problem, focus),
+          };
+        });
+      },
+    };
+  },
+});
 
 export { AnswerState };

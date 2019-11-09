@@ -17,8 +17,6 @@ export const StageComponent: FC<{
   answer: AnswerState;
   focus: string | undefined;
   answerIsCorrect: boolean;
-  onHoleSelect?: (holeId: string) => void;
-  onOptionSelect?: (optionIndex: number) => void;
   onNext?: () => void;
   onQuitStage?: () => void;
 }> = ({
@@ -29,8 +27,6 @@ export const StageComponent: FC<{
   answer,
   focus,
   answerIsCorrect,
-  onHoleSelect,
-  onOptionSelect,
   onNext,
   onQuitStage,
 }) => {
@@ -41,13 +37,8 @@ export const StageComponent: FC<{
         stageNumber={stageNumber}
         onQuitStage={onQuitStage}
       />
-      <ProblemDisplay
-        problem={problem}
-        answer={answer}
-        focus={focus}
-        onHoleSelect={onHoleSelect}
-      />
-      <OptionsDisplay options={options} onOptionSelect={onOptionSelect} />
+      <ProblemDisplay problem={problem} answer={answer} focus={focus} />
+      <OptionsDisplay options={options} />
       <StageNavigation answerIsCorrect={answerIsCorrect} onNext={onNext} />
     </Wrapper>
   );

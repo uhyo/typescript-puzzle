@@ -1,6 +1,6 @@
 import React, { FC, Fragment } from "react";
 import styled from "styled-components";
-import { AnswerState } from "~/containers/Stage/logic";
+import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { sourceCodeFontFamily } from "../../../design/font";
 import { Problem } from "../../../problems/problemDefinition/problem";
 import { FilledHole } from "./FilledHole";
@@ -10,15 +10,11 @@ interface Props {
   problem: Problem;
   answer: AnswerState;
   focus: string | undefined;
-  onHoleSelect?: (holeId: string) => void;
 }
 
-export const ProblemDisplay: FC<Props> = ({
-  problem,
-  answer,
-  focus,
-  onHoleSelect,
-}) => {
+export const ProblemDisplay: FC<Props> = ({ problem, answer, focus }) => {
+  const { holeSelect } = useStageActions();
+
   const { holes, texts } = problem;
   const result: React.ReactChild[] = [];
   for (let i = 0; i <= holes.length; i++) {
@@ -26,7 +22,7 @@ export const ProblemDisplay: FC<Props> = ({
     if (holes[i]) {
       const a = answer[i];
       const holeId = String(i);
-      const onClickHandler = onHoleSelect && (() => onHoleSelect(holeId));
+      const onClickHandler = () => holeSelect(holeId);
       if (a) {
         result.push(
           <FilledHole
