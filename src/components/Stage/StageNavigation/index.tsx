@@ -7,14 +7,18 @@ export const StageNavigation: FC<{
   answerIsCorrect: boolean;
   onNext?: () => void;
 }> = ({ answerIsCorrect, onNext }) => {
-  if (!answerIsCorrect) return null;
-
   return (
-    <div>
+    <Wrapper shown={answerIsCorrect} aria-hidden={!answerIsCorrect}>
       <NextButton onClick={onNext}>次の問題へ</NextButton>
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div<{
+  shown: boolean;
+}>`
+  visibility: ${props => (props.shown ? "visible" : "hidden")};
+`;
 
 const NextButton = styled.button`
   background-color: ${affirmativeBackgroundColor};
@@ -22,6 +26,7 @@ const NextButton = styled.button`
   font-size: 1.2em;
   font-weight: bold;
 
+  margin: 1.2em 0;
   padding: 6px;
   border-radius: ${largeRoundedBoxRadius};
 `;

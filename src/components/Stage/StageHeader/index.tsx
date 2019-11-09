@@ -34,6 +34,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-flow: nowrap row;
   font-size: 1.5rem;
+  padding-top: calc(5px + env(safe-area-inset-top, 0px));
 `;
 
 const LevelName = styled.span`

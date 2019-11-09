@@ -7,6 +7,7 @@ import { LevelSelect } from "~/containers/LevelSelect";
 import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
 import { uiFontFamily } from "~/design/font";
+import { phone } from "~/util/media";
 
 const AppContent: FC<{
   page: AppPage;
@@ -56,7 +57,10 @@ const GlobalStyle = createGlobalStyle`
 
 const AppWrapper = styled.div`
   width: 600px;
-  height: 860px;
+  height: 660px;
+  ${phone`
+      height: 100%;
+    `}
   max-height: 100%;
   max-width: 100%;
   padding: 0 20px;
