@@ -17,7 +17,13 @@ module.exports = {
     },
   },
   module: {
-    rules: [{ test: /\.tsx?$/, loader: "ts-loader" }],
+    rules: [
+      { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.svg$/,
+        loader: "file-loader",
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({

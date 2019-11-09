@@ -56,6 +56,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const AppWrapper = styled.div`
+  box-sizing: border-box;
   width: 600px;
   height: 660px;
   ${phone`

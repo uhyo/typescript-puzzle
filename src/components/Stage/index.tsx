@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { AnswerCheck } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
@@ -16,7 +17,7 @@ export const StageComponent: FC<{
   options: Option[];
   answer: AnswerState;
   focus: string | undefined;
-  answerIsCorrect: boolean;
+  answerCheck: AnswerCheck;
   onNext?: () => void;
   onQuitStage?: () => void;
 }> = ({
@@ -26,7 +27,7 @@ export const StageComponent: FC<{
   options,
   answer,
   focus,
-  answerIsCorrect,
+  answerCheck,
   onNext,
   onQuitStage,
 }) => {
@@ -37,9 +38,17 @@ export const StageComponent: FC<{
         stageNumber={stageNumber}
         onQuitStage={onQuitStage}
       />
-      <ProblemDisplay problem={problem} answer={answer} focus={focus} />
+      <ProblemDisplay
+        problem={problem}
+        answer={answer}
+        focus={focus}
+        backgroundState={answerCheck}
+      />
       <OptionsDisplay options={options} />
-      <StageNavigation answerIsCorrect={answerIsCorrect} onNext={onNext} />
+      <StageNavigation
+        answerIsCorrect={answerCheck === "correct"}
+        onNext={onNext}
+      />
     </Wrapper>
   );
 };

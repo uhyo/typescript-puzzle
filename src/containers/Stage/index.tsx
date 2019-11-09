@@ -17,7 +17,7 @@ export const Stage: FC<{
   const [startTransition] = useTransition();
   const { goToNext, goToTop } = useAppActions();
 
-  const answerIsCorrect = useMemo(() => checkAnswer(problem, answer), [
+  const answerCheck = useMemo(() => checkAnswer(problem, answer), [
     problem,
     answer,
   ]);
@@ -43,7 +43,7 @@ export const Stage: FC<{
         options={options}
         answer={answer}
         focus={focus}
-        answerIsCorrect={answerIsCorrect}
+        answerCheck={answerCheck}
         onNext={goToNext2}
         onQuitStage={quitStage}
       />
