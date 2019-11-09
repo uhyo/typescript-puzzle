@@ -21,11 +21,9 @@ export const LevelSelect: FC<{
     },
     [dispatch],
   );
-  // TODO: pass this from props
-  const clearedLevels = clearedLevelsFetcher.get();
-  console.log(clearedLevels);
 
-  // console.log(clearedLevels);
+  const clearedLevels = clearedLevelsFetcher.get();
+
   return (
     <LevelSelectComponent onSelect={onSelect} clearedLevels={clearedLevels} />
   );

@@ -60,12 +60,14 @@ const GlobalStyle = createGlobalStyle`
   html, body, #root {
     height: 100%;
   }
+  #root {
+    display: flex;
+    flex-flow: nowrap column;
+    justify-content: center;
+  }
 `;
 
 const AppWrapper = styled.div`
-  display: flex;
-  flex-flow: nowrap column;
-  justify-content: center;
   width: 600px;
   height: 860px;
   max-height: 100%;

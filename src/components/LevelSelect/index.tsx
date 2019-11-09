@@ -6,6 +6,7 @@ import { LevelDoc } from "~/db/level";
 import { mainBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
 import { Level, levelList, levelMetadata } from "~/problems/levels";
+import { PageWrapper } from "../PageWrapper";
 
 export const LevelSelectComponent: FC<{
   clearedLevels: LevelDoc[];
@@ -40,10 +41,8 @@ export const LevelSelectComponent: FC<{
   );
 };
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-flow: nowrap column;
-  align-items: stretch;
+const Wrapper = styled(PageWrapper)`
+  justify-content: center;
 `;
 
 const LevelButton = styled.button`
