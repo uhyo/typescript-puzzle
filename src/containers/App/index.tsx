@@ -1,18 +1,16 @@
-import React, { FC, Suspense, useReducer } from "react";
+import React, { FC, Suspense } from "react";
 import { AppComponent } from "~/components/App";
-import { getInitialState, reducer } from "./logic";
+import { useAppState } from "./logic";
 
 export const App: FC = () => {
-  const [{ page, stageStore }, dispatch] = useReducer(
-    reducer,
-    {},
-    getInitialState,
-  );
+  const [{ page, stageStore }, Provider] = useAppState();
 
   // TODO: suspense fallback
   return (
-    <Suspense fallback={null}>
-      <AppComponent page={page} stageStore={stageStore} dispatch={dispatch} />
-    </Suspense>
+    <Provider>
+      <Suspense fallback={null}>
+        <AppComponent page={page} stageStore={stageStore} />
+      </Suspense>
+    </Provider>
   );
 };

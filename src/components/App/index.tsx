@@ -1,6 +1,6 @@
-import React, { ComponentProps, Dispatch, FC } from "react";
+import React, { ComponentProps, FC } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import { AppAction, AppPage } from "~/containers/App/logic";
+import { AppPage } from "~/containers/App/logic";
 import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
 import { LevelSelect } from "~/containers/LevelSelect";
@@ -11,25 +11,13 @@ import { uiFontFamily } from "~/design/font";
 const AppContent: FC<{
   page: AppPage;
   stageStore: StageStore;
-  dispatch: Dispatch<AppAction>;
-}> = ({ page, stageStore, dispatch }) => {
+}> = ({ page, stageStore }) => {
   switch (page.type) {
     case "levelSelect": {
-      return (
-        <LevelSelect
-          dispatch={dispatch}
-          clearedLevelsFetcher={page.clearedLevelsFetcher}
-        />
-      );
+      return <LevelSelect clearedLevelsFetcher={page.clearedLevelsFetcher} />;
     }
     case "levelLoading": {
-      return (
-        <LevelLoading
-          level={page.level}
-          stageStore={stageStore}
-          dispatch={dispatch}
-        />
-      );
+      return <LevelLoading level={page.level} stageStore={stageStore} />;
     }
     case "stage": {
       const stageId = page.stages[page.stageIndex];
@@ -41,7 +29,6 @@ const AppContent: FC<{
           stageNumber={page.stageIndex + 1}
           problem={stage.problem}
           options={stage.options}
-          appDispatch={dispatch}
         />
       );
     }

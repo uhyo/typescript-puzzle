@@ -1,5 +1,4 @@
 import React, {
-  Dispatch,
   FC,
   useCallback,
   useMemo,
@@ -10,7 +9,7 @@ import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
 import { Option } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
-import { AppAction } from "../App/logic";
+import { useAppActions } from "../App/logic";
 import { checkAnswer } from "./check";
 import { getInitialState, reducer } from "./logic";
 
@@ -19,14 +18,14 @@ export const Stage: FC<{
   stageNumber: number;
   problem: Problem;
   options: Option[];
-  appDispatch: Dispatch<AppAction>;
-}> = ({ level, stageNumber, problem, options, appDispatch }) => {
+}> = ({ level, stageNumber, problem, options }) => {
   const [{ answer, focus }, dispatch] = useReducer(
     reducer,
     { problem },
     getInitialState,
   );
   const [startTransition] = useTransition();
+  const { goToNext, goToTop } = useAppActions();
 
   const selectHole = useCallback((holeId: string) => {
     dispatch({
@@ -51,21 +50,17 @@ export const Stage: FC<{
     [options],
   );
 
-  const goToNext = useCallback(() => {
+  const goToNext2 = useCallback(() => {
     startTransition(() => {
-      appDispatch({
-        type: "goToNext",
-      });
+      goToNext();
     });
-  }, [appDispatch]);
+  }, [goToNext]);
 
   const quitStage = useCallback(() => {
     startTransition(() => {
-      appDispatch({
-        type: "goToTop",
-      });
+      goToTop();
     });
-  }, [appDispatch]);
+  }, [goToTop]);
 
   return (
     <StageComponent
@@ -78,7 +73,7 @@ export const Stage: FC<{
       answerIsCorrect={answerIsCorrect}
       onHoleSelect={selectHole}
       onOptionSelect={selectOption}
-      onNext={goToNext}
+      onNext={goToNext2}
       onQuitStage={quitStage}
     />
   );

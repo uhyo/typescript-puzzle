@@ -22,7 +22,6 @@ export class Fetcher<T> {
    * If it is not fetched yet, throw a promise.
    */
   public get(): T {
-    console.log(this.state.state);
     if (this.state.state === "none") {
       const promise = this.fetch().then(value => {
         this.state = {

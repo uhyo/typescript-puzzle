@@ -3,6 +3,7 @@ import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { putClearedStages } from "~/db/stage";
 import { Level, levelMetadata, levels } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
+import { generateStateManagenentTools } from "~/util/states";
 
 export type AppState = {
   stageStore: StageStore;
@@ -45,91 +46,7 @@ export type AppPage =
       saveScoreFetcher: Fetcher<void>;
     };
 
-export type AppAction =
-  | {
-      type: "goToLevel";
-      level: Level;
-    }
-  | {
-      type: "stageLoaded";
-      level: Level;
-      stages: string[];
-    }
-  | {
-      type: "goToNext";
-    }
-  | {
-      type: "goToTop";
-    };
-
-export const reducer = (state: AppState, action: AppAction): AppState => {
-  switch (action.type) {
-    case "goToNext": {
-      const { stageStore, page } = state;
-      if (page.type === "stage") {
-        const nextIndex = page.stageIndex + 1;
-        if (nextIndex >= levelMetadata[page.level].numberOfStages) {
-          // レベルクリア
-          const save = async () => {
-            await putClearedStages(page.level, page.stages);
-            await putClearedLevel(stageStore, page.level);
-          };
-          return {
-            ...state,
-            page: {
-              type: "complete",
-              level: page.level,
-              saveScoreFetcher: new Fetcher(save),
-            },
-          };
-        }
-        // go to the next stage.
-        return {
-          ...state,
-          page: {
-            ...page,
-            stageIndex: page.stageIndex + 1,
-          },
-        };
-      }
-      break;
-    }
-    case "goToLevel": {
-      const { level } = action;
-      return {
-        ...state,
-        page: {
-          type: "levelLoading",
-          level,
-        },
-      };
-    }
-    case "stageLoaded": {
-      const { level, stages } = action;
-      return {
-        ...state,
-        page: {
-          type: "stage",
-          level,
-          stages,
-          stageIndex: 0,
-        },
-      };
-    }
-    case "goToTop": {
-      return {
-        ...state,
-        page: {
-          type: "levelSelect",
-          clearedLevelsFetcher: new Fetcher(getClearedLevels),
-        },
-      };
-    }
-  }
-  return state;
-};
-
-export const getInitialState = (options: {}): AppState => {
+const getInitialState = (): AppState => {
   const stageStore = new StageStore();
   return {
     stageStore,
@@ -143,3 +60,74 @@ export const getInitialState = (options: {}): AppState => {
     },
   };
 };
+
+export const {
+  useManagedState: useAppState,
+  useActions: useAppActions,
+} = generateStateManagenentTools({
+  getInitialState,
+  getActions: setState => ({
+    goToNext: () => {
+      setState(state => {
+        const { stageStore, page } = state;
+        if (page.type === "stage") {
+          const nextIndex = page.stageIndex + 1;
+          if (nextIndex >= levelMetadata[page.level].numberOfStages) {
+            // レベルクリア
+            const save = async () => {
+              await putClearedStages(page.level, page.stages);
+              await putClearedLevel(stageStore, page.level);
+            };
+            return {
+              ...state,
+              page: {
+                type: "complete",
+                level: page.level,
+                saveScoreFetcher: new Fetcher(save),
+              },
+            };
+          }
+          // go to the next stage.
+          return {
+            ...state,
+            page: {
+              ...page,
+              stageIndex: page.stageIndex + 1,
+            },
+          };
+        }
+        return state;
+      });
+    },
+    goToLevel: (level: Level) => {
+      setState(state => ({
+        ...state,
+        page: {
+          type: "levelLoading",
+          level,
+        },
+      }));
+    },
+    stageLoaded: (level: Level, stages: string[]) => {
+      setState(state => ({
+        ...state,
+        page: {
+          type: "stage",
+          level,
+          stages,
+          stageIndex: 0,
+        },
+      }));
+    },
+    goToTop: () => {
+      const clearedLevelsFetcher = new Fetcher(getClearedLevels);
+      setState(state => ({
+        ...state,
+        page: {
+          type: "levelSelect",
+          clearedLevelsFetcher,
+        },
+      }));
+    },
+  }),
+});

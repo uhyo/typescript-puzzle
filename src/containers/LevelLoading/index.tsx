@@ -1,7 +1,7 @@
-import { Dispatch, FC } from "react";
+import { FC } from "react";
 import { StageStore } from "~/dataStore/stages";
 import { Level } from "~/problems/levels";
-import { AppAction } from "../App/logic";
+import { useAppActions } from "../App/logic";
 import { loadLevel } from "./logic";
 
 /**
@@ -10,13 +10,9 @@ import { loadLevel } from "./logic";
 export const LevelLoading: FC<{
   stageStore: StageStore;
   level: Level;
-  dispatch: Dispatch<AppAction>;
-}> = ({ stageStore, level, dispatch }) => {
+}> = ({ stageStore, level }) => {
+  const { stageLoaded } = useAppActions();
   throw loadLevel(stageStore, level).then(stages => {
-    dispatch({
-      type: "stageLoaded",
-      level,
-      stages,
-    });
+    stageLoaded(level, stages);
   });
 };
