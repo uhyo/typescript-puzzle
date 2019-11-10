@@ -3,6 +3,7 @@ import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { putClearedStages } from "~/db/stage";
 import { Level, levelMetadata, levels } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
+import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
 
 export type AppState = {
@@ -55,8 +56,9 @@ const getInitialState = (): AppState => {
       type: "levelSelect",
       clearedLevelsFetcher: new Fetcher(getClearedLevels),
       */
-      type: "levelLoading",
+      type: "complete",
       level: levels[1],
+      saveScoreFetcher: new Fetcher(async () => {}),
     },
   };
 };
@@ -68,6 +70,7 @@ export const {
   getInitialState,
   getActions: setState => ({
     goToNext: () => {
+      const saveScoreCell = new FirstCell<Fetcher<void>>();
       setState(state => {
         const { stageStore, page } = state;
         if (page.type === "stage") {
@@ -83,7 +86,7 @@ export const {
               page: {
                 type: "complete",
                 level: page.level,
-                saveScoreFetcher: new Fetcher(save),
+                saveScoreFetcher: saveScoreCell.get(() => new Fetcher(save)),
               },
             };
           }

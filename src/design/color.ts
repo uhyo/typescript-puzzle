@@ -26,6 +26,16 @@ export const mainBackgroundColor = "#037acc";
 export const affirmativeBackgroundColor = "#27b850";
 
 /**
+ * Main Color for Text
+ */
+export const mainTextColor = "#037acc";
+
+/**
+ * Gray color for Text
+ */
+export const grayTextColor = "#888888";
+
+/**
  * Color of syntax kinds
  */
 export const syntaxColor = {
