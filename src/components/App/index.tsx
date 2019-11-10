@@ -6,6 +6,7 @@ import { LevelLoading } from "~/containers/LevelLoading";
 import { LevelSelect } from "~/containers/LevelSelect";
 import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
+import { mainBackgroundColor } from "~/design/color";
 import { uiFontFamily } from "~/design/font";
 import { phone } from "~/util/media";
 
@@ -57,23 +58,34 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const AppWrapper = styled.div`
+  display: flex;
+  flex-flow: nowrap column;
   box-sizing: border-box;
-  width: 600px;
+  width: 100%;
   height: 660px;
   ${phone`
       height: 100%;
     `}
   max-height: 100%;
-  max-width: 100%;
-  padding: 0 20px;
-  margin: 0 auto;
-
   font-family: ${uiFontFamily};
 `;
 
+const Header = styled.div`
+  flex: auto 1 1;
+  background-color: ${mainBackgroundColor};
+`;
+
+const Footer = styled.div`
+  flex: auto 1 1;
+`;
+
 export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
-  <AppWrapper>
-    <AppContent {...props} />
+  <>
+    <Header />
+    <AppWrapper>
+      <AppContent {...props} />
+    </AppWrapper>
+    <Footer />
     <GlobalStyle />
-  </AppWrapper>
+  </>
 );

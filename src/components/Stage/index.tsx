@@ -32,24 +32,26 @@ export const StageComponent: FC<{
   onQuitStage,
 }) => {
   return (
-    <Wrapper>
+    <>
       <StageHeader
         level={level}
         stageNumber={stageNumber}
         onQuitStage={onQuitStage}
       />
-      <ProblemDisplay
-        problem={problem}
-        answer={answer}
-        focus={focus}
-        backgroundState={answerCheck}
-      />
-      <OptionsDisplay options={options} />
-      <StageNavigation
-        answerIsCorrect={answerCheck === "correct"}
-        onNext={onNext}
-      />
-    </Wrapper>
+      <Wrapper>
+        <ProblemDisplay
+          problem={problem}
+          answer={answer}
+          focus={focus}
+          backgroundState={answerCheck}
+        />
+        <OptionsDisplay options={options} />
+        <StageNavigation
+          answerIsCorrect={answerCheck === "correct"}
+          onNext={onNext}
+        />
+      </Wrapper>
+    </>
   );
 };
 

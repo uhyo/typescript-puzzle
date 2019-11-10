@@ -2,6 +2,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FC } from "react";
 import styled from "styled-components";
+import { AppHeader } from "~/components/AppHeader";
 import { Level, levelMetadata } from "~/problems/levels";
 
 export const StageHeader: FC<{
@@ -18,7 +19,7 @@ export const StageHeader: FC<{
       }
     });
   return (
-    <Wrapper>
+    <Wrapper decorations>
       <LevelName>{name}</LevelName>
       <span>
         STAGE {stageNumber}/{numberOfStages}
@@ -30,11 +31,10 @@ export const StageHeader: FC<{
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled(AppHeader)`
   display: flex;
   flex-flow: nowrap row;
   font-size: 1.5rem;
-  padding-top: calc(5px + env(safe-area-inset-top, 0px));
 `;
 
 const LevelName = styled.span`
@@ -43,5 +43,6 @@ const LevelName = styled.span`
 `;
 
 const CloseButton = styled.button`
+  color: inherit;
   margin-left: 1.5em;
 `;
