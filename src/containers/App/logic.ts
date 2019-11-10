@@ -1,7 +1,7 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
-import { putClearedStages } from "~/db/stage";
-import { Level, levelMetadata, levels } from "~/problems/levels";
+import { getClearedStagesInLevel, putClearedStages } from "~/db/stage";
+import { Level, levelMetadata } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
@@ -45,6 +45,10 @@ export type AppPage =
        * Fetcher for saving score.
        */
       saveScoreFetcher: Fetcher<void>;
+      /**
+       * Fetcher for list of cleared stages in this level.
+       */
+      achivementFetcher: Fetcher<number>;
     };
 
 const getInitialState = (): AppState => {
@@ -52,13 +56,8 @@ const getInitialState = (): AppState => {
   return {
     stageStore,
     page: {
-      /*
       type: "levelSelect",
       clearedLevelsFetcher: new Fetcher(getClearedLevels),
-      */
-      type: "complete",
-      level: levels[1],
-      saveScoreFetcher: new Fetcher(async () => {}),
     },
   };
 };
@@ -71,6 +70,7 @@ export const {
   getActions: setState => ({
     goToNext: () => {
       const saveScoreCell = new FirstCell<Fetcher<void>>();
+      const achievementCell = new FirstCell<Fetcher<number>>();
       setState(state => {
         const { stageStore, page } = state;
         if (page.type === "stage") {
@@ -87,6 +87,14 @@ export const {
                 type: "complete",
                 level: page.level,
                 saveScoreFetcher: saveScoreCell.get(() => new Fetcher(save)),
+                achivementFetcher: achievementCell.get(
+                  () =>
+                    new Fetcher(async () => {
+                      const allStages = stageStore.getStagesInLevel(page.level);
+                      const docs = await getClearedStagesInLevel(page.level);
+                      return docs.length / allStages.length;
+                    }),
+                ),
               },
             };
           }

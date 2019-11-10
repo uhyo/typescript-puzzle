@@ -6,6 +6,7 @@ import { LevelDoc } from "~/db/level";
 import { mainBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
 import { Level, levelList, levelMetadata } from "~/problems/levels";
+import { Crown } from "../Crown";
 import { PageWrapper } from "../PageWrapper";
 
 export const LevelSelectComponent: FC<{
@@ -26,9 +27,9 @@ export const LevelSelectComponent: FC<{
           <LevelButton key={level} onClick={clickHandler}>
             {meta.name}
             {status === "completed" ? (
-              <Crown title="You solved all the problems in this level">
+              <CrownIcon title="You solved all the problems in this level">
                 <FontAwesomeIcon icon={faCrown} />
-              </Crown>
+              </CrownIcon>
             ) : status === "cleared" ? (
               <Check title="You cleared this level">
                 <FontAwesomeIcon icon={faCheck} />
@@ -63,11 +64,9 @@ const Check = styled.span`
   color: #55c41a;
 `;
 
-const Crown = styled.span`
+const CrownIcon = styled(Crown)`
   position: absolute;
   top: 0;
   right: 0;
   transform: scale(1.5) translateY(-45%) rotate(15deg);
-
-  color: #ffcc26;
 `;

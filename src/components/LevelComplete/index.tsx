@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useAppActions } from "~/containers/App/logic";
 import { grayTextColor, mainTextColor } from "~/design/color";
 import { Level, levelMetadata } from "~/problems/levels";
+import { Crown } from "../Crown";
 import { NavigationButton } from "../NavigationButton";
 import { PageWrapper } from "../PageWrapper";
 
@@ -11,14 +12,22 @@ import { PageWrapper } from "../PageWrapper";
  */
 export const LevelComplete: FC<{
   level: Level;
-}> = ({ level }) => {
+  achivement: number;
+}> = ({ level, achivement }) => {
   const [startTransition] = useTransition();
   const { goToTop } = useAppActions();
+
+  const achievementStr = (achivement * 100).toFixed(0);
   return (
     <Wrapper>
       <Body>
         <Title>Level Complete!</Title>
         <LevelName>{levelMetadata[level].name}</LevelName>
+        <Details>
+          <p>
+            Achievement: {achievementStr}%{achivement === 1 && <Crown />}
+          </p>
+        </Details>
       </Body>
       <NavigationButton
         onClick={() => {
@@ -54,4 +63,11 @@ const LevelName = styled.div`
   font-size: 2rem;
   text-align: center;
   color: ${mainTextColor};
+`;
+
+const Details = styled.div`
+  margin-top: 2em;
+  line-height: 1.5;
+  text-align: center;
+  color: ${grayTextColor};
 `;

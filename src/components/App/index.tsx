@@ -38,6 +38,7 @@ const AppContent: FC<{
         <LevelComplete
           level={page.level}
           saveScoreFetcher={page.saveScoreFetcher}
+          achivementFetcher={page.achivementFetcher}
         />
       );
     }

@@ -6,7 +6,9 @@ import { Fetcher } from "~/util/Fetcher";
 export const LevelComplete: FC<{
   level: Level;
   saveScoreFetcher: Fetcher<void>;
-}> = ({ level, saveScoreFetcher }) => {
+  achivementFetcher: Fetcher<number>;
+}> = ({ level, saveScoreFetcher, achivementFetcher }) => {
   saveScoreFetcher.get();
-  return <LevelCompleteComponent level={level} />;
+  const achivement = achivementFetcher.get();
+  return <LevelCompleteComponent level={level} achivement={achivement} />;
 };
