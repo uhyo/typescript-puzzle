@@ -3,19 +3,25 @@ import styled from "styled-components";
 import jigsawGreen from "~/assets/jigsaw-green.svg";
 import jigsawRed from "~/assets/jigsaw-red.svg";
 import { AnswerCheck } from "~/containers/Stage/check";
+import { useKeptValue } from "~/util/hooks/useKeptValue";
 
 export const BackGround: FC<{
   state?: AnswerCheck;
 }> = ({ state }) => {
+  const isDown = state !== undefined;
+  const color = useKeptValue(state, (prev, current) => {
+    return prev === undefined || current !== undefined;
+  });
   return (
-    <BackGroundMain state={state}>
-      <BackGroundBottom state={state} />
+    <BackGroundMain isDown={isDown} color={color}>
+      <BackGroundBottom color={color} />
     </BackGroundMain>
   );
 };
 
 const BackGroundMain = styled.div<{
-  state: AnswerCheck;
+  isDown: boolean;
+  color: AnswerCheck;
 }>`
   z-index: 0;
   position: absolute;
@@ -24,19 +30,17 @@ const BackGroundMain = styled.div<{
   width: 100%;
   height: 100%;
   background-color: ${props =>
-    props.state === "correct" ? "rgb(228, 255, 223)" : "rgb(255, 224, 223)"};
+    props.color === "correct" ? "rgb(228, 255, 223)" : "rgb(255, 224, 223)"};
   transform: ${props =>
-    props.state !== undefined
-      ? "translateY(0)"
-      : "translateY(calc(-100% - 120px))"};
+    props.isDown ? "translateY(0)" : "translateY(calc(-100% - 120px))"};
   transition: transform 450ms ease-out;
 `;
 
-const jigsawImage = (props: { state: AnswerCheck }) =>
-  props.state === "correct" ? jigsawGreen : jigsawRed;
+const jigsawImage = (props: { color: AnswerCheck }) =>
+  props.color === "correct" ? jigsawGreen : jigsawRed;
 
 const BackGroundBottom = styled.div<{
-  state: AnswerCheck;
+  color: AnswerCheck;
 }>`
   position: absolute;
   top: 100%;
