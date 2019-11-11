@@ -12,7 +12,11 @@ export const OpenHole: FC<{
   focused?: boolean;
   onClick?: () => void;
 }> = ({ focused, onClick }) => {
-  return <HoleSpan focused={!!focused} onClick={onClick} />;
+  return (
+    <HoleSpan focused={!!focused} onClick={onClick}>
+      <Invisible aria-hidden="true">x</Invisible>
+    </HoleSpan>
+  );
 };
 
 const HoleSpan = styled.span<{
@@ -24,8 +28,12 @@ const HoleSpan = styled.span<{
   border: 1px solid
     ${props => (props.focused ? mainBorderColor : "transparent")};
   width: 8ex;
-  height: 1.2em;
+  height: calc(1.2em + 8px);
   padding: 3px;
-  vertical-align: middle;
+  vertical-align: baseline;
   user-select: none;
+`;
+
+const Invisible = styled.span`
+  visibility: hidden;
 `;

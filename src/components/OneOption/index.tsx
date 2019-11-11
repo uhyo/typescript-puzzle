@@ -34,10 +34,11 @@ const OneOptionW = styled.code<{
   border: 1px solid
     ${props => (props.focused ? mainBorderColor : lightGrayBorderColor)};
   padding: 3px;
+  height: calc(1.2em + 8px);
   border-radius: ${smallRoundedBoxRadius};
   background-color: white;
   color: ${props => syntaxColor[props.type]};
-  vertical-align: middle;
+  vertical-align: baseline;
 
   cursor: pointer;
   user-select: none;
