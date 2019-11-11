@@ -1,4 +1,5 @@
 import level1 from "~/problems/level1";
+import level2 from "~/problems/level2";
 import { Level, levels } from "~/problems/levels";
 import { StageDefinition } from "~/problems/stageDefinition";
 
@@ -17,6 +18,7 @@ export class StageStore {
 
   constructor() {
     this.loadStages(levels[1], level1);
+    this.loadStages(levels[2], level2);
   }
 
   /**
