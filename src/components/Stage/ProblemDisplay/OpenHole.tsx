@@ -4,8 +4,8 @@ import {
   lightGrayBackgroundColor,
   mainBorderColor,
 } from "../../../design/color";
-import { smallRoundedBoxRadius } from "../../../design/length";
 import { ProblemHole } from "../../../problems/problemDefinition";
+import { Hole } from "../Hole";
 
 export const OpenHole: FC<{
   hole: ProblemHole;
@@ -19,19 +19,12 @@ export const OpenHole: FC<{
   );
 };
 
-const HoleSpan = styled.span<{
+const HoleSpan = styled(Hole)<{
   focused: boolean;
 }>`
-  display: inline-block;
-  background-color: ${lightGrayBackgroundColor};
-  border-radius: ${smallRoundedBoxRadius};
-  border: 1px solid
-    ${props => (props.focused ? mainBorderColor : "transparent")};
   width: 8ex;
-  height: calc(1.2em + 8px);
-  padding: 3px;
-  vertical-align: baseline;
-  user-select: none;
+  background-color: ${lightGrayBackgroundColor};
+  border-color: ${props => (props.focused ? mainBorderColor : "transparent")};
 `;
 
 const Invisible = styled.span`

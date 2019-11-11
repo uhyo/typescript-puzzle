@@ -53,6 +53,7 @@ const Wrapper = styled(PageWrapper)`
 const LevelButton = styled.button`
   position: relative;
   background-color: ${mainBackgroundColor};
+  margin-top: 2rem;
   padding: 8px;
   border-radius: ${largeRoundedBoxRadius};
   color: white;
