@@ -1,4 +1,4 @@
-import { typeOption } from "./options";
+import { typeOption, unionOption } from "./options";
 import { problem } from "./problemDefinition";
 import { typeHole, unionHole } from "./problemDefinition/hole";
 import { StageDefinition } from "./stageDefinition";
@@ -18,6 +18,7 @@ const stages: StageDefinition[] = [
       typeOption("string"),
       typeOption("number"),
       typeOption("boolean"),
+      unionOption(2),
     ],
   },
 ];

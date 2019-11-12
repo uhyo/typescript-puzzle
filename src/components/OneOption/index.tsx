@@ -1,36 +1,33 @@
 import React, { FC } from "react";
-import styled from "styled-components";
-import {
-  lightGrayBorderColor,
-  mainBorderColor,
-  syntaxColor,
-} from "../../design/color";
 import { Option } from "../../problems/options";
-import { Hole } from "../Stage/Hole";
+import { BlankHole } from "../Hole";
+import { OneOptionBase, TypeOption } from "./OneOptionBase";
 
 export const OneOption: FC<{
   option: Option;
   focused?: boolean;
   className?: string;
   onClick?: () => void;
-}> = ({ option, focused, className, onClick }) => (
-  <OneOptionW
-    className={className}
-    onClick={onClick}
-    type={option.type}
-    focused={!!focused}
-  >
-    {option.value}
-  </OneOptionW>
-);
-
-const OneOptionW = styled(Hole)<{
-  type: Option["type"];
-  focused: boolean;
-}>`
-  border-color: ${props =>
-    props.focused ? mainBorderColor : lightGrayBorderColor};
-  background-color: white;
-  color: ${props => syntaxColor[props.type]};
-  cursor: pointer;
-`;
+}> = ({ option, focused, className, onClick }) => {
+  switch (option.type) {
+    case "type": {
+      return (
+        <TypeOption
+          className={className}
+          onClick={onClick}
+          kind={option.kind}
+          focused={!!focused}
+        >
+          {option.value}
+        </TypeOption>
+      );
+    }
+    case "union": {
+      return (
+        <OneOptionBase onClick={onClick} focused={!!focused} openHeight>
+          <BlankHole short /> | <BlankHole short />
+        </OneOptionBase>
+      );
+    }
+  }
+};

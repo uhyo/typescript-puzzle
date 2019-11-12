@@ -39,5 +39,5 @@ export const grayTextColor = "#888888";
  * Color of syntax kinds
  */
 export const syntaxColor = {
-  type: "#438531",
+  primitive: "#438531",
 } as const;
