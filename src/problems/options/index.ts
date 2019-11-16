@@ -11,6 +11,25 @@ export type Option =
        */
       size: number;
     };
+
+/**
+ * Returns the name of (shallow) subholes in it.
+ */
+export function getSubHoles(option: Option, name: string): string[] {
+  switch (option.type) {
+    case "type": {
+      return [];
+    }
+    case "union": {
+      const result = [];
+      for (let i = 0; i < option.size; i++) {
+        result.push(`${name}.${i}`);
+      }
+      return result;
+    }
+  }
+}
+
 /**
  * Option which is a type.
  */

@@ -4,7 +4,7 @@ import { AnswerCheck } from "~/containers/Stage/check";
 import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { lightGrayBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
-import { sourceCodeFontFamily } from "../../../design/font";
+import { sourceCodeFontFamily, sourceCodeFontSize } from "../../../design/font";
 import { Problem } from "../../../problems/problemDefinition/problem";
 import { BackGround } from "../Background";
 import { FilledHole } from "./FilledHole";
@@ -100,6 +100,7 @@ const ProblemDisplayInner = styled.div`
   );
   line-height: 1.2;
   font-family: ${sourceCodeFontFamily};
+  font-size: ${sourceCodeFontSize};
   z-index: 1;
 `;
 

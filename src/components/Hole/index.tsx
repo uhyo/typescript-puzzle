@@ -1,7 +1,7 @@
 import React, { ComponentProps, FC } from "react";
 import styled from "styled-components";
 import { lightGrayBackgroundColor, mainBorderColor } from "~/design/color";
-import { sourceCodeFontFamily } from "~/design/font";
+import { sourceCodeFontFamily, sourceCodeFontSize } from "~/design/font";
 import { smallRoundedBoxRadius } from "~/design/length";
 
 /**
@@ -14,6 +14,7 @@ export const Hole = styled.span`
   height: calc(1.2em + 8px);
   padding: 3px;
   font-family: ${sourceCodeFontFamily};
+  font-size: ${sourceCodeFontSize};
   vertical-align: baseline;
   user-select: none;
 `;

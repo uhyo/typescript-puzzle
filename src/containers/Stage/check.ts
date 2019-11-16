@@ -1,6 +1,7 @@
 import { Option } from "~/problems/options";
 import { ProblemHole } from "~/problems/problemDefinition";
 import { Problem } from "~/problems/problemDefinition/problem";
+import { listHoles } from "./holes";
 import { AnswerState } from "./logic";
 
 export type AnswerCheck = "correct" | "wrong" | undefined;
@@ -11,11 +12,14 @@ export const checkAnswer = (
   problem: Problem,
   answer: AnswerState,
 ): AnswerCheck => {
+  // first, check whether all holes are filled.
+  if (listHoles(problem, answer).some(holeId => !answer[holeId])) {
+    return undefined;
+  }
   let correct = true;
   for (const [i, hole] of problem.holes.entries()) {
     const a = answer[i];
     if (!a) {
-      // this hole is not filled
       return undefined;
     }
     if (!holeMatchesAnswer(hole, a)) {
