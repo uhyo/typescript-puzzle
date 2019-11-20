@@ -4,7 +4,7 @@ import {
   mainBorderColor,
   syntaxColor,
 } from "~/design/color";
-import { Option } from "../../problems/options";
+import { OptionOfType } from "../../problems/options";
 import { Hole } from "../Hole";
 
 export const OneOptionBase = styled(Hole)<{
@@ -19,7 +19,7 @@ export const OneOptionBase = styled(Hole)<{
 `;
 
 export const TypeOption = styled(OneOptionBase)<{
-  kind: Extract<Option, { type: "type" }>["kind"];
+  kind: OptionOfType<"type">["kind"];
 }>`
   color: ${props => syntaxColor[props.kind]};
 `;

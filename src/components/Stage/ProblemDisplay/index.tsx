@@ -7,8 +7,7 @@ import { largeRoundedBoxRadius } from "~/design/length";
 import { sourceCodeFontFamily, sourceCodeFontSize } from "../../../design/font";
 import { Problem } from "../../../problems/problemDefinition/problem";
 import { BackGround } from "../Background";
-import { FilledHole } from "./FilledHole";
-import { OpenHole } from "./OpenHole";
+import { OneHole } from "./OneHole";
 
 interface Props {
   problem: Problem;
@@ -30,28 +29,17 @@ export const ProblemDisplay: FC<Props> = ({
   for (let i = 0; i <= holes.length; i++) {
     result.push(<Fragment key={`text-${i}`}>{texts[i]}</Fragment>);
     if (holes[i]) {
-      const a = answer[i];
       const holeId = String(i);
       const onClickHandler = () => holeSelect(holeId);
-      if (a) {
-        result.push(
-          <FilledHole
-            key={`filledhole-${i}`}
-            focused={holeId === focus}
-            content={a}
-            onClick={onClickHandler}
-          />,
-        );
-      } else {
-        result.push(
-          <OpenHole
-            key={`openhole-${i}`}
-            focused={holeId === focus}
-            hole={holes[i]}
-            onClick={onClickHandler}
-          />,
-        );
-      }
+      result.push(
+        <OneHole
+          key={`hole-${holeId}`}
+          focus={focus}
+          answer={answer}
+          holeId={holeId}
+          onClick={onClickHandler}
+        />,
+      );
     }
   }
   return (

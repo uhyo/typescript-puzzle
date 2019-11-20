@@ -1,33 +1,47 @@
 import React, { FC } from "react";
-import { Option } from "../../problems/options";
+import { Option, OptionOfType } from "../../problems/options";
 import { BlankHole } from "../Hole";
-import { OneOptionBase, TypeOption } from "./OneOptionBase";
+import { OneOptionBase, TypeOption as TypeOptionOrig } from "./OneOptionBase";
 
-export const OneOption: FC<{
-  option: Option;
+type OneOptionProps<T extends Option["type"]> = {
+  option: OptionOfType<T>;
   focused?: boolean;
   className?: string;
   onClick?: () => void;
-}> = ({ option, focused, className, onClick }) => {
-  switch (option.type) {
-    case "type": {
-      return (
-        <TypeOption
-          className={className}
-          onClick={onClick}
-          kind={option.kind}
-          focused={!!focused}
-        >
-          {option.value}
-        </TypeOption>
-      );
-    }
-    case "union": {
-      return (
-        <OneOptionBase onClick={onClick} focused={!!focused} openHeight>
-          <BlankHole short /> | <BlankHole short />
-        </OneOptionBase>
-      );
-    }
-  }
+};
+
+export const TypeOption: FC<OneOptionProps<"type">> = ({
+  option,
+  focused,
+  className,
+  onClick,
+}) => {
+  return (
+    <TypeOptionOrig
+      className={className}
+      onClick={onClick}
+      kind={option.kind}
+      focused={!!focused}
+    >
+      {option.value}
+    </TypeOptionOrig>
+  );
+};
+
+export const UnionOption: FC<OneOptionProps<"union">> = ({
+  option,
+  focused,
+  className,
+  onClick,
+}) => {
+  return (
+    <OneOptionBase
+      className={className}
+      onClick={onClick}
+      focused={!!focused}
+      openHeight
+    >
+      <BlankHole short /> | <BlankHole short />
+    </OneOptionBase>
+  );
 };

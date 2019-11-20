@@ -12,6 +12,11 @@ export type Option =
       size: number;
     };
 
+export type OptionOfType<T extends Option["type"]> = Extract<
+  Option,
+  { type: T }
+>;
+
 /**
  * Returns the name of (shallow) subholes in it.
  */
