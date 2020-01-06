@@ -37,7 +37,7 @@ export const ProblemDisplay: FC<Props> = ({
           focus={focus}
           answer={answer}
           holeId={holeId}
-          onClick={onClickHandler}
+          onHoleClick={onClickHandler}
         />,
       );
     }

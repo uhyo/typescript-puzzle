@@ -7,19 +7,33 @@ export const OneHole: FC<{
   answer: AnswerState;
   holeId: string;
   focus: string | undefined;
-  onClick?: () => void;
-}> = ({ answer, holeId, focus, onClick }) => {
+  onHoleClick?: (holeId: string) => void;
+}> = ({ answer, holeId, focus, onHoleClick }) => {
   const a = answer[holeId];
   const focused = holeId === focus;
   if (!a) {
-    return <OpenHole focused={focused} onClick={onClick} />;
+    return <OpenHole focused={focused} onClick={() => onHoleClick?.(holeId)} />;
   } else {
     switch (a.type) {
       case "type": {
-        return <TypeOption option={a} focused={focused} onClick={onClick} />;
+        return (
+          <TypeOption
+            option={a}
+            focused={focused}
+            holeId={holeId}
+            onHoleClick={onHoleClick}
+          />
+        );
       }
       case "union": {
-        return <UnionOption option={a} focused={focused} onClick={onClick} />;
+        return (
+          <UnionOption
+            option={a}
+            focused={focused}
+            holeId={holeId}
+            onHoleClick={onHoleClick}
+          />
+        );
       }
     }
   }

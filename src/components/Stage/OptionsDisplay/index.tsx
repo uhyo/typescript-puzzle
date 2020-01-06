@@ -8,15 +8,18 @@ export const OptionsDisplay: FC<{
   options: Option[];
 }> = ({ options }) => {
   const { selectOption } = useStageActions();
+  const onHoleClick = (holeId: string) => {
+    console.log(holeId);
+    selectOption(options[Number(holeId)]);
+  };
   return (
     <OptionsWrapper>
       {options.map((option, i) => (
         <OneOption
           key={i}
           option={option}
-          onClick={() => {
-            selectOption(option);
-          }}
+          holeId={String(i)}
+          onHoleClick={onHoleClick}
         />
       ))}
     </OptionsWrapper>
@@ -26,18 +29,29 @@ export const OptionsDisplay: FC<{
 const OneOptionInner: FC<{
   option: Option;
   className?: string;
-  onClick?: () => void;
-}> = ({ option, className, onClick }) => {
+  holeId: string;
+  onHoleClick?: (holeId: string) => void;
+}> = ({ option, className, holeId, onHoleClick }) => {
   // TODO: it's copy-pasted
   switch (option.type) {
     case "type": {
       return (
-        <TypeOption className={className} option={option} onClick={onClick} />
+        <TypeOption
+          className={className}
+          option={option}
+          holeId={holeId}
+          onHoleClick={onHoleClick}
+        />
       );
     }
     case "union": {
       return (
-        <UnionOption className={className} option={option} onClick={onClick} />
+        <UnionOption
+          className={className}
+          option={option}
+          holeId={holeId}
+          onHoleClick={onHoleClick}
+        />
       );
     }
   }

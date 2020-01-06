@@ -7,15 +7,18 @@ type OneOptionProps<T extends Option["type"]> = {
   option: OptionOfType<T>;
   focused?: boolean;
   className?: string;
-  onClick?: () => void;
+  holeId: string;
+  onHoleClick?: (holeId: string) => void;
 };
 
 export const TypeOption: FC<OneOptionProps<"type">> = ({
   option,
   focused,
   className,
-  onClick,
+  holeId,
+  onHoleClick,
 }) => {
+  const onClick = onHoleClick && (() => onHoleClick(holeId));
   return (
     <TypeOptionOrig
       className={className}
@@ -32,8 +35,10 @@ export const UnionOption: FC<OneOptionProps<"union">> = ({
   option,
   focused,
   className,
-  onClick,
+  holeId,
+  onHoleClick,
 }) => {
+  const onClick = onHoleClick && (() => onHoleClick(holeId));
   return (
     <OneOptionBase
       className={className}
