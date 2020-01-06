@@ -1,6 +1,6 @@
 import React, { FC } from "react";
+import { separateArrayWith } from "~/util/separateArrayWith";
 import { Option, OptionOfType } from "../../problems/options";
-import { BlankHole } from "../Hole";
 import { OneOptionBase, TypeOption as TypeOptionOrig } from "./OneOptionBase";
 
 type OneOptionProps<T extends Option["type"]> = {
@@ -37,6 +37,7 @@ export const UnionOption: FC<OneOptionProps<"union">> = ({
   className,
   holeId,
   onHoleClick,
+  children,
 }) => {
   const onClick = onHoleClick && (() => onHoleClick(holeId));
   return (
@@ -46,7 +47,7 @@ export const UnionOption: FC<OneOptionProps<"union">> = ({
       focused={!!focused}
       openHeight
     >
-      <BlankHole short /> | <BlankHole short />
+      {separateArrayWith(React.Children.toArray(children), " | ")}
     </OneOptionBase>
   );
 };

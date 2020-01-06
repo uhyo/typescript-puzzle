@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { BlankHole } from "~/components/Hole";
 import { TypeOption, UnionOption } from "~/components/OneOption";
 import { useStageActions } from "~/containers/Stage/logic";
 import { Option } from "~/problems/options";
@@ -51,7 +52,10 @@ const OneOptionInner: FC<{
           option={option}
           holeId={holeId}
           onHoleClick={onHoleClick}
-        />
+        >
+          <BlankHole short />
+          <BlankHole short />
+        </UnionOption>
       );
     }
   }
