@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import { range } from "~/util/range";
 import { BlankHole } from "./components/BlankHole";
 import { TypeHole } from "./components/TypeHole";
@@ -10,36 +10,19 @@ type Props = {
 };
 
 export const Hole: React.FC<Props> = ({ holeId }) => {
-  const { holeValues, onHoleClick, focus } = useContext(HoleContext);
+  const { holeValues, focus } = useContext(HoleContext);
   const value = holeValues[holeId];
   const isFocused = focus === holeId;
 
-  const holeClickHandler = useCallback(() => onHoleClick(holeId), [
-    holeId,
-    onHoleClick,
-  ]);
-
   if (value === undefined) {
-    return <BlankHole onClick={holeClickHandler} focused={isFocused} />;
+    return <BlankHole holeId={holeId} focused={isFocused} />;
   }
   switch (value.type) {
     case "type":
-      return (
-        <TypeHole
-          holeId={holeId}
-          value={value}
-          focused={isFocused}
-          onClick={holeClickHandler}
-        />
-      );
+      return <TypeHole holeId={holeId} value={value} focused={isFocused} />;
     case "union":
       return (
-        <UnionHole
-          value={value}
-          holeId={holeId}
-          focused={isFocused}
-          onClick={holeClickHandler}
-        >
+        <UnionHole value={value} holeId={holeId} focused={isFocused}>
           {range(0, value.size - 1).map(index => {
             const childHoleId = `${holeId}.${index}`;
             return <Hole key={childHoleId} holeId={childHoleId} />;

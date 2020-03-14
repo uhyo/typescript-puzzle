@@ -15,12 +15,11 @@ export const TypeHole: FC<OneHoleKindProps<"type">> = ({
   focused,
   className,
   holeId,
-  onClick,
 }) => {
   return (
     <TypeHoleStyle
+      data-holeid={holeId}
       className={className}
-      onClick={onClick}
       kind={option.kind}
       focused={!!focused}
     >

@@ -39,6 +39,7 @@ export const {
   getActions(setState) {
     return {
       holeSelect(holeId: string) {
+        console.log("holeSelect", holeId);
         setState(state => {
           if (state.answer[holeId]) {
             return {

@@ -15,11 +15,14 @@ const Invisible = styled.span`
   visibility: hidden;
 `;
 
+type Props = ComponentProps<typeof BlankHoleInner> & {
+  holeId: string;
+};
 /**
  * Render a blank hole.
  */
-export const BlankHole: FC<ComponentProps<typeof BlankHoleInner>> = props => (
-  <BlankHoleInner {...props}>
+export const BlankHole: FC<Props> = ({ holeId, ...props }) => (
+  <BlankHoleInner data-holeid={holeId} {...props}>
     <Invisible aria-hidden="true">x</Invisible>
   </BlankHoleInner>
 );

@@ -5,5 +5,4 @@ export type OneHoleKindProps<T extends HoleValue["type"]> = {
   focused?: boolean;
   className?: string;
   holeId: string;
-  onClick?: () => void;
 };

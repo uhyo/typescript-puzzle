@@ -1,5 +1,6 @@
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import styled from "styled-components";
+import { getInnermostHole } from "~/components/Hole/getInnermostHole";
 import { Hole } from "~/components/Hole/HoleContainer";
 import { HoleContext } from "~/components/Hole/HoleContext";
 import { useStageActions } from "~/containers/Stage/logic";
@@ -17,18 +18,25 @@ export const OptionsDisplay: FC<{
     }
     return {
       holeValues,
-      onHoleClick: (holeId: string) => {
+    };
+  }, [options, selectOption]);
+
+  const clickHandler = useCallback(
+    (e: React.SyntheticEvent) => {
+      const holeId = getInnermostHole(e.target as Node);
+      if (holeId) {
         console.log(holeId);
         // child hole could be selected, so convert e.g. "3.0" to "3"
         const selectedHoleId = parseInt(holeId, 10);
         selectOption(options[selectedHoleId]);
-      },
-    };
-  }, [options, selectOption]);
+      }
+    },
+    [selectOption],
+  );
 
   return (
     <HoleContext.Provider value={holeContextValue}>
-      <OptionsWrapper>
+      <OptionsWrapper onClick={clickHandler}>
         {options.map((option, i) => (
           <Hole key={i} holeId={String(i)} />
         ))}

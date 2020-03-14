@@ -4,15 +4,15 @@ import { OneHoleKindProps } from "./OneHoleKindProps";
 import { OneOptionBase } from "./OneOptionBase";
 
 export const UnionHole: FC<OneHoleKindProps<"union">> = ({
+  holeId,
   focused,
   className,
-  onClick,
   children,
 }) => {
   return (
     <OneOptionBase
+      data-holeid={holeId}
       className={className}
-      onClick={onClick}
       focused={!!focused}
       openHeight
     >

@@ -1,5 +1,6 @@
-import React, { FC, Fragment, useMemo } from "react";
+import React, { FC, Fragment, useCallback, useMemo } from "react";
 import styled from "styled-components";
+import { getInnermostHole } from "~/components/Hole/getInnermostHole";
 import { Hole } from "~/components/Hole/HoleContainer";
 import { HoleContext } from "~/components/Hole/HoleContext";
 import { AnswerCheck } from "~/containers/Stage/check";
@@ -28,10 +29,19 @@ export const ProblemDisplay: FC<Props> = ({
   const holeContextValue = useMemo(
     () => ({
       holeValues: answer,
-      onHoleClick: holeSelect,
       focus,
     }),
-    [answer, holeSelect, focus],
+    [answer, focus],
+  );
+
+  const clickHandler = useCallback(
+    (e: React.SyntheticEvent) => {
+      const holeId = getInnermostHole(e.target as Node);
+      if (holeId) {
+        holeSelect(holeId);
+      }
+    },
+    [holeSelect],
   );
 
   const { holes, texts } = problem;
@@ -49,7 +59,7 @@ export const ProblemDisplay: FC<Props> = ({
         <Container>
           <BackGround state={backgroundState} />
           <ProblemDisplayInner>
-            <ProblemProgram>{result}</ProblemProgram>
+            <ProblemProgram onClick={clickHandler}>{result}</ProblemProgram>
           </ProblemDisplayInner>
         </Container>
       </ProblemDisplayWrapper>
