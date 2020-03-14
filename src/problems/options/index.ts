@@ -1,4 +1,4 @@
-export type Option =
+export type HoleValue =
   | {
       type: "type";
       kind: "primitive";
@@ -12,15 +12,15 @@ export type Option =
       size: number;
     };
 
-export type OptionOfType<T extends Option["type"]> = Extract<
-  Option,
+export type HoleValueOfType<T extends HoleValue["type"]> = Extract<
+  HoleValue,
   { type: T }
 >;
 
 /**
  * Returns the name of (shallow) subholes in it.
  */
-export function getSubHoles(option: Option, name: string): string[] {
+export function getSubHoles(option: HoleValue, name: string): string[] {
   switch (option.type) {
     case "type": {
       return [];
@@ -38,7 +38,7 @@ export function getSubHoles(option: Option, name: string): string[] {
 /**
  * Option which is a type.
  */
-export const typeOption = (value: string): Option => ({
+export const typeOption = (value: string): HoleValue => ({
   type: "type",
   kind: "primitive",
   value,
@@ -47,7 +47,7 @@ export const typeOption = (value: string): Option => ({
 /**
  * Option which is a union.
  */
-export const unionOption = (size: number): Option => ({
+export const unionOption = (size: number): HoleValue => ({
   type: "union",
   size,
 });

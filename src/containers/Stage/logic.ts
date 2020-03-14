@@ -1,4 +1,4 @@
-import { Option } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { generateStateManagenentTools } from "~/util/states";
 import { AnswerState, setHoleContent } from "./answer";
@@ -17,7 +17,7 @@ export type StageAction =
     }
   | {
       type: "selectOption";
-      option: Option;
+      option: HoleValue;
     };
 
 type InitialStateParams = {
@@ -60,7 +60,7 @@ export const {
           }
         });
       },
-      selectOption(option: Option) {
+      selectOption(option: HoleValue) {
         setState(state => {
           const { focus, problem } = state;
           if (focus === undefined) {

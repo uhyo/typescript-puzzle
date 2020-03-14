@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { AnswerCheck } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/problems/levels";
-import { Option } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { PageWrapper } from "../PageWrapper";
 import { OptionsDisplay } from "./OptionsDisplay";
@@ -14,7 +14,7 @@ export const StageComponent: FC<{
   level: Level;
   stageNumber: number;
   problem: Problem;
-  options: Option[];
+  options: HoleValue[];
   answer: AnswerState;
   focus: string | undefined;
   answerCheck: AnswerCheck;

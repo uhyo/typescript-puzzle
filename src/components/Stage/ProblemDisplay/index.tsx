@@ -1,5 +1,7 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useMemo } from "react";
 import styled from "styled-components";
+import { Hole } from "~/components/Hole/HoleContainer";
+import { HoleContext } from "~/components/Hole/HoleContext";
 import { AnswerCheck } from "~/containers/Stage/check";
 import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { lightGrayBackgroundColor } from "~/design/color";
@@ -7,7 +9,6 @@ import { largeRoundedBoxRadius } from "~/design/length";
 import { sourceCodeFontFamily, sourceCodeFontSize } from "../../../design/font";
 import { Problem } from "../../../problems/problemDefinition/problem";
 import { BackGround } from "../Background";
-import { OneHole } from "./OneHole";
 
 interface Props {
   problem: Problem;
@@ -24,33 +25,35 @@ export const ProblemDisplay: FC<Props> = ({
 }) => {
   const { holeSelect } = useStageActions();
 
+  const holeContextValue = useMemo(
+    () => ({
+      holeValues: answer,
+      onHoleClick: holeSelect,
+      focus,
+    }),
+    [answer, holeSelect, focus],
+  );
+
   const { holes, texts } = problem;
   const result: React.ReactChild[] = [];
   for (let i = 0; i <= holes.length; i++) {
     result.push(<Fragment key={`text-${i}`}>{texts[i]}</Fragment>);
     if (holes[i]) {
       const holeId = String(i);
-      const onClickHandler = () => holeSelect(holeId);
-      result.push(
-        <OneHole
-          key={`hole-${holeId}`}
-          focus={focus}
-          answer={answer}
-          holeId={holeId}
-          onHoleClick={onClickHandler}
-        />,
-      );
+      result.push(<Hole key={`hole-${holeId}`} holeId={holeId} />);
     }
   }
   return (
-    <ProblemDisplayWrapper>
-      <Container>
-        <BackGround state={backgroundState} />
-        <ProblemDisplayInner>
-          <ProblemProgram>{result}</ProblemProgram>
-        </ProblemDisplayInner>
-      </Container>
-    </ProblemDisplayWrapper>
+    <HoleContext.Provider value={holeContextValue}>
+      <ProblemDisplayWrapper>
+        <Container>
+          <BackGround state={backgroundState} />
+          <ProblemDisplayInner>
+            <ProblemProgram>{result}</ProblemProgram>
+          </ProblemDisplayInner>
+        </Container>
+      </ProblemDisplayWrapper>
+    </HoleContext.Provider>
   );
 };
 

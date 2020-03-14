@@ -1,3 +1,3 @@
-import { Option } from "../options";
+import { HoleValue } from "../options";
 
-export type CorrectAnswer = Partial<Record<string, Option>>;
+export type CorrectAnswer = Partial<Record<string, HoleValue>>;

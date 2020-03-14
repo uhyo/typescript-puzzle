@@ -1,4 +1,4 @@
-import { Option } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
 import { ProblemHole } from "~/problems/problemDefinition";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { listHoles } from "./holes";
@@ -29,7 +29,10 @@ export const checkAnswer = (
   return correct ? "correct" : "wrong";
 };
 
-const holeMatchesAnswer = (hole: ProblemHole, answer: Option | undefined) => {
+const holeMatchesAnswer = (
+  hole: ProblemHole,
+  answer: HoleValue | undefined,
+) => {
   switch (hole.type) {
     case "type": {
       return answer?.type === "type" && hole.answer === answer.value;

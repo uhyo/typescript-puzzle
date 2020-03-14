@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useMemo, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
-import { Option } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { useAppActions } from "../App/logic";
 import { checkAnswer } from "./check";
@@ -11,7 +11,7 @@ export const Stage: FC<{
   level: Level;
   stageNumber: number;
   problem: Problem;
-  options: Option[];
+  options: HoleValue[];
 }> = ({ level, stageNumber, problem, options }) => {
   const [{ answer, focus }, Provider] = useStageState({ problem });
   const [startTransition] = useTransition();

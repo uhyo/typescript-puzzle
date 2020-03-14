@@ -1,68 +1,40 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import styled from "styled-components";
-import { BlankHole } from "~/components/Hole";
-import { TypeOption, UnionOption } from "~/components/OneOption";
+import { Hole } from "~/components/Hole/HoleContainer";
+import { HoleContext } from "~/components/Hole/HoleContext";
 import { useStageActions } from "~/containers/Stage/logic";
-import { Option } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
 
 export const OptionsDisplay: FC<{
-  options: Option[];
+  options: HoleValue[];
 }> = ({ options }) => {
   const { selectOption } = useStageActions();
-  const onHoleClick = (holeId: string) => {
-    console.log(holeId);
-    selectOption(options[Number(holeId)]);
-  };
+
+  const holeContextValue = useMemo(() => {
+    const holeValues: { [holeId in string]?: HoleValue } = {};
+    for (const [holeId, value] of options.entries()) {
+      holeValues[holeId] = value;
+    }
+    return {
+      holeValues,
+      onHoleClick: (holeId: string) => {
+        console.log(holeId);
+        // child hole could be selected, so convert e.g. "3.0" to "3"
+        const selectedHoleId = parseInt(holeId, 10);
+        selectOption(options[selectedHoleId]);
+      },
+    };
+  }, [options, selectOption]);
+
   return (
-    <OptionsWrapper>
-      {options.map((option, i) => (
-        <OneOption
-          key={i}
-          option={option}
-          holeId={String(i)}
-          onHoleClick={onHoleClick}
-        />
-      ))}
-    </OptionsWrapper>
+    <HoleContext.Provider value={holeContextValue}>
+      <OptionsWrapper>
+        {options.map((option, i) => (
+          <Hole key={i} holeId={String(i)} />
+        ))}
+      </OptionsWrapper>
+    </HoleContext.Provider>
   );
 };
 
-const OneOptionInner: FC<{
-  option: Option;
-  className?: string;
-  holeId: string;
-  onHoleClick?: (holeId: string) => void;
-}> = ({ option, className, holeId, onHoleClick }) => {
-  // TODO: it's copy-pasted
-  switch (option.type) {
-    case "type": {
-      return (
-        <TypeOption
-          className={className}
-          option={option}
-          holeId={holeId}
-          onHoleClick={onHoleClick}
-        />
-      );
-    }
-    case "union": {
-      return (
-        <UnionOption
-          className={className}
-          option={option}
-          holeId={holeId}
-          onHoleClick={onHoleClick}
-        >
-          <BlankHole short />
-          <BlankHole short />
-        </UnionOption>
-      );
-    }
-  }
-};
-
 const OptionsWrapper = styled.div``;
-
-const OneOption = styled(OneOptionInner)`
-  margin: 3px 0.5ex;
-`;
