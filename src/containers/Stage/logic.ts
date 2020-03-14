@@ -44,7 +44,12 @@ export const {
           if (state.answer[holeId]) {
             return {
               ...state,
-              answer: setHoleContent(state.answer, holeId, undefined),
+              answer: setHoleContent(
+                state.problem,
+                state.answer,
+                holeId,
+                undefined,
+              ),
               focus: holeId,
             };
           }
@@ -69,7 +74,7 @@ export const {
           }
           return {
             ...state,
-            answer: setHoleContent(state.answer, focus, option),
+            answer: setHoleContent(state.problem, state.answer, focus, option),
             focus: getNextFocus(problem, focus),
           };
         });
