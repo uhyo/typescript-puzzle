@@ -1,8 +1,8 @@
 import React, { FC, useCallback, useMemo } from "react";
 import styled from "styled-components";
-import { getInnermostHole } from "~/components/Hole/getInnermostHole";
-import { Hole } from "~/components/Hole/HoleContainer";
-import { HoleContext } from "~/components/Hole/HoleContext";
+import { getInnermostHole } from "~/containers/Hole/getInnermostHole";
+import { Hole } from "~/containers/Hole/HoleContainer";
+import { HoleContext } from "~/containers/Hole/HoleContext";
 import { useStageActions } from "~/containers/Stage/logic";
 import { HoleValue } from "~/problems/options";
 
