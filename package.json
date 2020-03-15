@@ -16,7 +16,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
-    "comlink": "^4.2.0",
+    "comlink-loader": "^2.0.0",
     "react": "0.0.0-experimental-38dd17ab9",
     "react-dom": "0.0.0-experimental-38dd17ab9",
     "styled-components": "^4.4.1"
@@ -38,8 +38,7 @@
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0",
-    "worker-loader": "^2.0.0"
+    "webpack-dev-server": "^3.9.0"
   },
   "husky": {
     "hooks": {
