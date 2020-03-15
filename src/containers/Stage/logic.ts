@@ -1,13 +1,20 @@
 import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
+import { RemoteCompiler } from "~/ts-compiler";
+import { Fetcher } from "~/util/Fetcher";
 import { generateStateManagenentTools } from "~/util/states";
 import { AnswerState, setHoleContent } from "./answer";
 import { getInitialFocus, getNextFocus } from "./focus";
+
+export type CheckState = {
+  status: boolean;
+};
 
 export type StageState = {
   readonly problem: Problem;
   readonly answer: AnswerState;
   readonly focus: string | undefined;
+  readonly check?: Fetcher<CheckState>;
 };
 
 export type StageAction =
@@ -22,6 +29,7 @@ export type StageAction =
 
 type InitialStateParams = {
   problem: Problem;
+  remoteCompiler: RemoteCompiler;
 };
 export const getInitialState = ({
   problem,
