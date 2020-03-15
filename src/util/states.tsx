@@ -12,7 +12,7 @@ type SetStateFunction<State> = (updater: StateUpdater<State>) => void;
 
 interface GenerateStateManagementToolsOptions<State, I, Actions> {
   getInitialState: (option: I) => State;
-  getActions: (setState: SetStateFunction<State>) => Actions;
+  getActions: (setState: SetStateFunction<State>, option: I) => Actions;
 }
 
 type ManagedState<State> = [State, FC];
@@ -36,14 +36,28 @@ export function generateStateManagenentTools<State, I, Actions>({
   I,
   Actions
 >): StateManagementTools<State, I, Actions> {
-  const Context = createContext<SetStateFunction<State>>(() => {});
+  type ContextValue = {
+    setState: SetStateFunction<State>;
+    actions: Actions;
+  };
+  const Context = createContext<ContextValue>({
+    setState() {},
+    actions: (undefined as unknown) as Actions,
+  });
 
   const useManagedState = ((initArg: I) => {
     const [state, setState] = useState<State>(() => getInitialState(initArg));
+    const contextValue = useMemo<ContextValue>(() => {
+      const actions = getActions(setState, initArg);
+      return {
+        setState,
+        actions,
+      };
+    }, []);
 
     const Provider = useCallback<FC>(
       ({ children }) => (
-        <Context.Provider value={setState}>{children}</Context.Provider>
+        <Context.Provider value={contextValue}>{children}</Context.Provider>
       ),
       [setState],
     );
@@ -52,8 +66,7 @@ export function generateStateManagenentTools<State, I, Actions>({
   }) as UseManagedState<State, I>;
 
   const useActions = () => {
-    const setState = useContext(Context);
-    const actions = useMemo(() => getActions(setState), [setState]);
+    const { actions } = useContext(Context);
     return actions;
   };
 
