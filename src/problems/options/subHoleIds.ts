@@ -1,18 +1,12 @@
-import { HoleValue } from ".";
+import { holeDefs, HoleValue } from ".";
+import { getSubHoleId } from "./getSubHoleId";
 
 /**
  * Generates IDs of subholes.
+ * @deprecated
  */
 export function* subHoleIds(holeId: string, value: HoleValue) {
-  switch (value.type) {
-    case "type": {
-      return;
-    }
-    case "union": {
-      for (let i = 0; i < value.size; i++) {
-        yield `${holeId}.${i}`;
-      }
-      return;
-    }
+  for (const sub of holeDefs[value.type].subHoleIds(value as any)) {
+    yield getSubHoleId(holeId, sub);
   }
 }

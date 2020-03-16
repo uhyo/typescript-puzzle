@@ -1,9 +1,10 @@
 import React, { FC } from "react";
-import { AnswerCheck } from "~/containers/Stage/check";
+import { CheckState } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/problems/levels";
 import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
+import { Fetcher } from "~/util/Fetcher";
 import { PageWrapper } from "../PageWrapper";
 import { OptionsDisplay } from "./OptionsDisplay";
 import { ProblemDisplay } from "./ProblemDisplay";
@@ -17,7 +18,7 @@ export const StageComponent: FC<{
   options: HoleValue[];
   answer: AnswerState;
   focus: string | undefined;
-  answerCheck: AnswerCheck;
+  check?: Fetcher<CheckState>;
   onNext?: () => void;
   onQuitStage?: () => void;
 }> = ({
@@ -27,10 +28,11 @@ export const StageComponent: FC<{
   options,
   answer,
   focus,
-  answerCheck,
+  check,
   onNext,
   onQuitStage,
 }) => {
+  const checkState = check?.get();
   return (
     <>
       <StageHeader
@@ -43,11 +45,11 @@ export const StageComponent: FC<{
           problem={problem}
           answer={answer}
           focus={focus}
-          backgroundState={answerCheck}
+          backgroundState={checkState}
         />
         <OptionsDisplay options={options} />
         <StageNavigation
-          answerIsCorrect={answerCheck === "correct"}
+          answerIsCorrect={!!checkState?.status}
           onNext={onNext}
         />
       </Wrapper>

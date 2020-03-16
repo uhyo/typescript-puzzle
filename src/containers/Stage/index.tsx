@@ -1,11 +1,10 @@
-import React, { FC, useCallback, useMemo, useTransition } from "react";
+import React, { FC, useCallback, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
 import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { RemoteCompiler } from "~/ts-compiler";
 import { useAppActions } from "../App/logic";
-import { checkAnswer } from "./check";
 import { useStageState } from "./logic";
 
 export const Stage: FC<{
@@ -15,17 +14,12 @@ export const Stage: FC<{
   problem: Problem;
   options: HoleValue[];
 }> = ({ compiler, level, stageNumber, problem, options }) => {
-  const [{ answer, focus }, Provider] = useStageState({
+  const [{ answer, focus, check }, Provider] = useStageState({
     problem,
     remoteCompiler: compiler,
   });
   const [startTransition] = useTransition();
   const { goToNext, goToTop } = useAppActions();
-
-  const answerCheck = useMemo(() => checkAnswer(problem, answer), [
-    problem,
-    answer,
-  ]);
 
   const goToNext2 = useCallback(() => {
     startTransition(() => {
@@ -48,7 +42,7 @@ export const Stage: FC<{
         options={options}
         answer={answer}
         focus={focus}
-        answerCheck={answerCheck}
+        check={check}
         onNext={goToNext2}
         onQuitStage={quitStage}
       />

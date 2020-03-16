@@ -4,11 +4,8 @@ import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { generateStateManagenentTools } from "~/util/states";
 import { AnswerState, setHoleContent } from "./answer";
+import { CheckState } from "./check";
 import { getInitialFocus, getNextFocus } from "./focus";
-
-export type CheckState = {
-  status: boolean;
-};
 
 export type StageState = {
   readonly problem: Problem;

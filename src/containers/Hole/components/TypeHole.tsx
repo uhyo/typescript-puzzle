@@ -1,16 +1,13 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { syntaxColor } from "~/design/color";
-import { HoleValueOfType } from "~/problems/options";
 import { OneHoleKindProps } from "./OneHoleKindProps";
 import { OneOptionBase } from "./OneOptionBase";
 
-const TypeHoleStyle = styled(OneOptionBase)<{
-  kind: HoleValueOfType<"type">["kind"];
-}>`
-  color: ${props => syntaxColor[props.kind]};
+const TypeHoleStyle = styled(OneOptionBase)`
+  color: ${syntaxColor.primitive};
 `;
-export const TypeHole: FC<OneHoleKindProps<"type">> = ({
+export const TypeHole: FC<OneHoleKindProps<"primitive">> = ({
   value: option,
   focused,
   className,
@@ -20,7 +17,6 @@ export const TypeHole: FC<OneHoleKindProps<"type">> = ({
     <TypeHoleStyle
       data-holeid={holeId}
       className={className}
-      kind={option.kind}
       focused={!!focused}
     >
       {option.value}

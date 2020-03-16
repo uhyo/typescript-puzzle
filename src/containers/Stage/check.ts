@@ -1,41 +1,64 @@
-import { HoleValue } from "~/problems/options";
-import { ProblemHole } from "~/problems/problemDefinition";
+import { holeDefs, HoleValue } from "~/problems/options";
+import { getSubHoleId } from "~/problems/options/getSubHoleId";
 import { Problem } from "~/problems/problemDefinition/problem";
-import { listHoles } from "./holes";
+import { RemoteCompiler } from "~/ts-compiler";
+import { Fetcher } from "~/util/Fetcher";
+import { allHoleIds } from "./holes";
 import { AnswerState } from "./logic";
 
-export type AnswerCheck = "correct" | "wrong" | undefined;
+export type CheckState = {
+  status: boolean;
+};
+
 /**
  * Check whether given answer is correct.
  */
 export const checkAnswer = (
   problem: Problem,
   answer: AnswerState,
-): AnswerCheck => {
+  compiler: RemoteCompiler,
+): Fetcher<CheckState> | undefined => {
   // first, check whether all holes are filled.
-  if (listHoles(problem, answer).some(holeId => !answer[holeId])) {
+  const holes = Array.from(allHoleIds(problem, answer));
+  if (holes.some(holeId => !answer[holeId])) {
     return undefined;
   }
-  let correct = true;
-  for (const [i, hole] of problem.holes.entries()) {
-    const a = answer[i];
-    if (!a) {
-      return undefined;
-    }
-    if (!holeMatchesAnswer(hole, a)) {
-      correct = false;
-    }
-  }
-  return correct ? "correct" : "wrong";
+  const sourceText = getSourceText(problem, answer);
+  return new Fetcher(async () => {
+    const diagnostics = await compiler.getDiagnostics(sourceText);
+    return {
+      status: diagnostics.length > 0,
+    };
+  });
 };
 
-const holeMatchesAnswer = (
-  hole: ProblemHole,
-  answer: HoleValue | undefined,
-) => {
-  switch (hole.type) {
-    case "type": {
-      return answer?.type === "type" && hole.answer === answer.value;
+const getSourceText = (problem: Problem, answer: AnswerState) => {
+  let result = "";
+  for (let i = 0; i < problem.texts.length; i++) {
+    result += problem.texts[i] || "";
+    const holeId = String(i);
+    const hole = answer[holeId];
+    if (hole) {
+      result += sourceTextOfHole(String(i), hole);
     }
   }
+  return result;
+  function sourceTextOfHole(holeId: string, hole: HoleValue): string {
+    return holeDefs[hole.type].toSourceText(hole as any, sub => {
+      const subHoleId = getSubHoleId(holeId, sub);
+      const subHole = answer[subHoleId];
+      return subHole ? sourceTextOfHole(subHoleId, subHole) : "";
+    });
+  }
 };
+
+// const holeMatchesAnswer = (
+//   hole: ProblemHole,
+//   answer: HoleValue | undefined,
+// ) => {
+//   switch (hole.type) {
+//     case "type": {
+//       return answer?.type === "type" && hole.answer === answer.value;
+//     }
+//   }
+// };
