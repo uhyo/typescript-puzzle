@@ -2,9 +2,10 @@ import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
+import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
 import { AnswerState, setHoleContent } from "./answer";
-import { CheckState } from "./check";
+import { checkAnswer, CheckState } from "./check";
 import { getInitialFocus, getNextFocus } from "./focus";
 
 export type StageState = {
@@ -41,10 +42,9 @@ export const {
   useActions: useStageActions,
 } = generateStateManagenentTools({
   getInitialState,
-  getActions(setState) {
+  getActions(setState, init) {
     return {
       holeSelect(holeId: string) {
-        console.log("holeSelect", holeId);
         setState(state => {
           if (state.answer[holeId]) {
             return {
@@ -56,6 +56,7 @@ export const {
                 undefined,
               ),
               focus: holeId,
+              check: undefined,
             };
           }
           if (state.focus === holeId) {
@@ -72,15 +73,27 @@ export const {
         });
       },
       selectOption(option: HoleValue) {
+        const checkResultCell = new FirstCell<
+          Fetcher<CheckState> | undefined
+        >();
         setState(state => {
           const { focus, problem } = state;
           if (focus === undefined) {
             return state;
           }
+          const answer = setHoleContent(
+            state.problem,
+            state.answer,
+            focus,
+            option,
+          );
           return {
             ...state,
-            answer: setHoleContent(state.problem, state.answer, focus, option),
+            answer,
             focus: getNextFocus(problem, focus),
+            check: checkResultCell.get(() =>
+              checkAnswer(state.problem, answer, init.remoteCompiler),
+            ),
           };
         });
       },

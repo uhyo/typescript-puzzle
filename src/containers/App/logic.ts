@@ -126,11 +126,12 @@ export const {
       }));
     },
     stageLoaded: (level: Level, stages: string[]) => {
+      const compilerCell = new FirstCell<RemoteCompiler>();
       setState(state => ({
         ...state,
         page: {
           type: "stage",
-          compiler: new RemoteCompiler(),
+          compiler: compilerCell.get(() => new RemoteCompiler()),
           level,
           stages,
           stageIndex: 0,
