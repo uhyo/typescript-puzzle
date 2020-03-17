@@ -1,4 +1,5 @@
 import ts from "typescript";
+import { defaultLibFileName, getLibContent } from "./lib";
 
 const srcFileName = "/src/index.ts";
 let program: ts.Program | undefined;
@@ -14,10 +15,19 @@ const host: ts.CompilerHost = {
     return sourceText;
   },
   getSourceFile(fileName, languageVersion) {
-    return ts.createSourceFile(fileName, sourceText, languageVersion);
+    console.log("getSourceFile", fileName);
+    if (fileName === srcFileName) {
+      return ts.createSourceFile(fileName, sourceText, languageVersion);
+    } else {
+      return ts.createSourceFile(
+        fileName,
+        getLibContent(fileName),
+        languageVersion,
+      );
+    }
   },
   getDefaultLibFileName() {
-    return "lib.d.ts";
+    return defaultLibFileName;
   },
   writeFile() {},
   getCurrentDirectory() {
@@ -39,11 +49,15 @@ const host: ts.CompilerHost = {
  */
 export const getDiagnostics = (source: string) => {
   sourceText = source;
+  console.log("got sourceText:", source);
   program = ts.createProgram({
     rootNames: [srcFileName],
     options: {},
     host,
     oldProgram: program,
   });
-  return ts.getPreEmitDiagnostics(program);
+  console.log("program:", program);
+  const diagnostics = ts.getPreEmitDiagnostics(program);
+  console.log(diagnostics);
+  return diagnostics;
 };

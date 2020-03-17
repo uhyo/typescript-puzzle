@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode development",
-    "build:production": "webpack --mode production",
+    "build": "npm run build:generateTypeScriptLib && npm run build:webpack",
+    "build:generateTypeScriptLib": "node scripts/generateTypeScriptLib.js",
+    "build:webpack": "webpack --mode development",
     "watch": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

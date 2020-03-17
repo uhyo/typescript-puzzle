@@ -27,7 +27,7 @@ export const checkAnswer = (
   return new Fetcher(async () => {
     const diagnostics = await compiler.getDiagnostics(sourceText);
     return {
-      status: diagnostics.length > 0,
+      status: diagnostics.length === 0,
     };
   });
 };

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useTransition } from "react";
+import React, { FC, useCallback, useEffect, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
 import { HoleValue } from "~/problems/options";
@@ -20,6 +20,11 @@ export const Stage: FC<{
   });
   const [startTransition] = useTransition();
   const { goToNext, goToTop } = useAppActions();
+
+  console.log("rerendered");
+  useEffect(() => {
+    console.log("renren");
+  });
 
   const goToNext2 = useCallback(() => {
     startTransition(() => {
