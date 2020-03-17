@@ -4,6 +4,7 @@ import { getInnermostHole } from "~/containers/Hole/getInnermostHole";
 import { Hole } from "~/containers/Hole/HoleContainer";
 import { HoleContext } from "~/containers/Hole/HoleContext";
 import { useStageActions } from "~/containers/Stage/logic";
+import { gapBetweenTappable } from "~/design/length";
 import { HoleValue } from "~/problems/options";
 
 export const OptionsDisplay: FC<{
@@ -41,11 +42,21 @@ export const OptionsDisplay: FC<{
     <HoleContext.Provider value={holeContextValue}>
       <OptionsWrapper onClick={clickHandler}>
         {options.map((option, i) => (
-          <Hole key={i} holeId={String(i)} />
+          <li key={i}>
+            <Hole holeId={String(i)} />
+          </li>
         ))}
       </OptionsWrapper>
     </HoleContext.Provider>
   );
 };
 
-const OptionsWrapper = styled.div``;
+const OptionsWrapper = styled.ul`
+  display: flex;
+  flex-flow: row wrap;
+  list-style-type: none;
+
+  & > li {
+    margin: ${gapBetweenTappable};
+  }
+`;
