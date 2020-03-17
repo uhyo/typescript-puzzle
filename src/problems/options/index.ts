@@ -25,13 +25,43 @@ type Aux_GetHoleDefiniton<T, AHD = AllHoleDefinitions> = AHD extends any
 type Aux_HoleDefinitionsObject<Types extends HoleValue["type"]> = {
   readonly [K in Types]: Aux_GetHoleDefiniton<K>;
 };
-type HoleDefinitionsObject = Aux_HoleDefinitionsObject<HoleValue["type"]>;
+type HoleDefinitionsByType = Aux_HoleDefinitionsObject<HoleValue["type"]>;
+type Aux_AnyFunctionWithHoleParameter<H> = (hole: H, ...args: any[]) => any;
+type Aux_HoleDefinitionsObjectAll = {
+  readonly [K in keyof HoleDefinition<string, HoleValue>]: HoleDefinition<
+    string,
+    HoleValue
+  >[K] extends Aux_AnyFunctionWithHoleParameter<HoleValue>
+    ? HoleDefinition<string, HoleValue>[K]
+    : unknown;
+};
+type Aux_NonUnknownKeys = {
+  [K in keyof Aux_HoleDefinitionsObjectAll]: unknown extends Aux_HoleDefinitionsObjectAll[K]
+    ? never
+    : K;
+}[keyof Aux_HoleDefinitionsObjectAll];
+type HoleDefinitionsObject = {
+  readonly [K in Aux_NonUnknownKeys]: Aux_HoleDefinitionsObjectAll[K];
+};
 /**
  * hole definiton for each hole type.
  */
+const holeDefsByType: HoleDefinitionsByType = {} as any;
+for (const d of holeDefinitions) {
+  (holeDefsByType as any)[d.type] = d;
+}
+/**
+ * collection of hole functions.
+ */
 export const holeDefs: HoleDefinitionsObject = {} as any;
 for (const d of holeDefinitions) {
-  (holeDefs as any)[d.type] = d;
+  for (const n of Object.keys(d)) {
+    const v = (d as any)[n];
+    if (typeof v === "function" && !(holeDefs as any)[n]) {
+      (holeDefs as any)[n] = (hole: HoleValue, ...args: any[]) =>
+        (holeDefsByType as any)[hole.type][n](hole, ...args);
+    }
+  }
 }
 
 type Aux_HoleFactoriesObject<Types extends HoleValue["type"]> = {

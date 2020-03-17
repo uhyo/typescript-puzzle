@@ -5,6 +5,15 @@ export type HoleDefinition<Type extends string, H> = {
    */
   readonly subHoleIds: (hole: H) => Generator<string, void, unknown>;
   /**
+   * Returns next focus.
+   * @param prev id of subhole which previously had focus. undefined if self.
+   * @return id of subhole which get next focus. undefined if none.
+   */
+  readonly getNextFocus: (
+    hole: H,
+    prev: string | undefined,
+  ) => string | undefined;
+  /**
    * Converts hole to source text.
    */
   readonly toSourceText: (

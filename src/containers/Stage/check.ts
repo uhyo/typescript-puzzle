@@ -1,5 +1,5 @@
 import { holeDefs, HoleValue } from "~/problems/options";
-import { getSubHoleId } from "~/problems/options/getSubHoleId";
+import { getSubHoleId } from "~/problems/options/subHoleIds";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
@@ -44,7 +44,7 @@ const getSourceText = (problem: Problem, answer: AnswerState) => {
   }
   return result;
   function sourceTextOfHole(holeId: string, hole: HoleValue): string {
-    return holeDefs[hole.type].toSourceText(hole as any, sub => {
+    return holeDefs.toSourceText(hole, sub => {
       const subHoleId = getSubHoleId(holeId, sub);
       const subHole = answer[subHoleId];
       return subHole ? sourceTextOfHole(subHoleId, subHole) : "";

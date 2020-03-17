@@ -90,7 +90,7 @@ export const {
           return {
             ...state,
             answer,
-            focus: getNextFocus(problem, focus),
+            focus: getNextFocus(problem, answer, focus),
             check: checkResultCell.get(() =>
               checkAnswer(state.problem, answer, init.remoteCompiler),
             ),

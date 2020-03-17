@@ -5,6 +5,9 @@ const primitiveHole = holeDefinition<{
   value: string;
 }>()("primitive", {
   *subHoleIds() {},
+  getNextFocus() {
+    return undefined;
+  },
   toSourceText(hole) {
     return hole.value;
   },
@@ -19,6 +22,20 @@ const unionHole = holeDefinition<{
   *subHoleIds(hole) {
     for (let i = 0; i < hole.size; i++) {
       yield String(i);
+    }
+  },
+  getNextFocus(hole, prev) {
+    if (prev) {
+      const next = Number(prev) + 1;
+      if (Number.isNaN(next) || hole.size <= next) {
+        return undefined;
+      } else {
+        return String(next);
+      }
+    } else if (hole.size > 0) {
+      return "0";
+    } else {
+      return undefined;
     }
   },
   toSourceText(hole, getSubHoleText) {
