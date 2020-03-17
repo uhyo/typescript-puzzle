@@ -18,7 +18,7 @@ export const Hole: React.FC<Props> = ({ holeId }) => {
     return <BlankHole holeId={holeId} focused={isFocused} />;
   }
   switch (value.type) {
-    case "type":
+    case "primitive":
       return <TypeHole holeId={holeId} value={value} focused={isFocused} />;
     case "union":
       return (

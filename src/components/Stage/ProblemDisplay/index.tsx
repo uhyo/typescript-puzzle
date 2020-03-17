@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { getInnermostHole } from "~/containers/Hole/getInnermostHole";
 import { Hole } from "~/containers/Hole/HoleContainer";
 import { HoleContext } from "~/containers/Hole/HoleContext";
-import { AnswerCheck } from "~/containers/Stage/check";
+import { CheckState } from "~/containers/Stage/check";
 import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { lightGrayBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
@@ -15,7 +15,7 @@ interface Props {
   problem: Problem;
   answer: AnswerState;
   focus: string | undefined;
-  backgroundState?: AnswerCheck;
+  backgroundState?: CheckState;
 }
 
 export const ProblemDisplay: FC<Props> = ({

@@ -1,31 +1,27 @@
-import { getSubHoles } from "~/problems/options";
+import { HoleValue } from "~/problems/options";
+import { subHoleIds } from "~/problems/options/subHoleIds";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { AnswerState } from "./logic";
 
 /**
- * List the holes existing now.
+ * Generates all existing holeIds.
  */
-export const listHoles = (problem: Problem, answer: AnswerState) => {
-  const result: string[] = [];
-
-  for (const [i, _] of problem.holes.entries()) {
-    const holeId = String(i);
-    result.push(holeId);
-
-    addHole(holeId, answer, result);
+export function* allHoleIds(problem: Problem, state: AnswerState) {
+  for (let i = 0; i < problem.holes.length; i++) {
+    const value = state[i];
+    yield* rec(String(i), value);
   }
 
-  return result;
-};
-
-const addHole = (holeId: string, answer: AnswerState, result: string[]) => {
-  result.push(holeId);
-  const option = answer[holeId];
-  if (!option) {
-    return;
+  function* rec(
+    holeId: string,
+    value: HoleValue | undefined,
+  ): Generator<string, void> {
+    yield holeId;
+    if (value === undefined) {
+      return;
+    }
+    for (const sub of subHoleIds(holeId, value)) {
+      yield* rec(sub, state[sub]);
+    }
   }
-
-  for (const id of getSubHoles(option, holeId)) {
-    addHole(id, answer, result);
-  }
-};
+}

@@ -2,6 +2,7 @@ import { StageStore } from "~/dataStore/stages";
 import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { getClearedStagesInLevel, putClearedStages } from "~/db/stage";
 import { Level, levelMetadata } from "~/problems/levels";
+import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
@@ -22,6 +23,10 @@ export type AppPage =
     }
   | {
       type: "stage";
+      /**
+       * Prepared remote compiler
+       */
+      compiler: RemoteCompiler;
       /**
        * List of all stages
        */
@@ -81,6 +86,7 @@ export const {
               await putClearedStages(page.level, page.stages);
               await putClearedLevel(stageStore, page.level);
             };
+            page.compiler.terminate();
             return {
               ...state,
               page: {
@@ -120,10 +126,12 @@ export const {
       }));
     },
     stageLoaded: (level: Level, stages: string[]) => {
+      const compilerCell = new FirstCell<RemoteCompiler>();
       setState(state => ({
         ...state,
         page: {
           type: "stage",
+          compiler: compilerCell.get(() => new RemoteCompiler()),
           level,
           stages,
           stageIndex: 0,

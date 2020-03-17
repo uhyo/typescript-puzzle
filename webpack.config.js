@@ -1,11 +1,14 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const webpack = require("webpack");
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
+const { ContextReplacementPlugin } = webpack;
 
-module.exports = {
+module.exports = (env, argv) => ({
   entry: "./src/index.tsx",
-  devtool: "inline-source-map",
+  devtool: argv.mode === "development" ? "inline-source-map" : undefined,
   output: {
     path: path.join(__dirname, "dist"),
     filename: "bundle.js",
@@ -23,20 +26,22 @@ module.exports = {
         test: /\.svg$/,
         loader: "url-loader",
         options: {
-          limit: 2048
-        }
+          limit: 2048,
+        },
       },
     ],
   },
   plugins: [
+    new ContextReplacementPlugin(/typescript\/lib/, null),
     new HtmlWebpackPlugin({
       template: "html/index.html",
     }),
     new webpack.HotModuleReplacementPlugin(),
     new CopyWebpackPlugin(["css/ress.min.css"]),
+    new BundleAnalyzerPlugin(),
   ],
   devServer: {
     host: "0.0.0.0",
     hot: true,
   },
-};
+});
