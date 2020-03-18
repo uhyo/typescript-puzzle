@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import styled from "styled-components";
 import { CheckState } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/problems/levels";
@@ -41,20 +42,31 @@ export const StageComponent: FC<{
         onQuitStage={onQuitStage}
       />
       <Wrapper>
-        <ProblemDisplay
-          problem={problem}
-          answer={answer}
-          focus={focus}
-          backgroundState={checkState}
-        />
-        <OptionsDisplay options={options} />
-        <StageNavigation
-          answerIsCorrect={!!checkState?.status}
-          onNext={onNext}
-        />
+        <div>
+          <ProblemDisplay
+            problem={problem}
+            answer={answer}
+            focus={focus}
+            backgroundState={checkState}
+          />
+        </div>
+        <div>
+          <OptionsDisplay options={options} />
+        </div>
+        <div>
+          <StageNavigation
+            answerIsCorrect={!!checkState?.status}
+            onNext={onNext}
+          />
+        </div>
       </Wrapper>
     </>
   );
 };
 
-const Wrapper = PageWrapper;
+const Wrapper = styled(PageWrapper)`
+  & > div:nth-child(1) {
+    flex: auto 1 0;
+    padding: 1.5em 0;
+  }
+`;

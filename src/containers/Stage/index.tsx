@@ -1,4 +1,5 @@
 import React, { FC, useCallback, useEffect, useTransition } from "react";
+import { ErrorBoundary } from "~/components/ErrorBoundary";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/problems/levels";
 import { HoleValue } from "~/problems/options";
@@ -40,17 +41,19 @@ export const Stage: FC<{
 
   return (
     <Provider>
-      <StageComponent
-        level={level}
-        stageNumber={stageNumber}
-        problem={problem}
-        options={options}
-        answer={answer}
-        focus={focus}
-        check={check}
-        onNext={goToNext2}
-        onQuitStage={quitStage}
-      />
+      <ErrorBoundary>
+        <StageComponent
+          level={level}
+          stageNumber={stageNumber}
+          problem={problem}
+          options={options}
+          answer={answer}
+          focus={focus}
+          check={check}
+          onNext={goToNext2}
+          onQuitStage={quitStage}
+        />
+      </ErrorBoundary>
     </Provider>
   );
 };

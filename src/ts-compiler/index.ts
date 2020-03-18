@@ -7,9 +7,16 @@ export class RemoteCompiler {
   constructor() {
     this.worker = new Worker();
   }
-  async getDiagnostics(sourceText: string): Promise<ts.Diagnostic[]> {
-    const d = await this.worker.getDiagnostics(sourceText);
-    return d;
+  async getDiagnostics(
+    sourceText: string,
+  ): Promise<ts.Diagnostic[] | undefined> {
+    try {
+      const d = await this.worker.getDiagnostics(sourceText);
+      return d;
+    } catch (err) {
+      console.error(err);
+      return undefined;
+    }
   }
   async terminate() {
     return await this.worker.terminate();

@@ -72,8 +72,7 @@ const ProblemDisplayWrapper = styled.div`
   display: flex;
   flex-flow: nowrap column;
   justify-content: center;
-
-  padding: 1.5em 0;
+  height: 100%;
 `;
 
 const Container = styled.div`

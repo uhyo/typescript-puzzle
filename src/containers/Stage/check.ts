@@ -7,7 +7,7 @@ import { allHoleIds } from "./holes";
 import { AnswerState } from "./logic";
 
 export type CheckState = {
-  status: boolean;
+  status: "correct" | "wrong" | "error";
 };
 
 /**
@@ -27,7 +27,12 @@ export const checkAnswer = (
   return new Fetcher(async () => {
     const diagnostics = await compiler.getDiagnostics(sourceText);
     return {
-      status: diagnostics.length === 0,
+      status:
+        diagnostics === undefined
+          ? "error"
+          : diagnostics.length > 0
+          ? "wrong"
+          : "correct",
     };
   });
 };
