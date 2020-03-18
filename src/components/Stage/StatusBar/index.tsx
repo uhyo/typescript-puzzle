@@ -2,15 +2,17 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { CheckState } from "~/containers/Stage/check";
 import { grayTextColor } from "~/design/color";
+import { useKeptValue } from "~/util/hooks/useKeptValue";
 
 type Props = {
-  className?: string;
   isLoading: boolean;
   check?: CheckState;
 };
 
-const StatusBarInner: FC<Props> = ({ className, isLoading, check }) => {
-  return <div className={className}>{stringForCheck(isLoading, check)}</div>;
+export const StatusBar: FC<Props> = ({ isLoading, check }) => {
+  const message = stringForCheck(isLoading, check);
+  const shownMessage = useKeptValue(message, (prev, current) => !!current);
+  return <StatusBarStyle shown={!!message}>{shownMessage}</StatusBarStyle>;
 };
 
 const stringForCheck = (isLoading: boolean, check: CheckState | undefined) => {
@@ -23,8 +25,12 @@ const stringForCheck = (isLoading: boolean, check: CheckState | undefined) => {
   return undefined;
 };
 
-export const StatusBar = styled(StatusBarInner)`
+export const StatusBarStyle = styled.div<{
+  shown: boolean;
+}>`
   height: 1.5em;
   line-height: 1.5;
   color: ${grayTextColor};
+  opacity: ${props => (props.shown ? "1" : "0")};
+  transition: opacity 0.3s ease 0.1s;
 `;
