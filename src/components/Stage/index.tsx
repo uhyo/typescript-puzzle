@@ -54,10 +54,7 @@ export const StageComponent: FC<{
           <OptionsDisplay options={options} />
         </div>
         <div>
-          <StageNavigation
-            answerIsCorrect={!!checkState?.status}
-            onNext={onNext}
-          />
+          <StageNavigation check={checkState} onNext={onNext} />
         </div>
       </Wrapper>
     </>

@@ -1,5 +1,8 @@
 import styled from "styled-components";
-import { affirmativeBackgroundColor } from "~/design/color";
+import {
+  affirmativeBackgroundColor,
+  disabledBackgroundColor,
+} from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
 
 export const NavigationButton = styled.button`
@@ -12,4 +15,8 @@ export const NavigationButton = styled.button`
   margin: 1.2em 0;
   padding: 6px;
   border-radius: ${largeRoundedBoxRadius};
+
+  &[disabled] {
+    background-color: ${disabledBackgroundColor};
+  }
 `;

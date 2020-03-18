@@ -26,6 +26,11 @@ export const mainBackgroundColor = "#037acc";
 export const affirmativeBackgroundColor = "#27b850";
 
 /**
+ * Background color for disabled
+ */
+export const disabledBackgroundColor = "#bbbbbb";
+
+/**
  * Main Color for Text
  */
 export const mainTextColor = "#037acc";
