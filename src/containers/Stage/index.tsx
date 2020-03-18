@@ -1,6 +1,12 @@
-import React, { FC, useCallback, useEffect, useTransition } from "react";
-import { ErrorBoundary } from "~/components/ErrorBoundary";
+import React, {
+  FC,
+  Suspense,
+  useCallback,
+  useEffect,
+  useTransition,
+} from "react";
 import { StageComponent } from "~/components/Stage";
+import { SUSPENSE_CONFIG } from "~/design/suspenseConfig";
 import { Level } from "~/problems/levels";
 import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
@@ -19,7 +25,8 @@ export const Stage: FC<{
     problem,
     remoteCompiler: compiler,
   });
-  const [startTransition] = useTransition();
+  const [startPageTransition] = useTransition(SUSPENSE_CONFIG);
+  const [startCheckTransition, checkIsLoading] = useTransition(SUSPENSE_CONFIG);
   const { goToNext, goToTop } = useAppActions();
 
   console.log("rerendered");
@@ -28,20 +35,20 @@ export const Stage: FC<{
   });
 
   const goToNext2 = useCallback(() => {
-    startTransition(() => {
+    startPageTransition(() => {
       goToNext();
     });
   }, [goToNext]);
 
   const quitStage = useCallback(() => {
-    startTransition(() => {
+    startPageTransition(() => {
       goToTop();
     });
   }, [goToTop]);
 
   return (
     <Provider>
-      <ErrorBoundary>
+      <Suspense fallback={<p>loading</p>}>
         <StageComponent
           level={level}
           stageNumber={stageNumber}
@@ -52,8 +59,10 @@ export const Stage: FC<{
           check={check}
           onNext={goToNext2}
           onQuitStage={quitStage}
+          startCheckTransition={startCheckTransition}
+          isCheckLoading={checkIsLoading}
         />
-      </ErrorBoundary>
+      </Suspense>
     </Provider>
   );
 };

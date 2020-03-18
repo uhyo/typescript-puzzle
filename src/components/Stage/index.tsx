@@ -11,6 +11,7 @@ import { OptionsDisplay } from "./OptionsDisplay";
 import { ProblemDisplay } from "./ProblemDisplay";
 import { StageHeader } from "./StageHeader";
 import { StageNavigation } from "./StageNavigation";
+import { StatusBar } from "./StatusBar";
 
 export const StageComponent: FC<{
   level: Level;
@@ -22,6 +23,8 @@ export const StageComponent: FC<{
   check?: Fetcher<CheckState>;
   onNext?: () => void;
   onQuitStage?: () => void;
+  startCheckTransition: (callback: () => void) => void;
+  isCheckLoading: boolean;
 }> = ({
   level,
   stageNumber,
@@ -32,6 +35,8 @@ export const StageComponent: FC<{
   check,
   onNext,
   onQuitStage,
+  startCheckTransition,
+  isCheckLoading,
 }) => {
   const checkState = check?.get();
   return (
@@ -51,7 +56,13 @@ export const StageComponent: FC<{
           />
         </div>
         <div>
-          <OptionsDisplay options={options} />
+          <StatusBar isLoading={isCheckLoading} check={checkState} />
+        </div>
+        <div>
+          <OptionsDisplay
+            options={options}
+            startCheckTransition={startCheckTransition}
+          />
         </div>
         <div>
           <StageNavigation check={checkState} onNext={onNext} />
@@ -64,6 +75,6 @@ export const StageComponent: FC<{
 const Wrapper = styled(PageWrapper)`
   & > div:nth-child(1) {
     flex: auto 1 0;
-    padding: 1.5em 0;
+    padding: 1.5em 0 0;
   }
 `;

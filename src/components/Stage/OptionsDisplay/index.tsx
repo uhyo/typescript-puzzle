@@ -1,4 +1,9 @@
-import React, { FC, useCallback, useMemo, useTransition } from "react";
+import React, {
+  FC,
+  TransitionStartFunction,
+  useCallback,
+  useMemo,
+} from "react";
 import styled from "styled-components";
 import { getInnermostHole } from "~/containers/Hole/getInnermostHole";
 import { Hole } from "~/containers/Hole/HoleContainer";
@@ -9,8 +14,8 @@ import { HoleValue } from "~/problems/options";
 
 export const OptionsDisplay: FC<{
   options: HoleValue[];
-}> = ({ options }) => {
-  const [startTransition] = useTransition();
+  startCheckTransition: TransitionStartFunction;
+}> = ({ options, startCheckTransition }) => {
   const { selectOption } = useStageActions();
 
   const holeContextValue = useMemo(() => {
@@ -30,7 +35,7 @@ export const OptionsDisplay: FC<{
         console.log(holeId);
         // child hole could be selected, so convert e.g. "3.0" to "3"
         const selectedHoleId = parseInt(holeId, 10);
-        startTransition(() => {
+        startCheckTransition(() => {
           selectOption(options[selectedHoleId]);
         });
       }

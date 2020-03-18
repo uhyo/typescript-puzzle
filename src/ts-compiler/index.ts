@@ -12,6 +12,7 @@ export class RemoteCompiler {
   ): Promise<ts.Diagnostic[] | undefined> {
     try {
       const d = await this.worker.getDiagnostics(sourceText);
+      // await new Promise(resolve => setTimeout(resolve, 1 * 1e3));
       return d;
     } catch (err) {
       console.error(err);
