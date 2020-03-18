@@ -18,8 +18,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
     "comlink-loader": "^2.0.0",
-    "react": "0.0.0-experimental-38dd17ab9",
-    "react-dom": "0.0.0-experimental-38dd17ab9",
+    "react": "0.0.0-experimental-aae83a4b9",
+    "react-dom": "0.0.0-experimental-aae83a4b9",
     "styled-components": "^4.4.1"
   },
   "devDependencies": {
