@@ -9,6 +9,10 @@ const BlankHoleInner = styled(HoleBase)<{
 }>`
   width: ${props => (props.short ? "2.5ex" : "8ex")};
   background-color: ${lightGrayBackgroundColor};
+  ${props =>
+    props.focused
+      ? `background: linear-gradient(115deg, ${lightGrayBackgroundColor} 0%, #eeeeee 38%, #c6c6c6 100%);`
+      : ""}
   border-color: ${props => (props.focused ? mainBorderColor : "transparent")};
 `;
 const Invisible = styled.span`
