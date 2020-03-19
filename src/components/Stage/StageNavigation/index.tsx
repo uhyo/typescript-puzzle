@@ -10,19 +10,13 @@ export const StageNavigation: FC<{
   onNext?: () => void;
 }> = ({ check, onNext }) => {
   const isCorrect = check?.status === "correct";
-  const isShown = isCorrect || check?.status === "error";
   return (
-    <Wrapper shown={isShown} aria-hidden={!isShown}>
-      <NavigationButton
-        onClick={isCorrect ? onNext : undefined}
-        disabled={isShown && !isCorrect}
-      >
-        <NextText>{isCorrect ? "NEXT" : "ERROR 😢"}</NextText>
-        {isCorrect && (
-          <NextIcon>
-            <FontAwesomeIcon icon={faAngleDoubleRight} />
-          </NextIcon>
-        )}
+    <Wrapper shown={isCorrect} aria-hidden={!isCorrect}>
+      <NavigationButton onClick={isCorrect ? onNext : undefined}>
+        <NextText>NEXT</NextText>
+        <NextIcon>
+          <FontAwesomeIcon icon={faAngleDoubleRight} />
+        </NextIcon>
       </NavigationButton>
     </Wrapper>
   );

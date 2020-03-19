@@ -81,23 +81,15 @@ export const {
           Fetcher<CheckState> | undefined
         >();
         const answerFocusCell = new FirstCell<
-          Pick<StageState, "answer" | "focus">
+          Pick<StageState, "answer" | "focus"> | undefined
         >();
         const getNextAnswerFocus = (state: StageState) => {
           const { answer, focus, problem } = state;
           if (focus === undefined) {
-            return {
-              answer,
-              focus,
-            };
+            return undefined;
           }
-          const nextAnswer = setHoleContent(
-            state.problem,
-            state.answer,
-            focus,
-            option,
-          );
-          const nextFocus = getNextFocus(problem, answer, focus);
+          const nextAnswer = setHoleContent(problem, answer, focus, option);
+          const nextFocus = getNextFocus(problem, nextAnswer, focus);
           return {
             answer: nextAnswer,
             focus: nextFocus,
@@ -105,6 +97,9 @@ export const {
         };
         setState(state => {
           const next = answerFocusCell.get(() => getNextAnswerFocus(state));
+          if (!next) {
+            return state;
+          }
           return {
             ...state,
             ...next,
@@ -113,6 +108,9 @@ export const {
         startTransition(() => {
           setState(state => {
             const next = answerFocusCell.get(() => getNextAnswerFocus(state));
+            if (!next) {
+              return state;
+            }
             return {
               ...state,
               ...next,

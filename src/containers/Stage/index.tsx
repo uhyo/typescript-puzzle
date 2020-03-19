@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  Suspense,
-  useCallback,
-  useEffect,
-  useTransition,
-} from "react";
+import React, { FC, Suspense, useCallback, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { SUSPENSE_CONFIG } from "~/design/suspenseConfig";
 import { Level } from "~/problems/levels";
@@ -28,11 +22,6 @@ export const Stage: FC<{
   const [startPageTransition] = useTransition(SUSPENSE_CONFIG);
   const [startCheckTransition, checkIsLoading] = useTransition(SUSPENSE_CONFIG);
   const { goToNext, goToTop } = useAppActions();
-
-  console.log("rerendered");
-  useEffect(() => {
-    console.log("renren");
-  });
 
   const goToNext2 = useCallback(() => {
     startPageTransition(() => {
