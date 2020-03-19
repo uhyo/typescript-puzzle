@@ -11,7 +11,10 @@ export class RemoteCompiler {
     sourceText: string,
   ): Promise<ts.Diagnostic[] | undefined> {
     try {
+      const start = performance.now();
       const d = await this.worker.getDiagnostics(sourceText);
+      const end = performance.now();
+      console.log("compiled in ", end - start, "ms");
       // await new Promise(resolve => setTimeout(resolve, 1 * 1e3));
       return d;
     } catch (err) {

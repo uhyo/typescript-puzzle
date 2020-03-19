@@ -32,7 +32,6 @@ export const OptionsDisplay: FC<{
     (e: React.SyntheticEvent) => {
       const holeId = getInnermostHole(e.target as Node);
       if (holeId) {
-        console.log(holeId);
         // child hole could be selected, so convert e.g. "3.0" to "3"
         const selectedHoleId = parseInt(holeId, 10);
         selectOption(options[selectedHoleId], startCheckTransition);
