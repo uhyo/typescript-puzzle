@@ -35,9 +35,7 @@ export const OptionsDisplay: FC<{
         console.log(holeId);
         // child hole could be selected, so convert e.g. "3.0" to "3"
         const selectedHoleId = parseInt(holeId, 10);
-        startCheckTransition(() => {
-          selectOption(options[selectedHoleId]);
-        });
+        selectOption(options[selectedHoleId], startCheckTransition);
       }
     },
     [selectOption],

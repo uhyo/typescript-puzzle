@@ -1,3 +1,4 @@
+import { TransitionStartFunction } from "react";
 import { HoleValue } from "~/problems/options";
 import { Problem } from "~/problems/problemDefinition/problem";
 import { RemoteCompiler } from "~/ts-compiler";
@@ -72,29 +73,54 @@ export const {
           }
         });
       },
-      selectOption(option: HoleValue) {
+      selectOption(
+        option: HoleValue,
+        startTransition: TransitionStartFunction,
+      ) {
         const checkResultCell = new FirstCell<
           Fetcher<CheckState> | undefined
         >();
-        setState(state => {
-          const { focus, problem } = state;
+        const answerFocusCell = new FirstCell<
+          Pick<StageState, "answer" | "focus">
+        >();
+        const getNextAnswerFocus = (state: StageState) => {
+          const { answer, focus, problem } = state;
           if (focus === undefined) {
-            return state;
+            return {
+              answer,
+              focus,
+            };
           }
-          const answer = setHoleContent(
+          const nextAnswer = setHoleContent(
             state.problem,
             state.answer,
             focus,
             option,
           );
+          const nextFocus = getNextFocus(problem, answer, focus);
+          return {
+            answer: nextAnswer,
+            focus: nextFocus,
+          };
+        };
+        setState(state => {
+          const next = answerFocusCell.get(() => getNextAnswerFocus(state));
           return {
             ...state,
-            answer,
-            focus: getNextFocus(problem, answer, focus),
-            check: checkResultCell.get(() =>
-              checkAnswer(state.problem, answer, init.remoteCompiler),
-            ),
+            ...next,
           };
+        });
+        startTransition(() => {
+          setState(state => {
+            const next = answerFocusCell.get(() => getNextAnswerFocus(state));
+            return {
+              ...state,
+              ...next,
+              check: checkResultCell.get(() =>
+                checkAnswer(state.problem, next.answer, init.remoteCompiler),
+              ),
+            };
+          });
         });
       },
     };
