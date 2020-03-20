@@ -1,6 +1,11 @@
+import { setCacheNameDetails } from "workbox-core";
 import { precacheAndRoute } from "workbox-precaching";
+import { cacheNamePrefix } from "./cacheName";
 import { registerRoutes } from "./routes";
-console.log("I am sw");
+
+setCacheNameDetails({
+  prefix: cacheNamePrefix,
+});
 
 // this is injected by workbox-webpack-plugin
 const manifest = (self as any).__WB_MANIFEST;

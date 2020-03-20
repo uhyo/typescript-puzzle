@@ -2,13 +2,14 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { cacheNamePrefix } from "./cacheName";
 
 export const registerRoutes = () => {
   // Google Fonts stylesheets
   registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,
     new StaleWhileRevalidate({
-      cacheName: "google-fonts-stylesheets",
+      cacheName: `${cacheNamePrefix}-google-fonts-styles`,
     }),
   );
 
@@ -16,7 +17,7 @@ export const registerRoutes = () => {
   registerRoute(
     /^https:\/\/fonts\.gstatic\.com/,
     new CacheFirst({
-      cacheName: "google-fonts-webfonts",
+      cacheName: `${cacheNamePrefix}-google-fonts`,
       plugins: [
         new CacheableResponsePlugin({
           // Opaque Response has 0 status
