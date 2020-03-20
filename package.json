@@ -6,8 +6,9 @@
   "scripts": {
     "build": "npm run build:generateTypeScriptLib && npm run build:webpack",
     "build:generateTypeScriptLib": "node scripts/generateTypeScriptLib.js",
-    "build:webpack": "webpack --mode development",
-    "watch": "webpack-dev-server",
+    "build:webpack": "webpack --mode production",
+    "watch": "npm run build:generateTypeScriptLib && npm run watch:webpack",
+    "watch:webpack": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -7,7 +7,10 @@ import { CheckState } from "~/containers/Stage/check";
 import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { lightGrayBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
-import { sourceCodeFontFamily, sourceCodeFontSize } from "../../../design/font";
+import {
+  problemSourceCodeFontSize,
+  sourceCodeFontFamily,
+} from "../../../design/font";
 import { Problem } from "../../../problems/problemDefinition/problem";
 import { BackGround } from "../Background";
 
@@ -100,7 +103,7 @@ const ProblemDisplayInner = styled.div`
   );
   line-height: 1.2;
   font-family: ${sourceCodeFontFamily};
-  font-size: ${sourceCodeFontSize};
+  font-size: ${problemSourceCodeFontSize};
   z-index: 1;
 `;
 

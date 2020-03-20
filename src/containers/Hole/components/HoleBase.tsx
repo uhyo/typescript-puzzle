@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { sourceCodeFontFamily, sourceCodeFontSize } from "~/design/font";
+import { problemSourceCodeFontSize, sourceCodeFontFamily } from "~/design/font";
 import { smallRoundedBoxRadius } from "~/design/length";
 
 /**
@@ -12,7 +12,7 @@ export const HoleBase = styled.span`
   height: calc(1.2em + 8px);
   padding: 3px;
   font-family: ${sourceCodeFontFamily};
-  font-size: ${sourceCodeFontSize};
+  font-size: ${problemSourceCodeFontSize};
   vertical-align: baseline;
   user-select: none;
 `;

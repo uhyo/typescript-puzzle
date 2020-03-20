@@ -53,7 +53,6 @@ module.exports = (env, argv) => {
         template: "html/index.html",
         excludeChunks: ["sw"],
       }),
-      new webpack.HotModuleReplacementPlugin(),
       new CopyWebpackPlugin(["css/ress.min.css"]),
       new BundleAnalyzerPlugin(),
       new WorkboxPlugin.InjectManifest({
@@ -63,7 +62,7 @@ module.exports = (env, argv) => {
         // do not cache typescript compiler worker
         exclude: [/\.tsc\.worker\./],
       }),
-    ].concat(isDev ? [] : []),
+    ].concat(isDev ? [new webpack.HotModuleReplacementPlugin()] : []),
     devServer: {
       host: "0.0.0.0",
       hot: true,

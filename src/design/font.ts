@@ -8,6 +8,11 @@ export const sourceCodeFontFamily = '"Source Code Pro", monospace';
 export const uiFontFamily = '"Asap", sans-serif';
 
 /**
- * Size of source code font
+ * Size of source code font in problem
  */
-export const sourceCodeFontSize = "1.1rem";
+export const problemSourceCodeFontSize = "1rem";
+
+/**
+ * Size of source code font in optionns
+ */
+export const optionsSourceCodeFontSize = "1.1rem";
