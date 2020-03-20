@@ -4,10 +4,12 @@ import { LevelDoc } from "~/db/level";
 import { Level } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 import { useAppActions } from "../App/logic";
+import { ServiceWorkerState } from "../App/registerServiceWorker";
 
 export const LevelSelect: FC<{
   clearedLevelsFetcher: Fetcher<LevelDoc[]>;
-}> = ({ clearedLevelsFetcher }) => {
+  serviceWorkerState: Fetcher<ServiceWorkerState>;
+}> = ({ clearedLevelsFetcher, serviceWorkerState }) => {
   const [startTransition] = useTransition();
   const { goToLevel } = useAppActions();
   const onSelect = useCallback(
@@ -19,9 +21,13 @@ export const LevelSelect: FC<{
     [goToLevel],
   );
 
-  const clearedLevels = clearedLevelsFetcher.get();
-
   return (
-    <LevelSelectComponent onSelect={onSelect} clearedLevels={clearedLevels} />
+    <>
+      <LevelSelectComponent
+        onSelect={onSelect}
+        clearedLevelsFetcher={clearedLevelsFetcher}
+        serviceWorkerState={serviceWorkerState}
+      />
+    </>
   );
 };

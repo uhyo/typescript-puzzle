@@ -3,13 +3,17 @@ import { AppComponent } from "~/components/App";
 import { useAppState } from "./logic";
 
 export const App: FC = () => {
-  const [{ page, stageStore }, Provider] = useAppState();
+  const [{ page, stageStore, serviceWorkerState }, Provider] = useAppState();
 
   // TODO: suspense fallback
   return (
     <Provider>
       <Suspense fallback={null}>
-        <AppComponent page={page} stageStore={stageStore} />
+        <AppComponent
+          page={page}
+          stageStore={stageStore}
+          serviceWorkerState={serviceWorkerState}
+        />
       </Suspense>
     </Provider>
   );

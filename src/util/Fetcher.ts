@@ -55,4 +55,16 @@ export class Fetcher<T> {
       return this.state.value;
     }
   }
+
+  /**
+   * Returns fetched data.
+   * Returns undefined if not fetched yet.
+   */
+  public getOrUndefined(): T | undefined {
+    if (this.state.state === "fetched") {
+      return this.state.value;
+    } else {
+      return undefined;
+    }
+  }
 }
