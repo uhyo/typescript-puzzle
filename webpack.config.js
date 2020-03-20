@@ -4,44 +4,69 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
+const WorkboxPlugin = require("workbox-webpack-plugin");
 const { ContextReplacementPlugin } = webpack;
 
-module.exports = (env, argv) => ({
-  entry: "./src/index.tsx",
-  devtool: argv.mode === "development" ? "inline-source-map" : undefined,
-  output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-  resolve: {
-    extensions: [".ts", ".tsx", ".js"],
-    alias: {
-      "~": path.join(__dirname, "src"),
+module.exports = (env, argv) => {
+  const isDev = argv.mode !== "production";
+  return {
+    entry: {
+      app: "./src/index.tsx",
     },
-  },
-  module: {
-    rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" },
-      {
-        test: /\.svg$/,
-        loader: "url-loader",
-        options: {
-          limit: 2048,
-        },
+    devtool: isDev ? "inline-source-map" : undefined,
+    output: {
+      path: path.join(__dirname, "dist"),
+      filename: chunkData => {
+        if (chunkData.chunk.name === "sw") {
+          return "sw.js";
+        } else {
+          return !isDev ? "[name].[contenthash].js" : "[id].js";
+        }
       },
-    ],
-  },
-  plugins: [
-    new ContextReplacementPlugin(/typescript\/lib/, null),
-    new HtmlWebpackPlugin({
-      template: "html/index.html",
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new CopyWebpackPlugin(["css/ress.min.css"]),
-    new BundleAnalyzerPlugin(),
-  ],
-  devServer: {
-    host: "0.0.0.0",
-    hot: true,
-  },
-});
+      chunkFilename: !isDev ? "[name].[contenthash].js" : "[id].js",
+    },
+    optimization: {
+      moduleIds: "hashed",
+      // moduleIds: "deterministic",
+    },
+    resolve: {
+      extensions: [".ts", ".tsx", ".js"],
+      alias: {
+        "~": path.join(__dirname, "src"),
+      },
+    },
+    module: {
+      rules: [
+        { test: /\.tsx?$/, loader: "ts-loader" },
+        {
+          test: /\.svg$/,
+          loader: "url-loader",
+          options: {
+            limit: 2048,
+          },
+        },
+      ],
+    },
+    plugins: [
+      new ContextReplacementPlugin(/typescript\/lib/, null),
+      new HtmlWebpackPlugin({
+        template: "html/index.html",
+        excludeChunks: ["sw"],
+      }),
+      new webpack.HotModuleReplacementPlugin(),
+      new CopyWebpackPlugin(["css/ress.min.css"]),
+      new BundleAnalyzerPlugin(),
+      new WorkboxPlugin.InjectManifest({
+        swSrc: "./src/sw/index.ts",
+        swDest: "sw.js",
+        maximumFileSizeToCacheInBytes: isDev ? 20 * 1024 ** 2 : 1024 ** 2,
+        // do not cache typescript compiler worker
+        exclude: [/\.tsc\.worker\./],
+      }),
+    ].concat(isDev ? [] : []),
+    devServer: {
+      host: "0.0.0.0",
+      hot: true,
+    },
+  };
+};

@@ -1,6 +1,7 @@
 import React, { ComponentProps, FC } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { AppPage } from "~/containers/App/logic";
+import { ServiceWorkerState } from "~/containers/App/registerServiceWorker";
 import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
 import { LevelSelect } from "~/containers/LevelSelect";
@@ -8,15 +9,22 @@ import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
 import { mainBackgroundColor } from "~/design/color";
 import { uiFontFamily } from "~/design/font";
+import { Fetcher } from "~/util/Fetcher";
 import { phone } from "~/util/media";
 
 const AppContent: FC<{
   page: AppPage;
   stageStore: StageStore;
-}> = ({ page, stageStore }) => {
+  serviceWorkerState: Fetcher<ServiceWorkerState>;
+}> = ({ page, stageStore, serviceWorkerState }) => {
   switch (page.type) {
     case "levelSelect": {
-      return <LevelSelect clearedLevelsFetcher={page.clearedLevelsFetcher} />;
+      return (
+        <LevelSelect
+          clearedLevelsFetcher={page.clearedLevelsFetcher}
+          serviceWorkerState={serviceWorkerState}
+        />
+      );
     }
     case "levelLoading": {
       return <LevelLoading level={page.level} stageStore={stageStore} />;
@@ -79,6 +87,12 @@ const Header = styled.div`
 const Footer = styled.div`
   flex: auto 1 1;
 `;
+
+type Props = {
+  page: AppPage;
+  stageStore: StageStore;
+  serviceWorkerState: Fetcher<ServiceWorkerState>;
+};
 
 export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
   <>

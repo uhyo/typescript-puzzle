@@ -6,9 +6,15 @@ import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
+import {
+  registerServiceWorker,
+  ServiceWorkerState,
+  waitForSWWaiting,
+} from "./registerServiceWorker";
 
 export type AppState = {
   stageStore: StageStore;
+  serviceWorkerState: Fetcher<ServiceWorkerState>;
   page: AppPage;
 };
 
@@ -64,6 +70,7 @@ const getInitialState = (): AppState => {
       type: "levelSelect",
       clearedLevelsFetcher: new Fetcher(getClearedLevels),
     },
+    serviceWorkerState: new Fetcher(registerServiceWorker),
   };
 };
 
@@ -147,6 +154,31 @@ export const {
           clearedLevelsFetcher,
         },
       }));
+    },
+    /**
+     * Check ServiceWorker updates.
+     */
+    checkSwUpdate: () => {
+      const resultCell = new FirstCell<Fetcher<ServiceWorkerState>>();
+      setState(state => {
+        const sw = state.serviceWorkerState.getOrUndefined();
+        if (sw === undefined || sw.status === "unsupported") {
+          return state;
+        }
+        return {
+          ...state,
+          serviceWorkerState: resultCell.get(() => {
+            return new Fetcher(async () => {
+              await sw.wb.update();
+              return {
+                status: "supported",
+                wb: sw.wb,
+                waitingState: new Fetcher(() => waitForSWWaiting(sw.wb)),
+              };
+            });
+          }),
+        };
+      });
     },
   }),
 });
