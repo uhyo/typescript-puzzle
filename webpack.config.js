@@ -60,6 +60,8 @@ module.exports = (env, argv) => {
         swSrc: "./src/sw/index.ts",
         swDest: "sw.js",
         maximumFileSizeToCacheInBytes: isDev ? 20 * 1024 ** 2 : 1024 ** 2,
+        // do not cache typescript compiler worker
+        exclude: [/\.tsc\.worker\./],
       }),
     ].concat(isDev ? [] : []),
     devServer: {

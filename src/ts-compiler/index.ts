@@ -1,5 +1,5 @@
 // @ts-ignore
-import Worker from "comlink-loader!./worker.ts";
+import Worker from "comlink-loader?name=[contenthash].tsc.worker.js!./worker.ts";
 import ts from "typescript";
 
 export class RemoteCompiler {
