@@ -20,10 +20,10 @@ module.exports = (env, argv) => {
         if (chunkData.chunk.name === "sw") {
           return "sw.js";
         } else {
-          return !isDev ? "[name].[contenthash].js" : "[id].js";
+          return !isDev ? "[name].[contenthash].js" : "[id].[name].js";
         }
       },
-      chunkFilename: !isDev ? "[name].[contenthash].js" : "[id].js",
+      chunkFilename: !isDev ? "[name].[contenthash].js" : "[id].[name].js",
     },
     optimization: {
       moduleIds: "hashed",

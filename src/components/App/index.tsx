@@ -1,22 +1,42 @@
-import React, { ComponentProps, FC } from "react";
+import React, { ComponentProps, FC, lazy } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { AppPage } from "~/containers/App/logic";
 import { ServiceWorkerState } from "~/containers/App/registerServiceWorker";
-import { LevelComplete } from "~/containers/LevelComplete";
 import { LevelLoading } from "~/containers/LevelLoading";
 import { LevelSelect } from "~/containers/LevelSelect";
-import { Stage } from "~/containers/Stage";
 import { StageStore } from "~/dataStore/stages";
 import { mainBackgroundColor } from "~/design/color";
-import { uiFontFamily } from "~/design/font";
+import { sourceCodeFontFamily, uiFontFamily } from "~/design/font";
 import { Fetcher } from "~/util/Fetcher";
 import { phone } from "~/util/media";
 
-const AppContent: FC<{
+const Stage = lazy(() =>
+  import(/*
+    webpackChunkName: "page_Stage"
+  */ "~/containers/Stage").then(
+    ({ Stage }) => ({
+      default: Stage,
+    }),
+  ),
+);
+
+const LevelComplete = lazy(() =>
+  import(
+    /*
+    webpackChunkName: "page_Stage"
+  */ "~/containers/LevelComplete"
+  ).then(({ LevelComplete }) => ({
+    default: LevelComplete,
+  })),
+);
+
+type Props = {
   page: AppPage;
   stageStore: StageStore;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
-}> = ({ page, stageStore, serviceWorkerState }) => {
+};
+
+const AppContent: FC<Props> = ({ page, stageStore, serviceWorkerState }) => {
   switch (page.type) {
     case "levelSelect": {
       return (
@@ -85,14 +105,13 @@ const Header = styled.div`
 `;
 
 const Footer = styled.div`
-  flex: auto 1 1;
-`;
+  height: 0;
+  overflow: hidden;
 
-type Props = {
-  page: AppPage;
-  stageStore: StageStore;
-  serviceWorkerState: Fetcher<ServiceWorkerState>;
-};
+  & > span:nth-child(1) {
+    font-family: ${sourceCodeFontFamily};
+  }
+`;
 
 export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
   <>
@@ -100,7 +119,9 @@ export const AppComponent: FC<ComponentProps<typeof AppContent>> = props => (
     <AppWrapper>
       <AppContent {...props} />
     </AppWrapper>
-    <Footer />
+    <Footer aria-hidden="true">
+      <span>a</span>
+    </Footer>
     <GlobalStyle />
   </>
 );
