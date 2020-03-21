@@ -11,6 +11,10 @@ const validateAuthorsType = <
   data: T,
 ) => data;
 
+/**
+ * Definitions of authors.
+ * Field names are treated as author IDs.
+ */
 export const authors = validateAuthorsType({
   uhyo: {
     name: "uhyo",

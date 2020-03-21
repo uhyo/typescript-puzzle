@@ -1,7 +1,6 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedStagesInLevel } from "~/db/stage";
 import { Level, levelMetadata } from "~/definitions/stages/levels";
-import { tscWorkerCacheName } from "~/sw/cacheName";
 import { shuffle } from "~/util/shuffle";
 
 /**
@@ -37,13 +36,14 @@ export const loadLevel = async (
  * Check whether tsc worker is already cached.
  */
 export const checkWorkerCache = async (): Promise<boolean> => {
-  if (!window.caches) {
-    return false;
-  }
-  if (!window.caches.has(tscWorkerCacheName)) {
-    return false;
-  }
-  const cache = await window.caches.open(tscWorkerCacheName);
-  const keys = await cache.keys();
-  return keys.some(req => req.url.includes(".tsc.worker"));
+  return true;
+  // if (!window.caches) {
+  //   return false;
+  // }
+  // if (!window.caches.has(tscWorkerCacheName)) {
+  //   return false;
+  // }
+  // const cache = await window.caches.open(tscWorkerCacheName);
+  // const keys = await cache.keys();
+  // return keys.some(req => req.url.includes(".tsc.worker"));
 };
