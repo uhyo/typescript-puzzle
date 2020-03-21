@@ -14,9 +14,10 @@ const BlankHoleInner = styled(HoleBase)<{
       ? `background: linear-gradient(115deg, ${lightGrayBackgroundColor} 0%, #eeeeee 38%, #c6c6c6 100%);`
       : ""}
   border-color: ${props => (props.focused ? mainBorderColor : "transparent")};
-`;
-const Invisible = styled.span`
-  visibility: hidden;
+
+  & > span {
+    visibility: hidden;
+  }
 `;
 
 type Props = ComponentProps<typeof BlankHoleInner> & {
@@ -27,6 +28,6 @@ type Props = ComponentProps<typeof BlankHoleInner> & {
  */
 export const BlankHole: FC<Props> = ({ holeId, ...props }) => (
   <BlankHoleInner data-holeid={holeId} {...props}>
-    <Invisible aria-hidden="true">x</Invisible>
+    <span aria-hidden="true">x</span>
   </BlankHoleInner>
 );

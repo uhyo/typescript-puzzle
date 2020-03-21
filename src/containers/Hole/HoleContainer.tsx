@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { range } from "~/util/range";
 import { BlankHole } from "./components/BlankHole";
-import { TypeHole } from "./components/TypeHole";
+import { FilledHoleBase } from "./components/HoleBase";
+import { TypeHoleContents } from "./components/TypeHole";
 import { UnionHole } from "./components/UnionHole";
 import { HoleContext } from "./HoleContext";
 
@@ -19,15 +20,21 @@ export const Hole: React.FC<Props> = ({ holeId }) => {
   }
   switch (value.type) {
     case "primitive":
-      return <TypeHole holeId={holeId} value={value} focused={isFocused} />;
+      return (
+        <FilledHoleBase data-holeid={holeId} focused={isFocused}>
+          <TypeHoleContents holeId={holeId} value={value} />
+        </FilledHoleBase>
+      );
     case "union":
       return (
-        <UnionHole value={value} holeId={holeId} focused={isFocused}>
-          {range(0, value.size - 1).map(index => {
-            const childHoleId = `${holeId}.${index}`;
-            return <Hole key={childHoleId} holeId={childHoleId} />;
-          })}
-        </UnionHole>
+        <FilledHoleBase data-holeid={holeId} focused={isFocused}>
+          <UnionHole value={value} holeId={holeId}>
+            {range(0, value.size - 1).map(index => {
+              const childHoleId = `${holeId}.${index}`;
+              return <Hole key={childHoleId} holeId={childHoleId} />;
+            })}
+          </UnionHole>
+        </FilledHoleBase>
       );
   }
 };

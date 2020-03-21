@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { lightGrayBorderColor, mainBorderColor } from "~/design/color";
 import {
   questionSourceCodeFontSize,
   sourceCodeFontFamily,
@@ -18,4 +19,17 @@ export const HoleBase = styled.span`
   font-size: ${questionSourceCodeFontSize};
   vertical-align: baseline;
   user-select: none;
+  cursor: pointer;
+`;
+
+/**
+ * Base styling of filled hole.
+ */
+export const FilledHoleBase = styled(HoleBase)<{
+  focused?: boolean;
+}>`
+  border-color: ${props =>
+    props.focused ? mainBorderColor : lightGrayBorderColor};
+  background-color: white;
+  height: auto;
 `;

@@ -56,6 +56,7 @@ export const OptionsDisplay: FC<{
 
 const OptionsWrapper = styled.ul`
   display: flex;
+  align-items: center;
   flex-flow: row wrap;
   list-style-type: none;
 

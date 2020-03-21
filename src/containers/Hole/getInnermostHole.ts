@@ -7,7 +7,7 @@ export const getInnermostHole = (element: Node): string | undefined => {
     if (node.dataset?.holeid) {
       return node.dataset.holeid;
     }
-    node = node.parent;
+    node = node.parentNode;
   }
   return undefined;
 };
