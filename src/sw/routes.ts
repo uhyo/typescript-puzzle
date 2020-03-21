@@ -2,9 +2,23 @@ import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { ExpirationPlugin } from "workbox-expiration";
 import { registerRoute } from "workbox-routing";
 import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
-import { cacheNamePrefix } from "./cacheName";
+import { cacheNamePrefix, tscWorkerCacheName } from "./cacheName";
 
 export const registerRoutes = () => {
+  // tsc worker file
+  registerRoute(
+    /\.tsc\.worker/,
+    new CacheFirst({
+      cacheName: tscWorkerCacheName,
+      plugins: [
+        new ExpirationPlugin({
+          maxAgeSeconds: 60 * 60 * 24 * 365,
+          maxEntries: 3,
+        }),
+      ],
+    }),
+  );
+
   // Google Fonts stylesheets
   registerRoute(
     /^https:\/\/fonts\.googleapis\.com/,

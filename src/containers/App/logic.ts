@@ -28,6 +28,13 @@ export type AppPage =
       level: Level;
     }
   | {
+      type: "confirmLargeDownload";
+      next: {
+        level: Level;
+        stages: string[];
+      };
+    }
+  | {
       type: "stage";
       /**
        * Prepared remote compiler
@@ -142,6 +149,15 @@ export const {
           level,
           stages,
           stageIndex: 0,
+        },
+      }));
+    },
+    goToConfirmLargeDownload: (next: { level: Level; stages: string[] }) => {
+      setState(state => ({
+        ...state,
+        page: {
+          type: "confirmLargeDownload",
+          next,
         },
       }));
     },

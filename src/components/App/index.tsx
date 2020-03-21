@@ -9,6 +9,7 @@ import { mainBackgroundColor } from "~/design/color";
 import { sourceCodeFontFamily, uiFontFamily } from "~/design/font";
 import { Fetcher } from "~/util/Fetcher";
 import { phone } from "~/util/media";
+import { ConfirmLargeDownload } from "../ConfirmLargeDownload";
 
 const Stage = lazy(() =>
   import(/*
@@ -48,6 +49,9 @@ const AppContent: FC<Props> = ({ page, stageStore, serviceWorkerState }) => {
     }
     case "levelLoading": {
       return <LevelLoading level={page.level} stageStore={stageStore} />;
+    }
+    case "confirmLargeDownload": {
+      return <ConfirmLargeDownload next={page.next} />;
     }
     case "stage": {
       const stageId = page.stages[page.stageIndex];
