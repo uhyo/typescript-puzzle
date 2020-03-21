@@ -72,7 +72,7 @@ module.exports = (env, argv) => {
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/sw/index.ts",
         swDest: "sw.js",
-        maximumFileSizeToCacheInBytes: isDev ? 20 * 1024 ** 2 : 3 * 1024 ** 2,
+        maximumFileSizeToCacheInBytes: isDev ? 40 * 1024 ** 2 : 3 * 1024 ** 2,
         dontCacheBustURLsMatching: /\.\w{16,}\./,
       }),
     ].concat(
