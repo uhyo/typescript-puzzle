@@ -10,7 +10,7 @@ Please run `watch` npm script to run `webpack-dev-server`. As this app involves 
 
 While any kind of contribution is equally welcome, one of the easiest but still very appreciated way of contributing is to add questions.
 
-The questions are defined in `src/definitions/stages/level{n}.ts`. You can add your question by appending a `StageDefinition` object to the `stages` array found in these files.
+The questions are defined in `src/definitions/stages/level-{name}.ts`. You can add your question by appending a `StageDefinition` object to the `stages` array found in these files.
 
 A stage is defined by _question_ (a program with holes) and _options_ (program fragments). Player fills the holes with prepared options.
 
