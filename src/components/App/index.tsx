@@ -34,15 +34,22 @@ type Props = {
   page: AppPage;
   stageStore: StageStore;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
+  privacyConfirmed: boolean;
 };
 
-const AppContent: FC<Props> = ({ page, stageStore, serviceWorkerState }) => {
+const AppContent: FC<Props> = ({
+  page,
+  stageStore,
+  serviceWorkerState,
+  privacyConfirmed,
+}) => {
   switch (page.type) {
     case "levelSelect": {
       return (
         <LevelSelect
           clearedLevelsFetcher={page.clearedLevelsFetcher}
           serviceWorkerState={serviceWorkerState}
+          privacyConfirmed={privacyConfirmed}
         />
       );
     }

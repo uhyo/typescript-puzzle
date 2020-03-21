@@ -6,6 +6,7 @@ import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
+import { getPrivacyConfirmed } from "./privacyConfirmation";
 import {
   registerServiceWorker,
   ServiceWorkerState,
@@ -14,8 +15,9 @@ import {
 
 export type AppState = {
   stageStore: StageStore;
-  serviceWorkerState: Fetcher<ServiceWorkerState>;
   page: AppPage;
+  serviceWorkerState: Fetcher<ServiceWorkerState>;
+  privacyConfirmed: boolean;
 };
 
 export type AppPage =
@@ -78,6 +80,7 @@ const getInitialState = (): AppState => {
       clearedLevelsFetcher: new Fetcher(getClearedLevels),
     },
     serviceWorkerState: new Fetcher(registerServiceWorker),
+    privacyConfirmed: getPrivacyConfirmed(),
   };
 };
 
@@ -169,6 +172,15 @@ export const {
           type: "levelSelect",
           clearedLevelsFetcher,
         },
+      }));
+    },
+    /**
+     * Set privacy confirmation state to confirmed.
+     */
+    setPrivacyConfirmed: () => {
+      setState(state => ({
+        ...state,
+        privacyConfirmed: true,
       }));
     },
     /**

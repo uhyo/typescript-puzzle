@@ -1,4 +1,5 @@
 import { setCacheNameDetails } from "workbox-core";
+import * as googleAnalytics from "workbox-google-analytics";
 import { precacheAndRoute } from "workbox-precaching";
 import { cacheNamePrefix } from "./cacheName";
 import { registerRoutes } from "./routes";
@@ -6,6 +7,8 @@ import { registerRoutes } from "./routes";
 setCacheNameDetails({
   prefix: cacheNamePrefix,
 });
+
+googleAnalytics.initialize();
 
 // this is injected by workbox-webpack-plugin
 const manifest = (self as any).__WB_MANIFEST;

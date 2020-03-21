@@ -26,6 +26,11 @@ export const mainBackgroundColor = "#037acc";
 export const affirmativeBackgroundColor = "#27b850";
 
 /**
+ * Backgroun color for warning
+ */
+export const warningBackgroundColor = "#f7f1cd";
+
+/**
  * Background color for disabled
  */
 export const disabledBackgroundColor = "#bbbbbb";

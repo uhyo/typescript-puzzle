@@ -54,6 +54,17 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: "html/index.html",
         excludeChunks: ["sw"],
+        local: {
+          ga: require("./scripts/googleAnalytics"),
+        },
+      }),
+      new HtmlWebpackPlugin({
+        template: "html/privacy.html",
+        filename: "privacy.html",
+        inject: false,
+        local: {
+          ga: require("./scripts/googleAnalytics"),
+        },
       }),
       new CopyWebpackPlugin(["css/ress.min.css"]),
       new PwaManifest(require("./scripts/webManifest")),

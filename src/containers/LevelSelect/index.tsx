@@ -4,14 +4,16 @@ import { LevelDoc } from "~/db/level";
 import { Level } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 import { useAppActions } from "../App/logic";
+import { savePrivacyConfirmed } from "../App/privacyConfirmation";
 import { ServiceWorkerState } from "../App/registerServiceWorker";
 
 export const LevelSelect: FC<{
   clearedLevelsFetcher: Fetcher<LevelDoc[]>;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
-}> = ({ clearedLevelsFetcher, serviceWorkerState }) => {
+  privacyConfirmed: boolean;
+}> = ({ clearedLevelsFetcher, serviceWorkerState, privacyConfirmed }) => {
   const [startTransition] = useTransition();
-  const { goToLevel } = useAppActions();
+  const { goToLevel, setPrivacyConfirmed } = useAppActions();
   const onSelect = useCallback(
     (level: Level) => {
       startTransition(() => {
@@ -20,6 +22,10 @@ export const LevelSelect: FC<{
     },
     [goToLevel],
   );
+  const onPrivacyConfirm = useCallback(() => {
+    savePrivacyConfirmed();
+    setPrivacyConfirmed();
+  }, [setPrivacyConfirmed]);
 
   return (
     <>
@@ -27,6 +33,8 @@ export const LevelSelect: FC<{
         onSelect={onSelect}
         clearedLevelsFetcher={clearedLevelsFetcher}
         serviceWorkerState={serviceWorkerState}
+        privacyConfirmed={privacyConfirmed}
+        onPrivacyConfirm={onPrivacyConfirm}
       />
     </>
   );

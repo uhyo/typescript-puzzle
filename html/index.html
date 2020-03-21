@@ -1,12 +1,30 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>App</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link href="ress.min.css" rel="stylesheet" >
-    <link href="https://fonts.googleapis.com/css?family=Asap:700|Source+Code+Pro&display=block" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <title>Type Puzzles</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="ress.min.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Asap:700|Source+Code+Pro&display=block"
+      rel="stylesheet"
+    />
+    <% if(htmlWebpackPlugin.options.local.ga) { %>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=<%= htmlWebpackPlugin.options.local.ga.id %>"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "<%= htmlWebpackPlugin.options.local.ga.id %>");
+    </script>
+    <% } %>
   </head>
-  <body>
-  </body>
+  <body></body>
 </html>
