@@ -26,3 +26,9 @@ Each contributor can use their own format, but they are encouraged to keep the I
 
 Each stage can have an optional `author` field which is an author ID.
 To define your author ID, add a field to `src/definitions/authors.ts`.
+
+## Adding Hole Types
+
+There are various hole types that can be used as options. Basically, a hole type represents one syntactic construct of TypeScript.
+
+If you want add a new type of hole, do so by modifying files in `src/definitions/holes`.

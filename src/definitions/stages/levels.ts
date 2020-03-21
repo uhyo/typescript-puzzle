@@ -3,6 +3,7 @@
  */
 export const levels = {
   easy: 10,
+  easy2: 11,
   intermediate: 20,
 } as const;
 
@@ -25,13 +26,21 @@ export type LevelMetadata = {
 
 export const levelMetadata: Record<Level, LevelMetadata> = {
   [levels.easy]: {
-    name: "EASY",
+    name: "EASY 1",
+    numberOfStages: 4,
+  },
+  [levels.easy2]: {
+    name: "EASY 2",
     numberOfStages: 4,
   },
   [levels.intermediate]: {
-    name: "INTERMEDIATE",
+    name: "INTERMEDIATE 1",
     numberOfStages: 1,
   },
 };
 
-export const levelList: readonly Level[] = [levels.easy, levels.intermediate];
+export const levelList: readonly Level[] = [
+  levels.easy,
+  levels.easy2,
+  levels.intermediate,
+];

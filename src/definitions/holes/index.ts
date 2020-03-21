@@ -1,8 +1,9 @@
-import { booleanHole } from "./booleanHole";
-import { numberHole } from "./numberHole";
-import { primitiveHole } from "./primitiveHole";
-import { stringHole } from "./stringHole";
-import { unionHole } from "./unionHole";
+import { arrayHole } from "./types/arrayHole";
+import { primitiveHole } from "./types/primitiveHole";
+import { unionHole } from "./types/unionHole";
+import { booleanHole } from "./values/booleanHole";
+import { numberHole } from "./values/numberHole";
+import { stringHole } from "./values/stringHole";
 
 export const holeDefinitions = [
   primitiveHole,
@@ -10,4 +11,5 @@ export const holeDefinitions = [
   numberHole,
   booleanHole,
   unionHole,
+  arrayHole,
 ];

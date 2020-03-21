@@ -49,7 +49,14 @@ export const grayTextColor = "#888888";
  * Color of syntax kinds
  */
 export const syntaxColor = {
+  /**
+   * Built-in type names.
+   */
   primitiveType: "#438531",
+  /**
+   * Keywords.
+   */
+  keyword: "#674580",
   /**
    * String literal or string literal type
    */
