@@ -5,6 +5,7 @@ import { StageDefinition } from "../../stages/stageDefinition";
 const stages: StageDefinition[] = [
   {
     id: "v1.l1.s1",
+    author: "uhyo",
     question: question`
         const value: ${blank} = "foobar";
     `,
@@ -16,6 +17,7 @@ const stages: StageDefinition[] = [
   },
   {
     id: "v1.l1.s2",
+    author: "uhyo",
     question: question`
         const num: ${blank} = 3.1415;
     `,
