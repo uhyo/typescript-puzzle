@@ -2,8 +2,7 @@ import React, { FC, Suspense, useCallback, useTransition } from "react";
 import { StageComponent } from "~/components/Stage";
 import { Level } from "~/definitions/stages/levels";
 import { SUSPENSE_CONFIG } from "~/design/suspenseConfig";
-import { HoleValue } from "~/stages/holes/holeDefs";
-import { Question } from "~/stages/questionDefinition/question";
+import { StageDefinition } from "~/stages/stageDefinition";
 import { RemoteCompiler } from "~/ts-compiler";
 import { useAppActions } from "../App/logic";
 import { useStageState } from "./logic";
@@ -12,11 +11,12 @@ export const Stage: FC<{
   compiler: RemoteCompiler;
   level: Level;
   stageNumber: number;
-  question: Question;
-  options: readonly HoleValue[];
-}> = ({ compiler, level, stageNumber, question, options }) => {
+  stage: StageDefinition;
+}> = ({ compiler, level, stageNumber, stage }) => {
+  const { question } = stage;
+
   const [{ answer, focus, check }, Provider] = useStageState({
-    question: question,
+    question,
     remoteCompiler: compiler,
   });
   const [startPageTransition] = useTransition(SUSPENSE_CONFIG);
@@ -41,8 +41,7 @@ export const Stage: FC<{
         <StageComponent
           level={level}
           stageNumber={stageNumber}
-          question={question}
-          options={options}
+          stage={stage}
           answer={answer}
           focus={focus}
           check={check}

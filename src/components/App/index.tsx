@@ -68,8 +68,7 @@ const AppContent: FC<Props> = ({
           compiler={page.compiler}
           level={page.level}
           stageNumber={page.stageIndex + 1}
-          question={stage.question}
-          options={stage.options}
+          stage={stage}
         />
       );
     }

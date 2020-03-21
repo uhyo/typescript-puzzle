@@ -3,21 +3,20 @@ import styled from "styled-components";
 import { CheckState } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
 import { Level } from "~/definitions/stages/levels";
-import { HoleValue } from "~/stages/holes/holeDefs";
-import { Question } from "~/stages/questionDefinition/question";
+import { StageDefinition } from "~/stages/stageDefinition";
 import { Fetcher } from "~/util/Fetcher";
 import { PageWrapper } from "../PageWrapper";
 import { OptionsDisplay } from "./OptionsDisplay";
 import { QuestionDisplay } from "./QuestionDisplay";
 import { StageHeader } from "./StageHeader";
+import { StageMetadata } from "./StageMetadata";
 import { StageNavigation } from "./StageNavigation";
 import { StatusBar } from "./StatusBar";
 
 export const StageComponent: FC<{
   level: Level;
   stageNumber: number;
-  question: Question;
-  options: readonly HoleValue[];
+  stage: StageDefinition;
   answer: AnswerState;
   focus: string | undefined;
   check?: Fetcher<CheckState>;
@@ -28,8 +27,7 @@ export const StageComponent: FC<{
 }> = ({
   level,
   stageNumber,
-  question,
-  options,
+  stage,
   answer,
   focus,
   check,
@@ -38,6 +36,7 @@ export const StageComponent: FC<{
   startCheckTransition,
   isCheckLoading,
 }) => {
+  const { question, options } = stage;
   const checkState = check?.get();
   return (
     <>
@@ -47,6 +46,9 @@ export const StageComponent: FC<{
         onQuitStage={onQuitStage}
       />
       <Wrapper>
+        <div>
+          <StageMetadata stage={stage} />
+        </div>
         <div>
           <QuestionDisplay
             question={question}
@@ -74,7 +76,9 @@ export const StageComponent: FC<{
 
 const Wrapper = styled(PageWrapper)`
   & > div:nth-child(1) {
+    flex: 1.5em 0 0;
+  }
+  & > div:nth-child(2) {
     flex: auto 1 0;
-    padding: 1.5em 0 0;
   }
 `;
