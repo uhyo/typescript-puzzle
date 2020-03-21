@@ -1,19 +1,9 @@
+import React from "react";
 import { holeDefinition } from "~/stages/holes/holeDefinition";
 import { range } from "~/util/range";
+import { separateArrayWith } from "~/util/separateArrayWith";
 
-const primitiveHole = holeDefinition<{
-  value: string;
-}>()("primitive", {
-  *subHoleIds() {},
-  getNextFocus() {
-    return undefined;
-  },
-  toSourceText(hole) {
-    return hole.value;
-  },
-});
-
-const unionHole = holeDefinition<{
+export const unionHole = holeDefinition<{
   /**
    * number of holes.
    */
@@ -44,6 +34,7 @@ const unionHole = holeDefinition<{
       .join("|");
     return `(${contents})`;
   },
+  render(hole, { children }) {
+    return <>{separateArrayWith(React.Children.toArray(children), " | ")}</>;
+  },
 });
-
-export const holeDefinitions = [primitiveHole, unionHole];

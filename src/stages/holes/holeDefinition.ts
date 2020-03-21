@@ -1,3 +1,5 @@
+import { PropsWithChildren, ReactElement } from "react";
+
 export type HoleDefinition<Type extends string, H> = {
   type: Type;
   /**
@@ -20,6 +22,13 @@ export type HoleDefinition<Type extends string, H> = {
     hole: H,
     getSubHoleText: (subHoleId: string) => string,
   ) => string;
+  /**
+   * Render hole as a React element.
+   */
+  readonly render: (
+    hole: H,
+    props: PropsWithChildren<{}>,
+  ) => ReactElement | null;
 };
 
 export const holeDefinition = <H>() => {
