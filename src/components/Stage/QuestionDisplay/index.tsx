@@ -81,7 +81,6 @@ const QuestionDisplayWrapper = styled.div`
   display: flex;
   flex-flow: nowrap column;
   justify-content: center;
-  height: 100%;
 
   & > div {
     position: relative;

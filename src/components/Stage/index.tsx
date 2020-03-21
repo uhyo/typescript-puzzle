@@ -79,6 +79,8 @@ const Wrapper = styled(PageWrapper)`
     flex: 1.5em 0 0;
   }
   & > div:nth-child(2) {
+    display: flex;
+    flex-flow: column nowrap;
     flex: auto 1 0;
   }
 `;
