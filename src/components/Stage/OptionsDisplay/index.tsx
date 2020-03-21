@@ -1,5 +1,6 @@
 import React, {
   FC,
+  memo,
   TransitionStartFunction,
   useCallback,
   useMemo,
@@ -15,7 +16,7 @@ import { HoleValue } from "~/stages/holes/holeDefs";
 export const OptionsDisplay: FC<{
   options: readonly HoleValue[];
   startCheckTransition: TransitionStartFunction;
-}> = ({ options, startCheckTransition }) => {
+}> = memo(({ options, startCheckTransition }) => {
   const { selectOption } = useStageActions();
 
   const holeContextValue = useMemo(() => {
@@ -51,7 +52,7 @@ export const OptionsDisplay: FC<{
       </OptionsWrapper>
     </HoleContext.Provider>
   );
-};
+});
 
 const OptionsWrapper = styled.ul`
   display: flex;

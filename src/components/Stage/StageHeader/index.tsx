@@ -1,6 +1,6 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import styled from "styled-components";
 import { AppHeader } from "~/components/AppHeader";
 import { Level, levelMetadata } from "~/definitions/stages/levels";
@@ -9,7 +9,7 @@ export const StageHeader: FC<{
   level: Level;
   stageNumber: number;
   onQuitStage?: () => void;
-}> = ({ level, stageNumber, onQuitStage }) => {
+}> = memo(({ level, stageNumber, onQuitStage }) => {
   const { name, numberOfStages } = levelMetadata[level];
   const quitButton =
     onQuitStage &&
@@ -29,7 +29,7 @@ export const StageHeader: FC<{
       </CloseButton>
     </Wrapper>
   );
-};
+});
 
 const Wrapper = styled(AppHeader)`
   display: flex;
