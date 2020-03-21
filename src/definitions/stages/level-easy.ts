@@ -18,7 +18,7 @@ const literalOptions = [
 
 const stages: StageDefinition[] = [
   {
-    id: "uh.v1.l1.s1",
+    id: "uh.v1.l10.s1",
     author: "uhyo",
     question: question`
         const value: ${blank} = "foobar";
@@ -26,7 +26,7 @@ const stages: StageDefinition[] = [
     options: primitiveOptions,
   },
   {
-    id: "uh.v1.l1.s2",
+    id: "uh.v1.l10.s2",
     author: "uhyo",
     question: question`
         const num: ${blank} = 3.1415;
@@ -34,7 +34,7 @@ const stages: StageDefinition[] = [
     options: primitiveOptions,
   },
   {
-    id: "uh.v1.l1.s3",
+    id: "uh.v1.l10.s3",
     author: "uhyo",
     question: question`
         const b: ${blank} = true;
@@ -42,7 +42,7 @@ const stages: StageDefinition[] = [
     options: primitiveOptions,
   },
   {
-    id: "uh.v1.l1.s4",
+    id: "uh.v1.l10.s4",
     author: "uhyo",
     question: question`
         const val: string = ${blank};
@@ -50,7 +50,7 @@ const stages: StageDefinition[] = [
     options: literalOptions,
   },
   {
-    id: "uh.v1.l1.s5",
+    id: "uh.v1.l10.s5",
     author: "uhyo",
     question: question`
         const val: number = ${blank};
@@ -58,7 +58,7 @@ const stages: StageDefinition[] = [
     options: literalOptions,
   },
   {
-    id: "uh.v1.l1.s6",
+    id: "uh.v1.l10.s6",
     author: "uhyo",
     question: question`
         const val: boolean = ${blank};
@@ -66,7 +66,7 @@ const stages: StageDefinition[] = [
     options: literalOptions,
   },
   {
-    id: "uh.v1.l1.s7",
+    id: "uh.v1.l10.s7",
     author: "uhyo",
     question: question`
       function double(value: ${blank}): ${blank} {
@@ -77,7 +77,7 @@ const stages: StageDefinition[] = [
     options: primitiveOptions,
   },
   {
-    id: "uh.v1.l1.s8",
+    id: "uh.v1.l10.s8",
     author: "uhyo",
     question: question`
       function greet(name: ${blank}): ${blank} {

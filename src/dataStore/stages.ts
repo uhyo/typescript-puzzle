@@ -1,5 +1,5 @@
-import level1 from "~/definitions/stages/level1";
-import level2 from "~/definitions/stages/level2";
+import level1 from "~/definitions/stages/level-easy";
+import level2 from "~/definitions/stages/level-intermediate";
 import { Level, levels } from "~/definitions/stages/levels";
 import { StageDefinition } from "~/stages/stageDefinition";
 
@@ -17,8 +17,8 @@ export class StageStore {
   private stageToLevel: Map<string, Level> = new Map();
 
   constructor() {
-    this.loadStages(levels[1], level1);
-    this.loadStages(levels[2], level2);
+    this.loadStages(levels.easy, level1);
+    this.loadStages(levels.intermediate, level2);
   }
 
   /**

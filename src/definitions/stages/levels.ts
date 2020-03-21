@@ -2,8 +2,8 @@
  * Definition of levels
  */
 export const levels = {
-  1: 1,
-  2: 2,
+  easy: 10,
+  intermediate: 20,
 } as const;
 
 export type Level = typeof levels[keyof typeof levels];
@@ -24,14 +24,14 @@ export type LevelMetadata = {
 };
 
 export const levelMetadata: Record<Level, LevelMetadata> = {
-  [levels[1]]: {
-    name: "LEVEL 1",
-    numberOfStages: 1,
+  [levels.easy]: {
+    name: "EASY",
+    numberOfStages: 4,
   },
-  [levels[2]]: {
-    name: "LEVEL 2",
+  [levels.intermediate]: {
+    name: "INTERMEDIATE",
     numberOfStages: 1,
   },
 };
 
-export const levelList: readonly Level[] = [levels[1], levels[2]];
+export const levelList: readonly Level[] = [levels.easy, levels.intermediate];
