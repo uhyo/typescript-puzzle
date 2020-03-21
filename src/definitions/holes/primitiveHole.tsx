@@ -4,7 +4,7 @@ import { syntaxColor } from "~/design/color";
 import { holeDefinition } from "~/stages/holes/holeDefinition";
 
 const PrimitiveHoleContents = styled.span`
-  color: ${syntaxColor.primitive};
+  color: ${syntaxColor.primitiveType};
 `;
 
 export const primitiveHole = holeDefinition<{
