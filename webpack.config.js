@@ -76,7 +76,13 @@ module.exports = (env, argv) => {
           ga: require("./scripts/googleAnalytics"),
         },
       }),
-      new CopyWebpackPlugin(["css/ress.min.css"]),
+      new CopyWebpackPlugin([
+        "css/ress.min.css",
+        {
+          from: "./src/assets/jigsaw-icon-ts.png",
+          to: "og-image.png",
+        },
+      ]),
       new PwaManifest(require("./scripts/webManifest")),
       new ManifestPlugin(),
       new WorkboxPlugin.InjectManifest({
@@ -85,11 +91,9 @@ module.exports = (env, argv) => {
         maximumFileSizeToCacheInBytes: isDev ? 40 * 1024 ** 2 : 3 * 1024 ** 2,
         dontCacheBustURLsMatching: /\.\w{16,}\./,
       }),
-    ].concat(
-      isDev
-        ? [new webpack.HotModuleReplacementPlugin()]
-        : [new BundleAnalyzerPlugin()],
-    ),
+    ]
+      .concat(isDev ? [new webpack.HotModuleReplacementPlugin()] : [])
+      .concat(process.env.ANALYZER ? [new BundleAnalyzerPlugin()] : []),
     devServer: {
       host: "0.0.0.0",
       hot: true,
