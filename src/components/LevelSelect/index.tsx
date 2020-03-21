@@ -11,6 +11,7 @@ import { Fetcher } from "~/util/Fetcher";
 import { AppHeader } from "../AppHeader";
 import { Crown } from "../Crown";
 import { PageWrapper } from "../PageWrapper";
+import { Footer } from "./Footer";
 import { PrivacyNotice } from "./PrivacyNotice";
 import { UpdateNotice } from "./UpdateNotice";
 
@@ -65,6 +66,9 @@ export const LevelSelectComponent: FC<{
               </LevelButton>
             );
           })}
+        </div>
+        <div>
+          <Footer />
         </div>
       </Wrapper>
     </>
