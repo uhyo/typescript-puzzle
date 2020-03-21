@@ -1,7 +1,7 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
 import { getClearedStagesInLevel, putClearedStages } from "~/db/stage";
-import { Level, levelMetadata } from "~/problems/levels";
+import { Level, levelMetadata } from "~/definitions/stages/levels";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";

@@ -1,5 +1,5 @@
 import { StageStore } from "~/dataStore/stages";
-import { Level } from "~/problems/levels";
+import { Level } from "~/definitions/stages/levels";
 import { levelStore } from "./config";
 import { openDb } from "./openDb";
 import { getClearedStagesInLevel } from "./stage";

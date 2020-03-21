@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { FC } from "react";
 import styled from "styled-components";
 import { AppHeader } from "~/components/AppHeader";
-import { Level, levelMetadata } from "~/problems/levels";
+import { Level, levelMetadata } from "~/definitions/stages/levels";
 
 export const StageHeader: FC<{
   level: Level;

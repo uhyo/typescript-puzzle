@@ -1,6 +1,6 @@
 import { StageStore } from "~/dataStore/stages";
 import { getClearedStagesInLevel } from "~/db/stage";
-import { Level, levelMetadata } from "~/problems/levels";
+import { Level, levelMetadata } from "~/definitions/stages/levels";
 import { tscWorkerCacheName } from "~/sw/cacheName";
 import { shuffle } from "~/util/shuffle";
 

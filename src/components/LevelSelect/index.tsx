@@ -4,9 +4,9 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { ServiceWorkerState } from "~/containers/App/registerServiceWorker";
 import { LevelDoc } from "~/db/level";
+import { Level, levelList, levelMetadata } from "~/definitions/stages/levels";
 import { mainBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
-import { Level, levelList, levelMetadata } from "~/problems/levels";
 import { Fetcher } from "~/util/Fetcher";
 import { AppHeader } from "../AppHeader";
 import { Crown } from "../Crown";
@@ -55,7 +55,7 @@ export const LevelSelectComponent: FC<{
               <LevelButton key={level} onClick={clickHandler}>
                 {meta.name}
                 {status === "completed" ? (
-                  <CrownIcon title="You solved all the problems in this level">
+                  <CrownIcon title="You solved all the questions in this level">
                     <FontAwesomeIcon icon={faCrown} />
                   </CrownIcon>
                 ) : status === "cleared" ? (

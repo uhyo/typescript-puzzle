@@ -1,8 +1,8 @@
 import React, { FC, useTransition } from "react";
 import styled from "styled-components";
 import { useAppActions } from "~/containers/App/logic";
+import { Level, levelMetadata } from "~/definitions/stages/levels";
 import { grayTextColor, mainTextColor } from "~/design/color";
-import { Level, levelMetadata } from "~/problems/levels";
 import { AppHeader } from "../AppHeader";
 import { Crown } from "../Crown";
 import { NavigationButton } from "../NavigationButton";

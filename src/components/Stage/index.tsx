@@ -2,13 +2,13 @@ import React, { FC } from "react";
 import styled from "styled-components";
 import { CheckState } from "~/containers/Stage/check";
 import { AnswerState } from "~/containers/Stage/logic";
-import { Level } from "~/problems/levels";
-import { HoleValue } from "~/problems/options";
-import { Problem } from "~/problems/problemDefinition/problem";
+import { Level } from "~/definitions/stages/levels";
+import { HoleValue } from "~/stages/holes/holeDefs";
+import { Question } from "~/stages/questionDefinition/question";
 import { Fetcher } from "~/util/Fetcher";
 import { PageWrapper } from "../PageWrapper";
 import { OptionsDisplay } from "./OptionsDisplay";
-import { ProblemDisplay } from "./ProblemDisplay";
+import { QuestionDisplay } from "./QuestionDisplay";
 import { StageHeader } from "./StageHeader";
 import { StageNavigation } from "./StageNavigation";
 import { StatusBar } from "./StatusBar";
@@ -16,8 +16,8 @@ import { StatusBar } from "./StatusBar";
 export const StageComponent: FC<{
   level: Level;
   stageNumber: number;
-  problem: Problem;
-  options: HoleValue[];
+  question: Question;
+  options: readonly HoleValue[];
   answer: AnswerState;
   focus: string | undefined;
   check?: Fetcher<CheckState>;
@@ -28,7 +28,7 @@ export const StageComponent: FC<{
 }> = ({
   level,
   stageNumber,
-  problem,
+  question,
   options,
   answer,
   focus,
@@ -48,8 +48,8 @@ export const StageComponent: FC<{
       />
       <Wrapper>
         <div>
-          <ProblemDisplay
-            problem={problem}
+          <QuestionDisplay
+            question={question}
             answer={answer}
             focus={focus}
             backgroundState={checkState}

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { StageStore } from "~/dataStore/stages";
-import { Level } from "~/problems/levels";
+import { Level } from "~/definitions/stages/levels";
 import { useAppActions } from "../App/logic";
 import { checkWorkerCache, loadLevel } from "./logic";
 

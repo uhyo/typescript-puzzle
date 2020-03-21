@@ -1,4 +1,4 @@
-import { Level } from "~/problems/levels";
+import { Level } from "~/definitions/stages/levels";
 import { openDb } from ".";
 import { stageStore } from "./config";
 

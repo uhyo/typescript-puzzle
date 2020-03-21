@@ -8,21 +8,21 @@ import { AnswerState, useStageActions } from "~/containers/Stage/logic";
 import { lightGrayBackgroundColor } from "~/design/color";
 import { largeRoundedBoxRadius } from "~/design/length";
 import {
-  problemSourceCodeFontSize,
+  questionSourceCodeFontSize,
   sourceCodeFontFamily,
 } from "../../../design/font";
-import { Problem } from "../../../problems/problemDefinition/problem";
+import { Question } from "../../../stages/questionDefinition/question";
 import { BackGround } from "../Background";
 
 interface Props {
-  problem: Problem;
+  question: Question;
   answer: AnswerState;
   focus: string | undefined;
   backgroundState?: CheckState;
 }
 
-export const ProblemDisplay: FC<Props> = ({
-  problem,
+export const QuestionDisplay: FC<Props> = ({
+  question,
   answer,
   focus,
   backgroundState,
@@ -47,7 +47,7 @@ export const ProblemDisplay: FC<Props> = ({
     [holeSelect],
   );
 
-  const { holes, texts } = problem;
+  const { holes, texts } = question;
   const result: React.ReactChild[] = [];
   for (let i = 0; i <= holes.length; i++) {
     result.push(<Fragment key={`text-${i}`}>{texts[i]}</Fragment>);
@@ -58,40 +58,40 @@ export const ProblemDisplay: FC<Props> = ({
   }
   return (
     <HoleContext.Provider value={holeContextValue}>
-      <ProblemDisplayWrapper>
-        <Container>
+      <QuestionDisplayWrapper>
+        <div>
           <BackGround state={backgroundState} />
-          <ProblemDisplayInner>
-            <ProblemProgram onClick={clickHandler}>{result}</ProblemProgram>
-          </ProblemDisplayInner>
-        </Container>
-      </ProblemDisplayWrapper>
+          <QuestionDisplayInner>
+            <code onClick={clickHandler}>{result}</code>
+          </QuestionDisplayInner>
+        </div>
+      </QuestionDisplayWrapper>
     </HoleContext.Provider>
   );
 };
 
-const ProblemDisplayWrapper = styled.div`
+const QuestionDisplayWrapper = styled.div`
   flex: auto 1 0;
   display: flex;
   flex-flow: nowrap column;
   justify-content: center;
   height: 100%;
+
+  & > div {
+    position: relative;
+    flex: auto 1 1;
+    display: flex;
+    flex-flow: nowrap column;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    isolation: isolate;
+    border: 1px solid ${lightGrayBackgroundColor};
+    border-radius: ${largeRoundedBoxRadius};
+  }
 `;
 
-const Container = styled.div`
-  position: relative;
-  flex: auto 1 1;
-  display: flex;
-  flex-flow: nowrap column;
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-  isolation: isolate;
-  border: 1px solid ${lightGrayBackgroundColor};
-  border-radius: ${largeRoundedBoxRadius};
-`;
-
-const ProblemDisplayInner = styled.div`
+const QuestionDisplayInner = styled.div`
   flex: auto 1 1;
   padding: 6px 8px;
   background-image: repeating-linear-gradient(
@@ -102,12 +102,13 @@ const ProblemDisplayInner = styled.div`
     rgba(0, 0, 0, 0.02) 20px
   );
   line-height: 1.2;
-  font-family: ${sourceCodeFontFamily};
-  font-size: ${problemSourceCodeFontSize};
+  font-size: ${questionSourceCodeFontSize};
   z-index: 1;
-`;
 
-const ProblemProgram = styled.div`
-  height: 100%;
-  overflow-y: auto;
+  & > code {
+    display: block;
+    height: 100%;
+    overflow-y: auto;
+    font-family: ${sourceCodeFontFamily};
+  }
 `;

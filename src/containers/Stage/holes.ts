@@ -1,13 +1,13 @@
-import { HoleValue } from "~/problems/options";
-import { subHoleIds } from "~/problems/options/subHoleIds";
-import { Problem } from "~/problems/problemDefinition/problem";
+import { HoleValue } from "~/stages/holes/holeDefs";
+import { subHoleIds } from "~/stages/holes/subHoleIds";
+import { Question } from "~/stages/questionDefinition/question";
 import { AnswerState } from "./logic";
 
 /**
  * Generates all existing holeIds.
  */
-export function* allHoleIds(problem: Problem, state: AnswerState) {
-  for (let i = 0; i < problem.holes.length; i++) {
+export function* allHoleIds(question: Question, state: AnswerState) {
+  for (let i = 0; i < question.holes.length; i++) {
     const value = state[i];
     yield* rec(String(i), value);
   }

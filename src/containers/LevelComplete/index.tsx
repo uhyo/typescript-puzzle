@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { LevelComplete as LevelCompleteComponent } from "~/components/LevelComplete";
-import { Level } from "~/problems/levels";
+import { Level } from "~/definitions/stages/levels";
 import { Fetcher } from "~/util/Fetcher";
 
 export const LevelComplete: FC<{

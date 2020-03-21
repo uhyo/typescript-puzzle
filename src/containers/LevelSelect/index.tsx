@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useTransition } from "react";
 import { LevelSelectComponent } from "~/components/LevelSelect";
 import { LevelDoc } from "~/db/level";
-import { Level } from "~/problems/levels";
+import { Level } from "~/definitions/stages/levels";
 import { Fetcher } from "~/util/Fetcher";
 import { useAppActions } from "../App/logic";
 import { savePrivacyConfirmed } from "../App/privacyConfirmation";

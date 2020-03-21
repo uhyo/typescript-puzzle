@@ -10,10 +10,10 @@ import { Hole } from "~/containers/Hole/HoleContainer";
 import { HoleContext } from "~/containers/Hole/HoleContext";
 import { useStageActions } from "~/containers/Stage/logic";
 import { gapBetweenTappable } from "~/design/length";
-import { HoleValue } from "~/problems/options";
+import { HoleValue } from "~/stages/holes/holeDefs";
 
 export const OptionsDisplay: FC<{
-  options: HoleValue[];
+  options: readonly HoleValue[];
   startCheckTransition: TransitionStartFunction;
 }> = ({ options, startCheckTransition }) => {
   const { selectOption } = useStageActions();

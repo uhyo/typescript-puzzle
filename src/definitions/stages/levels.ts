@@ -18,7 +18,7 @@ export type LevelMetadata = {
    */
   name: string;
   /**
-   * Number of problems to solve
+   * Number of questions to solve
    */
   numberOfStages: number;
 };

@@ -1,6 +1,6 @@
 import { TransitionStartFunction } from "react";
-import { HoleValue } from "~/problems/options";
-import { Problem } from "~/problems/problemDefinition/problem";
+import { HoleValue } from "~/stages/holes/holeDefs";
+import { Question } from "~/stages/questionDefinition/question";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
@@ -10,7 +10,7 @@ import { checkAnswer, CheckState } from "./check";
 import { getInitialFocus, getNextFocus } from "./focus";
 
 export type StageState = {
-  readonly problem: Problem;
+  readonly question: Question;
   readonly answer: AnswerState;
   readonly focus: string | undefined;
   readonly check?: Fetcher<CheckState>;
@@ -27,15 +27,15 @@ export type StageAction =
     };
 
 type InitialStateParams = {
-  problem: Problem;
+  question: Question;
   remoteCompiler: RemoteCompiler;
 };
 export const getInitialState = ({
-  problem,
+  question,
 }: InitialStateParams): StageState => ({
-  problem,
+  question,
   answer: {},
-  focus: getInitialFocus(problem),
+  focus: getInitialFocus(question),
 });
 
 export const {
@@ -51,7 +51,7 @@ export const {
             return {
               ...state,
               answer: setHoleContent(
-                state.problem,
+                state.question,
                 state.answer,
                 holeId,
                 undefined,
@@ -84,12 +84,12 @@ export const {
           Pick<StageState, "answer" | "focus"> | undefined
         >();
         const getNextAnswerFocus = (state: StageState) => {
-          const { answer, focus, problem } = state;
+          const { answer, focus, question } = state;
           if (focus === undefined) {
             return undefined;
           }
-          const nextAnswer = setHoleContent(problem, answer, focus, option);
-          const nextFocus = getNextFocus(problem, nextAnswer, focus);
+          const nextAnswer = setHoleContent(question, answer, focus, option);
+          const nextFocus = getNextFocus(question, nextAnswer, focus);
           return {
             answer: nextAnswer,
             focus: nextFocus,
@@ -115,7 +115,7 @@ export const {
               ...state,
               ...next,
               check: checkResultCell.get(() =>
-                checkAnswer(state.problem, next.answer, init.remoteCompiler),
+                checkAnswer(state.question, next.answer, init.remoteCompiler),
               ),
             };
           });

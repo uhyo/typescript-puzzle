@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { HoleValue } from "~/problems/options";
+import { HoleValue } from "~/stages/holes/holeDefs";
 
 export type HoleValues = { [holeId in string]?: HoleValue };
 

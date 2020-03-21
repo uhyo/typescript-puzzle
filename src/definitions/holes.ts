@@ -1,4 +1,4 @@
-import { holeDefinition } from "~/problems/options/holeDefinition";
+import { holeDefinition } from "~/stages/holes/holeDefinition";
 import { range } from "~/util/range";
 
 const primitiveHole = holeDefinition<{

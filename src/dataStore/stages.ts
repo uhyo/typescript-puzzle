@@ -1,14 +1,14 @@
-import level1 from "~/problems/level1";
-import level2 from "~/problems/level2";
-import { Level, levels } from "~/problems/levels";
-import { StageDefinition } from "~/problems/stageDefinition";
+import level1 from "~/definitions/stages/level1";
+import level2 from "~/definitions/stages/level2";
+import { Level, levels } from "~/definitions/stages/levels";
+import { StageDefinition } from "~/stages/stageDefinition";
 
 /**
  * Data store which holds stage data.
  */
 export class StageStore {
   /**
-   * Loaded problems.
+   * Loaded levels.
    */
   private levels: Partial<Record<Level, readonly StageDefinition[]>> = {};
   /**

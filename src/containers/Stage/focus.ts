@@ -1,13 +1,13 @@
-import { holeDefs } from "~/problems/options";
-import { getParentAndSub, getSubHoleId } from "~/problems/options/subHoleIds";
-import { Problem } from "~/problems/problemDefinition/problem";
+import { holeDefs } from "~/stages/holes/holeDefs";
+import { getParentAndSub, getSubHoleId } from "~/stages/holes/subHoleIds";
+import { Question } from "~/stages/questionDefinition/question";
 import { AnswerState } from "./logic";
 
-export const getInitialFocus = (problem: Problem): string | undefined =>
-  problem.holes.length > 0 ? "0" : undefined;
+export const getInitialFocus = (question: Question): string | undefined =>
+  question.holes.length > 0 ? "0" : undefined;
 
 export const getNextFocus = (
-  problem: Problem,
+  question: Question,
   answer: AnswerState,
   currentFocusedId: string | undefined,
 ): string | undefined => {
@@ -15,7 +15,7 @@ export const getNextFocus = (
   // next: go forthward to transition to next tree
   let mode: "down" | "next" = "down";
   if (currentFocusedId === undefined) {
-    if (problem.holes.length > 0) {
+    if (question.holes.length > 0) {
       currentFocusedId = "0";
     } else {
       return undefined;
@@ -31,7 +31,7 @@ export const getNextFocus = (
           // https://github.com/microsoft/TypeScript/issues/32950
           const next: number = Number(currentFocusedId) + 1;
 
-          if (next < problem.holes.length) {
+          if (next < question.holes.length) {
             currentFocusedId = String(next);
             mode = "down";
             continue;

@@ -1,13 +1,12 @@
-import { typeOption } from "./options";
-import { problem } from "./problemDefinition";
-import { typeHole } from "./problemDefinition/hole";
-import { StageDefinition } from "./stageDefinition";
+import { typeOption } from "../../stages/holes/holeDefs";
+import { blank, question } from "../../stages/questionDefinition";
+import { StageDefinition } from "../../stages/stageDefinition";
 
 const stages: StageDefinition[] = [
   {
     id: "v1.l1.s1",
-    problem: problem`
-        const value: ${typeHole("string")} = "foobar";
+    question: question`
+        const value: ${blank} = "foobar";
     `,
     options: [
       typeOption("string"),
@@ -17,8 +16,8 @@ const stages: StageDefinition[] = [
   },
   {
     id: "v1.l1.s2",
-    problem: problem`
-        const num: ${typeHole("number")} = 3.1415;
+    question: question`
+        const num: ${blank} = 3.1415;
     `,
     options: [
       typeOption("string"),
