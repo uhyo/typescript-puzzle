@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { holeDefs, HoleValue } from "~/stages/holes/holeDefs";
+import { holeDefs, HoleValue } from "~/stages/holes";
 
 type Props = {
   hole: HoleValue;

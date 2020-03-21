@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { holeDefs } from "~/stages/holes/holeDefs";
+import { holeDefs } from "~/stages/holes";
 import { getSubHoleId } from "~/stages/holes/subHoleIds";
 import { BlankHole } from "./components/BlankHole";
 import { FilledHoleBase } from "./components/HoleBase";

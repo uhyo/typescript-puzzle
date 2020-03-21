@@ -1,19 +1,19 @@
-import { typeOption } from "../../stages/holes/holeDefs";
+import { holeFactories as f } from "~/stages/holes";
 import { blank, question } from "../../stages/questionDefinition";
 import { StageDefinition } from "../../stages/stageDefinition";
 
 // options with primitive types only
 const primitiveOptions = [
-  typeOption("string"),
-  typeOption("number"),
-  typeOption("boolean"),
+  f.primitive({ value: "string" }),
+  f.primitive({ value: "number" }),
+  f.primitive({ value: "boolean" }),
 ];
 
 // options with literal values only
 const literalOptions = [
-  typeOption("string"),
-  typeOption("number"),
-  typeOption("boolean"),
+  f.string({ value: "hello" }),
+  f.number({ value: 123 }),
+  f.boolean({ value: true }),
 ];
 
 const stages: StageDefinition[] = [

@@ -1,5 +1,5 @@
 import { AuthorID } from "~/definitions/authors";
-import { HoleValue } from "../holes/holeDefs";
+import { HoleValue } from "../holes";
 import { Question } from "../questionDefinition/question";
 
 export type StageDefinition = {

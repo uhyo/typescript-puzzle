@@ -1,4 +1,4 @@
-import { holeDefs, HoleValue } from "./holeDefs";
+import { holeDefs, HoleValue } from ".";
 
 /**
  * Get global subhole ID from parent ID and sub name.

@@ -1,4 +1,4 @@
-import { holeDefs, HoleValue } from "~/stages/holes/holeDefs";
+import { holeDefs, HoleValue } from "~/stages/holes";
 import { getSubHoleId } from "~/stages/holes/subHoleIds";
 import { Question } from "~/stages/questionDefinition/question";
 import { RemoteCompiler } from "~/ts-compiler";

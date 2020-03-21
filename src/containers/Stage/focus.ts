@@ -1,4 +1,4 @@
-import { holeDefs } from "~/stages/holes/holeDefs";
+import { holeDefs } from "~/stages/holes";
 import { getParentAndSub, getSubHoleId } from "~/stages/holes/subHoleIds";
 import { Question } from "~/stages/questionDefinition/question";
 import { AnswerState } from "./logic";

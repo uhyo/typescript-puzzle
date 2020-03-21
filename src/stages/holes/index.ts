@@ -77,21 +77,3 @@ for (const d of holeDefinitions) {
     ...def,
   });
 }
-
-/**
- * Option which is a type.
- * @deprecated
- */
-export const typeOption = (value: string): HoleValue => ({
-  type: "primitive",
-  value,
-});
-
-/**
- * Option which is a union.
- * @deprecated
- */
-export const unionOption = (size: number): HoleValue => ({
-  type: "union",
-  size,
-});

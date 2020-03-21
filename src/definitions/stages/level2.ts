@@ -1,4 +1,4 @@
-import { typeOption, unionOption } from "../../stages/holes/holeDefs";
+import { holeFactories as f } from "~/stages/holes";
 import { blank, question } from "../../stages/questionDefinition";
 import { StageDefinition } from "../../stages/stageDefinition";
 
@@ -12,10 +12,10 @@ const stages: StageDefinition[] = [
           : 123;
     `,
     options: [
-      typeOption("string"),
-      typeOption("number"),
-      typeOption("boolean"),
-      unionOption(2),
+      f.primitive({ value: "string" }),
+      f.primitive({ value: "number" }),
+      f.primitive({ value: "boolean" }),
+      f.union({ size: 2 }),
     ],
   },
 ];

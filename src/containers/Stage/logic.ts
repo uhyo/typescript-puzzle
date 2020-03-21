@@ -1,5 +1,5 @@
 import { TransitionStartFunction } from "react";
-import { HoleValue } from "~/stages/holes/holeDefs";
+import { HoleValue } from "~/stages/holes";
 import { Question } from "~/stages/questionDefinition/question";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";

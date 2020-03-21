@@ -1,4 +1,4 @@
-import { HoleValue } from "~/stages/holes/holeDefs";
+import { HoleValue } from "~/stages/holes";
 import { Question } from "~/stages/questionDefinition/question";
 import { allHoleIds } from "./holes";
 export type AnswerState = Partial<Record<string, HoleValue>>;
