@@ -31,7 +31,7 @@ export const levelMetadata: Record<Level, LevelMetadata> = {
   },
   [levels.easy2]: {
     name: "EASY 2",
-    numberOfStages: 4,
+    numberOfStages: 2,
   },
   [levels.intermediate]: {
     name: "INTERMEDIATE 1",

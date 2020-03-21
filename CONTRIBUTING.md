@@ -27,8 +27,19 @@ Each contributor can use their own format, but they are encouraged to keep the I
 Each stage can have an optional `author` field which is an author ID.
 To define your author ID, add a field to `src/definitions/authors.ts`.
 
+By filling the `author` field, your name is shown as question author when your question is shown to players.
+
 ## Adding Hole Types
 
 There are various hole types that can be used as options. Basically, a hole type represents one syntactic construct of TypeScript.
 
 If you want add a new type of hole, do so by modifying files in `src/definitions/holes`.
+
+## 概要（日本語） / Summary in Japanese
+
+どんな貢献ももちろん歓迎ですが、問題の追加による貢献が比較的簡単かつ需要があります。
+問題を追加するには、`~/src/definitions/stages`以下のファイルを編集してください。
+
+また、問題を追加する際には自身の著者情報を`~/src/definitions/authors.ts`に追加することをお勧めします。追加した問題が出題される際に問題の著者名が表示されます。
+
+選択肢用に様々な構文 (_hole_) が用意されていますが、もし新たなものを追加したい場合は`~/src/definitions/holes`以下のファイルを編集してください。
