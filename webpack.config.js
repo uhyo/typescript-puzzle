@@ -2,6 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ManifestPlugin = require("webpack-manifest-plugin");
+const PwaManifest = require("webpack-pwa-manifest");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 const WorkboxPlugin = require("workbox-webpack-plugin");
@@ -54,12 +56,14 @@ module.exports = (env, argv) => {
         excludeChunks: ["sw"],
       }),
       new CopyWebpackPlugin(["css/ress.min.css"]),
+      new PwaManifest(require("./scripts/webManifest")),
+      new ManifestPlugin(),
       new BundleAnalyzerPlugin(),
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/sw/index.ts",
         swDest: "sw.js",
         maximumFileSizeToCacheInBytes: isDev ? 20 * 1024 ** 2 : 1024 ** 2,
-        // do not cache typescript compiler worker
+        // do not precache typescript compiler worker
         exclude: [/\.tsc\.worker\./],
       }),
     ].concat(isDev ? [new webpack.HotModuleReplacementPlugin()] : []),

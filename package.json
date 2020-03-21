@@ -22,6 +22,7 @@
     "react": "0.0.0-experimental-aae83a4b9",
     "react-dom": "0.0.0-experimental-aae83a4b9",
     "styled-components": "^4.4.1",
+    "webpack-manifest-plugin": "^2.2.0",
     "workbox-cacheable-response": "^5.1.1",
     "workbox-core": "^5.1.1",
     "workbox-expiration": "^5.1.1",
@@ -49,6 +50,7 @@
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0",
+    "webpack-pwa-manifest": "^4.2.0",
     "workbox-webpack-plugin": "^5.0.0"
   },
   "husky": {
