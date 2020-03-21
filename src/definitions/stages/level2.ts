@@ -4,7 +4,7 @@ import { StageDefinition } from "../../stages/stageDefinition";
 
 const stages: StageDefinition[] = [
   {
-    id: "v1.l2.s1",
+    id: "uh.v1.l2.s1",
     author: "uhyo",
     question: question`
         const value: ${blank} = Math.random() < 0.5

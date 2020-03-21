@@ -2,30 +2,29 @@ import { typeOption } from "../../stages/holes/holeDefs";
 import { blank, question } from "../../stages/questionDefinition";
 import { StageDefinition } from "../../stages/stageDefinition";
 
+// options with primitives only
+const primitiveOptions = [
+  typeOption("string"),
+  typeOption("number"),
+  typeOption("boolean"),
+];
+
 const stages: StageDefinition[] = [
   {
-    id: "v1.l1.s1",
+    id: "uh.v1.l1.s1",
     author: "uhyo",
     question: question`
         const value: ${blank} = "foobar";
     `,
-    options: [
-      typeOption("string"),
-      typeOption("number"),
-      typeOption("boolean"),
-    ],
+    options: primitiveOptions,
   },
   {
-    id: "v1.l1.s2",
+    id: "uh.v1.l1.s2",
     author: "uhyo",
     question: question`
         const num: ${blank} = 3.1415;
     `,
-    options: [
-      typeOption("string"),
-      typeOption("number"),
-      typeOption("boolean"),
-    ],
+    options: primitiveOptions,
   },
 ];
 

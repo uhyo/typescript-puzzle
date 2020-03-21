@@ -43,11 +43,6 @@ export const StageMetadata: FC<Props> = memo(({ stage }) => {
 
   return (
     <Wrapper>
-      {showDetail ? null : (
-        <>
-          Stage ID: <code>{stage.id}</code>
-        </>
-      )}
       {authorInfo ? (
         <>
           {" "}
