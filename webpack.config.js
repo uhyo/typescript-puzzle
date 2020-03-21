@@ -22,14 +22,24 @@ module.exports = (env, argv) => {
         if (chunkData.chunk.name === "sw") {
           return "sw.js";
         } else {
-          return !isDev ? "[name].[contenthash].js" : "[id].[name].js";
+          return !isDev ? "[name].[contenthash].js" : "[id].js";
         }
       },
-      chunkFilename: !isDev ? "[name].[contenthash].js" : "[id].[name].js",
+      chunkFilename: !isDev ? "[name].[contenthash].js" : "[id].js",
     },
     optimization: {
       moduleIds: "hashed",
       // moduleIds: "deterministic",
+      splitChunks: {
+        cacheGroups: {
+          vendor: {
+            test: /node_modules/,
+            name: "vendor",
+            chunks: "initial",
+            enforce: true,
+          },
+        },
+      },
     },
     resolve: {
       extensions: [".ts", ".tsx", ".js"],
