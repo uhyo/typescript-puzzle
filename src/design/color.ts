@@ -50,4 +50,17 @@ export const grayTextColor = "#888888";
  */
 export const syntaxColor = {
   primitiveType: "#438531",
+  /**
+   * String literal or string literal type
+   */
+  string: "#d45342",
+  /**
+   * Number literal or number literal type
+   */
+  number: "#1c49eb",
+  /**
+   * Boolean literal or boolean literal type
+   */
+  boolean: "#2f9c44",
 } as const;
+123;

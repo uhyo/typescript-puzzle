@@ -69,7 +69,6 @@ module.exports = (env, argv) => {
       new CopyWebpackPlugin(["css/ress.min.css"]),
       new PwaManifest(require("./scripts/webManifest")),
       new ManifestPlugin(),
-      new BundleAnalyzerPlugin(),
       new WorkboxPlugin.InjectManifest({
         swSrc: "./src/sw/index.ts",
         swDest: "sw.js",
@@ -77,7 +76,11 @@ module.exports = (env, argv) => {
         // do not precache typescript compiler worker
         exclude: [/\.tsc\.worker\./],
       }),
-    ].concat(isDev ? [new webpack.HotModuleReplacementPlugin()] : []),
+    ].concat(
+      isDev
+        ? [new webpack.HotModuleReplacementPlugin()]
+        : [new BundleAnalyzerPlugin()],
+    ),
     devServer: {
       host: "0.0.0.0",
       hot: true,

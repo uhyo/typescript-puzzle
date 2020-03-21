@@ -3,16 +3,16 @@ import styled from "styled-components";
 import { syntaxColor } from "~/design/color";
 import { holeDefinition } from "~/stages/holes/holeDefinition";
 
-const PrimitiveHoleContents = styled.span`
-  color: ${syntaxColor.primitiveType};
+const HoleContents = styled.span`
+  color: ${syntaxColor.string};
 `;
 
 /**
  * Hole value for primitive type.
  */
-export const primitiveHole = holeDefinition<{
+export const stringHole = holeDefinition<{
   value: string;
-}>()("primitive", {
+}>()("string", {
   *subHoleIds() {},
   getNextFocus() {
     return undefined;
@@ -21,6 +21,6 @@ export const primitiveHole = holeDefinition<{
     return hole.value;
   },
   render(hole) {
-    return <PrimitiveHoleContents>{hole.value}</PrimitiveHoleContents>;
+    return <HoleContents>{hole.value}</HoleContents>;
   },
 });
