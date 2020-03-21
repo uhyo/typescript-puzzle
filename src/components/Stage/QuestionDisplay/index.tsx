@@ -13,6 +13,7 @@ import {
 } from "../../../design/font";
 import { Question } from "../../../stages/questionDefinition/question";
 import { BackGround } from "../Background";
+import { formatQuestion } from "./formatQuestion";
 
 interface Props {
   question: Question;
@@ -47,22 +48,27 @@ export const QuestionDisplay: FC<Props> = ({
     [holeSelect],
   );
 
-  const { holes, texts } = question;
-  const result: React.ReactChild[] = [];
-  for (let i = 0; i <= holes.length; i++) {
-    result.push(<Fragment key={`text-${i}`}>{texts[i]}</Fragment>);
-    if (holes[i]) {
-      const holeId = String(i);
-      result.push(<Hole key={`hole-${holeId}`} holeId={holeId} />);
+  const questionPart = useMemo<React.ReactChild[]>(() => {
+    const { holes, texts } = question;
+    const cleanedTexts = formatQuestion(texts);
+    const result: React.ReactChild[] = [];
+    for (let i = 0; i <= holes.length; i++) {
+      result.push(<Fragment key={`text-${i}`}>{cleanedTexts[i]}</Fragment>);
+      if (holes[i]) {
+        const holeId = String(i);
+        result.push(<Hole key={`hole-${holeId}`} holeId={holeId} />);
+      }
     }
-  }
+    return result;
+  }, [question]);
+
   return (
     <HoleContext.Provider value={holeContextValue}>
       <QuestionDisplayWrapper>
         <div>
           <BackGround state={backgroundState} />
           <QuestionDisplayInner>
-            <code onClick={clickHandler}>{result}</code>
+            <code onClick={clickHandler}>{questionPart}</code>
           </QuestionDisplayInner>
         </div>
       </QuestionDisplayWrapper>
@@ -109,6 +115,7 @@ const QuestionDisplayInner = styled.div`
     display: block;
     height: 100%;
     overflow-y: auto;
+    white-space: pre;
     font-family: ${sourceCodeFontFamily};
   }
 `;

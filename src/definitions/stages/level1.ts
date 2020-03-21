@@ -65,6 +65,17 @@ const stages: StageDefinition[] = [
     `,
     options: literalOptions,
   },
+  {
+    id: "uh.v1.l1.s7",
+    author: "uhyo",
+    question: question`
+      function double(value: ${blank}): ${blank} {
+        return value * 2;
+      }
+      double(100);
+    `,
+    options: primitiveOptions,
+  },
 ];
 
 export default stages;
