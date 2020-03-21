@@ -1,5 +1,10 @@
 import { StageStore } from "~/dataStore/stages";
-import { getClearedLevels, LevelDoc, putClearedLevel } from "~/db/level";
+import {
+  getClearedLevels,
+  LevelDoc,
+  putClearedLevel,
+  recheckClearedLevels,
+} from "~/db/level";
 import { getClearedStagesInLevel, putClearedStages } from "~/db/stage";
 import { Level, levelMetadata } from "~/definitions/stages/levels";
 import { RemoteCompiler } from "~/ts-compiler";
@@ -77,7 +82,11 @@ const getInitialState = (): AppState => {
     stageStore,
     page: {
       type: "levelSelect",
-      clearedLevelsFetcher: new Fetcher(getClearedLevels),
+      clearedLevelsFetcher: new Fetcher(async () => {
+        // on initial load, re-check previous achivements.
+        await recheckClearedLevels(stageStore);
+        return getClearedLevels();
+      }),
     },
     serviceWorkerState: new Fetcher(registerServiceWorker),
     privacyConfirmed: getPrivacyConfirmed(),

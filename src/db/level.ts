@@ -58,3 +58,25 @@ export const putClearedLevel = async (
     req.onsuccess = () => resolve();
   });
 };
+
+/**
+ * Recalculate cleared levels.
+ */
+export const recheckClearedLevels = async (
+  stageStore: StageStore,
+): Promise<void> => {
+  const db = await openDb();
+  const levelsToCheck = await new Promise<LevelDoc[]>((resolve, reject) => {
+    const t = db.transaction(levelStore.name, "readonly");
+    t.onerror = reject;
+    const ls = t.objectStore(levelStore.name);
+
+    const req: IDBRequest<LevelDoc[]> = ls.getAll();
+    req.onsuccess = () => {
+      resolve(req.result.filter(doc => doc.status === "completed"));
+    };
+  });
+  for (const { level } of levelsToCheck) {
+    await putClearedLevel(stageStore, level);
+  }
+};
