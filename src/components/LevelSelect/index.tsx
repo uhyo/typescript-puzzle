@@ -11,13 +11,22 @@ import { Fetcher } from "~/util/Fetcher";
 import { AppHeader } from "../AppHeader";
 import { Crown } from "../Crown";
 import { PageWrapper } from "../PageWrapper";
+import { PrivacyNotice } from "./PrivacyNotice";
 import { UpdateNotice } from "./UpdateNotice";
 
 export const LevelSelectComponent: FC<{
   clearedLevelsFetcher: Fetcher<LevelDoc[]>;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
+  privacyConfirmed: boolean;
   onSelect?: (level: Level) => void;
-}> = ({ clearedLevelsFetcher, serviceWorkerState, onSelect }) => {
+  onPrivacyConfirm: () => void;
+}> = ({
+  clearedLevelsFetcher,
+  serviceWorkerState,
+  privacyConfirmed,
+  onSelect,
+  onPrivacyConfirm,
+}) => {
   const clearedLevels = clearedLevelsFetcher.get();
   return (
     <>
@@ -25,6 +34,12 @@ export const LevelSelectComponent: FC<{
       <Wrapper>
         <div>
           <UpdateNotice serviceWorkerState={serviceWorkerState} />
+        </div>
+        <div>
+          <PrivacyNotice
+            privacyConfirmed={privacyConfirmed}
+            onConfirm={onPrivacyConfirm}
+          />
         </div>
         <div>
           {levelList.map(level => {
@@ -57,11 +72,12 @@ export const LevelSelectComponent: FC<{
 };
 
 const Wrapper = styled(PageWrapper)`
-  & > div:nth-child(1) {
+  & > div:nth-child(1),
+  & > div:nth-child(2) {
     flex: auto 0 0;
   }
 
-  & > div:nth-child(2) {
+  & > div:nth-child(3) {
     flex: auto 1 1;
 
     display: flex;
