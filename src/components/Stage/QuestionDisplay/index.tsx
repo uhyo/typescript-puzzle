@@ -115,7 +115,8 @@ const QuestionDisplayInner = styled.div`
     display: block;
     height: 100%;
     overflow-y: auto;
-    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-all;
     font-family: ${sourceCodeFontFamily};
   }
 `;

@@ -28,7 +28,8 @@ export class RemoteCompiler {
       const start = performance.now();
       const d = await this.worker.getDiagnostics(sourceText);
       const end = performance.now();
-      console.log("compiled in ", end - start, "ms");
+      console.debug("compiled in ", end - start, "ms");
+      console.debug(d);
       // await new Promise(resolve => setTimeout(resolve, 1 * 1e3));
       return d;
     } catch (err) {

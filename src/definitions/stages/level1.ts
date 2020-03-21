@@ -76,6 +76,17 @@ const stages: StageDefinition[] = [
     `,
     options: primitiveOptions,
   },
+  {
+    id: "uh.v1.l1.s8",
+    author: "uhyo",
+    question: question`
+      function greet(name: ${blank}): ${blank} {
+        return \`Hello, \${name}!\`;
+      }
+      console.log(greet("John"));
+    `,
+    options: primitiveOptions,
+  },
 ];
 
 export default stages;

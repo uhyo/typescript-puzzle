@@ -48,7 +48,9 @@ export const getDiagnostics = (source: string) => {
   sourceText = source;
   program = ts.createProgram({
     rootNames: [srcFileName],
-    options: {},
+    options: {
+      lib: ["lib.es2020.d.ts", "lib.custom.d.ts"],
+    },
     host,
     oldProgram: program,
   });
