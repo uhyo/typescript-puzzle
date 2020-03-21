@@ -21,6 +21,6 @@ export const booleanHole = holeDefinition<{
     return String(hole.value);
   },
   render(hole) {
-    return <HoleContents>{hole.value}</HoleContents>;
+    return <HoleContents>{String(hole.value)}</HoleContents>;
   },
 });

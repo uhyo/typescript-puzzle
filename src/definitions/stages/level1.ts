@@ -41,6 +41,30 @@ const stages: StageDefinition[] = [
     `,
     options: primitiveOptions,
   },
+  {
+    id: "uh.v1.l1.s4",
+    author: "uhyo",
+    question: question`
+        const val: string = ${blank};
+    `,
+    options: literalOptions,
+  },
+  {
+    id: "uh.v1.l1.s5",
+    author: "uhyo",
+    question: question`
+        const val: number = ${blank};
+    `,
+    options: literalOptions,
+  },
+  {
+    id: "uh.v1.l1.s6",
+    author: "uhyo",
+    question: question`
+        const val: boolean = ${blank};
+    `,
+    options: literalOptions,
+  },
 ];
 
 export default stages;

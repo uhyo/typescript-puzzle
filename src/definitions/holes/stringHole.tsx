@@ -18,9 +18,9 @@ export const stringHole = holeDefinition<{
     return undefined;
   },
   toSourceText(hole) {
-    return hole.value;
+    return `"${hole.value}"`;
   },
   render(hole) {
-    return <HoleContents>{hole.value}</HoleContents>;
+    return <HoleContents>"{hole.value}"</HoleContents>;
   },
 });
