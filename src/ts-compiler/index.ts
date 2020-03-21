@@ -2,10 +2,24 @@
 import Worker from "comlink-loader?name=[contenthash].tsc.worker.js!./worker.ts";
 import ts from "typescript";
 
+const cacheTime = 10 * 60 * 1000;
+let workerCache:
+  | {
+      worker: Worker;
+      terminateTimer: number;
+    }
+  | undefined;
+
 export class RemoteCompiler {
   private readonly worker: any;
   constructor() {
-    this.worker = new Worker();
+    if (workerCache) {
+      this.worker = workerCache.worker;
+      clearTimeout(workerCache.terminateTimer);
+      workerCache = undefined;
+    } else {
+      this.worker = new Worker();
+    }
   }
   async getDiagnostics(
     sourceText: string,
@@ -23,6 +37,17 @@ export class RemoteCompiler {
     }
   }
   async terminate() {
-    return await this.worker.terminate();
+    if (workerCache === undefined) {
+      const worker = this.worker;
+      workerCache = {
+        worker,
+        terminateTimer: setTimeout(() => {
+          worker.terminate();
+          workerCache = undefined;
+        }, cacheTime),
+      };
+    } else {
+      await this.worker.terminate();
+    }
   }
 }
