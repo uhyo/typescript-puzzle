@@ -8,7 +8,6 @@ import { StageStore } from "~/dataStore/stages";
 import { mainBackgroundColor } from "~/design/color";
 import { sourceCodeFontFamily, uiFontFamily } from "~/design/font";
 import { Fetcher } from "~/util/Fetcher";
-import { phone } from "~/util/media";
 import { ConfirmLargeDownload } from "../ConfirmLargeDownload";
 
 const Stage = lazy(() =>
@@ -91,20 +90,17 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const AppWrapper = styled.div`
+  flex: auto 1 1;
   display: flex;
   flex-flow: nowrap column;
   box-sizing: border-box;
   width: 100%;
-  height: 660px;
-  ${phone`
-      height: 100%;
-    `}
-  max-height: 100%;
+  height: 100%;
   font-family: ${uiFontFamily};
 `;
 
 const Header = styled.div`
-  flex: auto 1 1;
+  flex: auto 0 1;
   background-color: ${mainBackgroundColor};
 `;
 
