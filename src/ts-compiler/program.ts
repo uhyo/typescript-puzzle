@@ -50,6 +50,7 @@ export const getDiagnostics = (source: string) => {
     rootNames: [srcFileName],
     options: {
       lib: ["lib.es2020.d.ts", "lib.custom.d.ts"],
+      target: ts.ScriptTarget.ESNext,
     },
     host,
     oldProgram: program,
