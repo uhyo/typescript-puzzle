@@ -11,6 +11,11 @@ import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
 import { generateStateManagenentTools } from "~/util/states";
+import {
+  trackClearLevel,
+  trackEnterLevel,
+  trackStageClear,
+} from "~/util/tracking";
 import { getPrivacyConfirmed } from "./privacyConfirmation";
 import {
   registerServiceWorker,
@@ -102,12 +107,18 @@ export const {
     goToNext: () => {
       const saveScoreCell = new FirstCell<Fetcher<void>>();
       const achievementCell = new FirstCell<Fetcher<number>>();
+      const trackingCell = new FirstCell<void>();
       setState(state => {
         const { stageStore, page } = state;
         if (page.type === "stage") {
           const nextIndex = page.stageIndex + 1;
           if (nextIndex >= levelMetadata[page.level].numberOfStages) {
             // レベルクリア
+            trackingCell.get(() => {
+              trackStageClear(page.stages[page.stageIndex]);
+              trackClearLevel(page.level);
+            });
+
             const save = async () => {
               await putClearedStages(page.level, page.stages);
               await putClearedLevel(stageStore, page.level);
@@ -131,6 +142,9 @@ export const {
             };
           }
           // go to the next stage.
+          trackingCell.get(() => {
+            trackStageClear(page.stages[page.stageIndex]);
+          });
           return {
             ...state,
             page: {
@@ -143,6 +157,7 @@ export const {
       });
     },
     goToLevel: (level: Level) => {
+      trackEnterLevel(level);
       setState(state => ({
         ...state,
         page: {
