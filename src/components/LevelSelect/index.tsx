@@ -31,7 +31,7 @@ export const LevelSelectComponent: FC<{
   const clearedLevels = clearedLevelsFetcher.get();
   return (
     <>
-      <AppHeader decorations>Type Puzzles</AppHeader>
+      <AppHeader decorations>Type Puzzles (Beta)</AppHeader>
       <Wrapper>
         <div>
           <UpdateNotice serviceWorkerState={serviceWorkerState} />
