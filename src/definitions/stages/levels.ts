@@ -35,7 +35,7 @@ export const levelMetadata: Record<Level, LevelMetadata> = {
   },
   [levels.intermediate]: {
     name: "INTERMEDIATE 1",
-    numberOfStages: 1,
+    numberOfStages: 2,
   },
 };
 
