@@ -21,6 +21,11 @@ export const authors = validateAuthorsType({
     github: "uhyo",
     twitter: "uhyo_",
   },
+  kc7891: {
+    name: "kc7891",
+    github: "kc7891",
+    twitter: "K_Chiba7891",
+  },
 });
 
 export type AuthorID = keyof typeof authors;
