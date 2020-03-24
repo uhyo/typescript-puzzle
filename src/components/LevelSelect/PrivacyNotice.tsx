@@ -1,10 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import {
-  grayTextColor,
-  mainTextColor,
-  warningBackgroundColor,
-} from "~/design/color";
+import { grayTextColor, mainTextColor } from "~/design/color";
+import { NoticeBox } from "./NoticeBox";
 
 type Props = {
   privacyConfirmed: boolean;
@@ -31,10 +28,7 @@ export const PrivacyNotice: FC<Props> = ({ privacyConfirmed, onConfirm }) => {
   );
 };
 
-const Wrapper = styled.div`
-  padding: 4px;
-  background-color: ${warningBackgroundColor};
-
+const Wrapper = styled(NoticeBox)`
   & > div {
     display: flex;
     flex-flow: row nowrap;

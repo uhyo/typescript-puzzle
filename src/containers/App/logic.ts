@@ -16,6 +16,10 @@ import {
   trackEnterLevel,
   trackStageClear,
 } from "~/util/tracking";
+import {
+  getLastSeenQuestionNumber,
+  setLastSeenQuestionNumber,
+} from "./lastSeenQuestionNumber";
 import { getPrivacyConfirmed } from "./privacyConfirmation";
 import {
   registerServiceWorker,
@@ -28,6 +32,7 @@ export type AppState = {
   page: AppPage;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
   privacyConfirmed: boolean;
+  lastSeenQuestionNumber?: number;
 };
 
 export type AppPage =
@@ -83,6 +88,10 @@ export type AppPage =
 
 const getInitialState = (): AppState => {
   const stageStore = new StageStore();
+  const lastSeenQuestionNumber = getLastSeenQuestionNumber();
+  if (lastSeenQuestionNumber === undefined) {
+    setLastSeenQuestionNumber(stageStore.getAllStageNumber());
+  }
   return {
     stageStore,
     page: {
@@ -95,6 +104,7 @@ const getInitialState = (): AppState => {
     },
     serviceWorkerState: new Fetcher(registerServiceWorker),
     privacyConfirmed: getPrivacyConfirmed(),
+    lastSeenQuestionNumber,
   };
 };
 
@@ -205,6 +215,16 @@ export const {
       setState(state => ({
         ...state,
         privacyConfirmed: true,
+      }));
+    },
+    /**
+     * Set last seen question number.
+     */
+    setLastSeenQuestionNumber: (num: number) => {
+      setLastSeenQuestionNumber(num);
+      setState(state => ({
+        ...state,
+        lastSeenQuestionNumber: num,
       }));
     },
     /**

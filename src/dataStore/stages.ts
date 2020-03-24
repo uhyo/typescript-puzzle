@@ -6,6 +6,7 @@ import { StageDefinition } from "~/stages/stageDefinition";
 
 /**
  * Data store which holds stage data.
+ * TODO: test for this class
  */
 export class StageStore {
   /**
@@ -31,6 +32,7 @@ export class StageStore {
     const level = this.stageToLevel.get(id);
     const stages = level && this.levels[level];
     if (stages) {
+      // TODO: O(n)
       const s = stages.find(s => s.id === id);
       if (s) {
         return s;
@@ -45,6 +47,13 @@ export class StageStore {
    */
   public getStagesInLevel(level: Level) {
     return this.levels[level] ?? [];
+  }
+
+  /**
+   * Returns the number of all stages.
+   */
+  public getAllStageNumber() {
+    return this.stageToLevel.size;
   }
 
   private loadStages(level: Level, stages: StageDefinition[]) {

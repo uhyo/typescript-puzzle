@@ -9,6 +9,7 @@ import { mainBackgroundColor } from "~/design/color";
 import { sourceCodeFontFamily, uiFontFamily } from "~/design/font";
 import { Fetcher } from "~/util/Fetcher";
 import { ConfirmLargeDownload } from "../ConfirmLargeDownload";
+import { ProvideLastSeenQuestions } from "./LastSeenQuestionsContext";
 
 const Stage = lazy(() =>
   import(/*
@@ -35,6 +36,7 @@ type Props = {
   stageStore: StageStore;
   serviceWorkerState: Fetcher<ServiceWorkerState>;
   privacyConfirmed: boolean;
+  lastSeenQuestionNumber: number | undefined;
 };
 
 const AppContent: FC<Props> = ({
@@ -42,15 +44,21 @@ const AppContent: FC<Props> = ({
   stageStore,
   serviceWorkerState,
   privacyConfirmed,
+  lastSeenQuestionNumber,
 }) => {
   switch (page.type) {
     case "levelSelect": {
       return (
-        <LevelSelect
-          clearedLevelsFetcher={page.clearedLevelsFetcher}
-          serviceWorkerState={serviceWorkerState}
-          privacyConfirmed={privacyConfirmed}
-        />
+        <ProvideLastSeenQuestions
+          allNumber={stageStore.getAllStageNumber()}
+          lastSeenQuestionNumber={lastSeenQuestionNumber}
+        >
+          <LevelSelect
+            clearedLevelsFetcher={page.clearedLevelsFetcher}
+            serviceWorkerState={serviceWorkerState}
+            privacyConfirmed={privacyConfirmed}
+          />
+        </ProvideLastSeenQuestions>
       );
     }
     case "levelLoading": {

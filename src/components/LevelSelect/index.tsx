@@ -13,6 +13,7 @@ import { Crown } from "../Crown";
 import { PageWrapper } from "../PageWrapper";
 import { Footer } from "./Footer";
 import { PrivacyNotice } from "./PrivacyNotice";
+import { UpdatedQuestionsNotice } from "./UpdatedQuestionsNotice";
 import { UpdateNotice } from "./UpdateNotice";
 
 export const LevelSelectComponent: FC<{
@@ -41,6 +42,9 @@ export const LevelSelectComponent: FC<{
             privacyConfirmed={privacyConfirmed}
             onConfirm={onPrivacyConfirm}
           />
+        </div>
+        <div>
+          <UpdatedQuestionsNotice />
         </div>
         <div>
           {levelList.map(level => {
@@ -77,11 +81,12 @@ export const LevelSelectComponent: FC<{
 
 const Wrapper = styled(PageWrapper)`
   & > div:nth-child(1),
-  & > div:nth-child(2) {
+  & > div:nth-child(2),
+  & > div:nth-child(3) {
     flex: auto 0 0;
   }
 
-  & > div:nth-child(3) {
+  & > div:nth-child(4) {
     flex: auto 1 1;
 
     display: flex;

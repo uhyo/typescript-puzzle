@@ -4,7 +4,13 @@ import { useAppState } from "./logic";
 
 export const App: FC = () => {
   const [
-    { page, stageStore, serviceWorkerState, privacyConfirmed },
+    {
+      page,
+      stageStore,
+      serviceWorkerState,
+      privacyConfirmed,
+      lastSeenQuestionNumber,
+    },
     Provider,
   ] = useAppState();
 
@@ -16,6 +22,7 @@ export const App: FC = () => {
           stageStore={stageStore}
           serviceWorkerState={serviceWorkerState}
           privacyConfirmed={privacyConfirmed}
+          lastSeenQuestionNumber={lastSeenQuestionNumber}
         />
       </Suspense>
     </Provider>
