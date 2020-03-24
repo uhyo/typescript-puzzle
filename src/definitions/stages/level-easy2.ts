@@ -59,6 +59,45 @@ const stages: StageDefinition[] = [
     `,
     options: typeOptions,
   },
+  {
+    id: "uh.v1.l11.s5",
+    author: "uhyo",
+    question: question`
+      type User = {
+        name: string;
+        age: number;
+      };
+
+      const u: User = {
+        name: ${blank},
+        age: ${blank},
+      }
+    `,
+    options: [
+      f.string({ value: "uhyo" }),
+      f.number({ value: 25 }),
+      f.boolean({ value: false }),
+    ],
+  },
+  {
+    id: "uh.v1.l11.s6",
+    author: "uhyo",
+    question: question`
+      type User = {
+        name: string;
+        age: number;
+      };
+
+      function checkUser(user: User): ${blank} {
+        return user.${blank} >= 18;
+      }
+    `,
+    options: [
+      f.identifier({ value: "name" }),
+      f.identifier({ value: "age" }),
+      ...typeOptions,
+    ],
+  },
 ];
 
 export default stages;

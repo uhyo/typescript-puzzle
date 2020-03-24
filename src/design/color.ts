@@ -58,6 +58,10 @@ export const syntaxColor = {
    */
   keyword: "#674580",
   /**
+   * Identifiers.
+   */
+  identifier: "#a1704d",
+  /**
    * String literal or string literal type
    */
   string: "#d45342",
@@ -70,4 +74,3 @@ export const syntaxColor = {
    */
   boolean: "#2f9c44",
 } as const;
-123;
