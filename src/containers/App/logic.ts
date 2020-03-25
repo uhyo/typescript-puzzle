@@ -24,7 +24,6 @@ import { getPrivacyConfirmed } from "./privacyConfirmation";
 import {
   registerServiceWorker,
   ServiceWorkerState,
-  waitForSWWaiting,
 } from "./registerServiceWorker";
 
 export type AppState = {
@@ -231,25 +230,16 @@ export const {
      * Check ServiceWorker updates.
      */
     checkSwUpdate: () => {
-      const resultCell = new FirstCell<Fetcher<ServiceWorkerState>>();
+      const resultCell = new FirstCell<void>();
       setState(state => {
         const sw = state.serviceWorkerState.getOrUndefined();
         if (sw === undefined || sw.status === "unsupported") {
           return state;
         }
-        return {
-          ...state,
-          serviceWorkerState: resultCell.get(() => {
-            return new Fetcher(async () => {
-              await sw.wb.update();
-              return {
-                status: "supported",
-                wb: sw.wb,
-                waitingState: new Fetcher(() => waitForSWWaiting(sw.wb)),
-              };
-            });
-          }),
-        };
+        resultCell.get(() => {
+          sw.wb.update();
+        });
+        return state;
       });
     },
   }),

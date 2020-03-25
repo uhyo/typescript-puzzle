@@ -1,13 +1,10 @@
-import React, { FC, Suspense, useTransition } from "react";
+import React, { FC, Suspense } from "react";
 import styled from "styled-components";
-import { Workbox } from "workbox-window";
-import { useAppActions } from "~/containers/App/logic";
 import {
   reloadToUpdate,
   ServiceWorkerState,
 } from "~/containers/App/registerServiceWorker";
 import { grayTextColor, mainTextColor } from "~/design/color";
-import { SUSPENSE_CONFIG } from "~/design/suspenseConfig";
 import { Fetcher } from "~/util/Fetcher";
 
 type Props = {
@@ -25,60 +22,26 @@ export const UpdateNotice: FC<Props> = ({ serviceWorkerState }) => {
 };
 
 const UpdateNoticeWaiter1: FC<Props> = ({ serviceWorkerState }) => {
-  const { checkSwUpdate } = useAppActions();
-  const [startTraisition, isLoading] = useTransition(SUSPENSE_CONFIG);
   const state = serviceWorkerState.get();
 
   if (state.status === "unsupported") {
     return null;
   }
-  return (
-    <Suspense
-      fallback={
-        <p>
-          App is up to date.
-          <button
-            type="button"
-            onClick={() => {
-              startTraisition(() => {
-                checkSwUpdate();
-              });
-            }}
-          >
-            Check Updates
-          </button>
-        </p>
-      }
-    >
-      {isLoading ? (
-        <Checking />
-      ) : (
-        <UpdateNoticeWaiter2 wb={state.wb} waitingState={state.waitingState} />
-      )}
-    </Suspense>
-  );
-};
 
-const UpdateNoticeWaiter2: FC<{
-  wb: Workbox;
-  waitingState: Fetcher<unknown>;
-}> = ({ wb, waitingState }) => {
-  waitingState.get();
-  const update = () => {
-    reloadToUpdate(wb);
-  };
+  state.waitingState.get();
   return (
     <p>
       An update is available.
-      <button type="button" onClick={update}>
+      <button
+        type="button"
+        onClick={() => {
+          reloadToUpdate(state.wb);
+        }}
+      >
         Update
       </button>
     </p>
   );
-};
-
-const Checking: FC<{}> = () => {
-  return <p>Checking...</p>;
 };
 
 const Wrapper = styled.div`

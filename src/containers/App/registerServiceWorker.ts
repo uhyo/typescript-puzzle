@@ -19,7 +19,15 @@ export const registerServiceWorker = async (): Promise<ServiceWorkerState> => {
   }
   const { Workbox } = await import("workbox-window");
   const wb = new Workbox("/sw.js");
-  wb.register();
+  const sw = await wb.register();
+  if (sw?.waiting) {
+    // this is needed if SW was already waiting when page is opened
+    return {
+      status: "supported",
+      wb,
+      waitingState: new Fetcher(() => Promise.resolve()),
+    };
+  }
   return {
     status: "supported",
     wb,

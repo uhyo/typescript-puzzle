@@ -1,8 +1,10 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { useAppActions } from "~/containers/App/logic";
 import { grayTextColor, mainTextColor } from "~/design/color";
 
 export const Footer: FC = () => {
+  const { checkSwUpdate } = useAppActions();
   return (
     <Wrapper>
       <div>
@@ -10,6 +12,14 @@ export const Footer: FC = () => {
         <a target="_blank" href="https://github.com/uhyo/typescript-puzzle">
           GitHub
         </a>
+        <button
+          type="button"
+          onClick={() => {
+            checkSwUpdate();
+          }}
+        >
+          Check Updates
+        </button>
       </div>
       <p>Help Type Puzzles by contributing questions!</p>
     </Wrapper>
@@ -38,5 +48,11 @@ const Wrapper = styled.footer`
     margin: 0 1em;
     color: ${grayTextColor};
     text-decoration: none;
+  }
+
+  button {
+    display: inline-block;
+    margin: 0 1em;
+    color: ${mainTextColor};
   }
 `;
