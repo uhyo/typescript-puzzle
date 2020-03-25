@@ -10,6 +10,7 @@ import { Level, levelMetadata } from "~/definitions/stages/levels";
 import { RemoteCompiler } from "~/ts-compiler";
 import { Fetcher } from "~/util/Fetcher";
 import { FirstCell } from "~/util/firstCell";
+import { sleep } from "~/util/sleep";
 import { generateStateManagenentTools } from "~/util/states";
 import {
   trackClearLevel,
@@ -239,7 +240,13 @@ export const {
         resultCell.get(() => {
           sw.wb.update();
         });
-        return state;
+        return {
+          ...state,
+          serviceWorkerState: new Fetcher(async () => ({
+            ...sw,
+            checkingUpdateTimeout: new Fetcher(() => sleep(3000)),
+          })),
+        };
       });
     },
   }),

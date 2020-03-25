@@ -1,5 +1,6 @@
 import React, { FC, Suspense } from "react";
 import styled from "styled-components";
+import { Workbox } from "workbox-window";
 import {
   reloadToUpdate,
   ServiceWorkerState,
@@ -28,20 +29,55 @@ const UpdateNoticeWaiter1: FC<Props> = ({ serviceWorkerState }) => {
     return null;
   }
 
-  state.waitingState.get();
+  return (
+    <Suspense fallback={<UpdateNoticeWaiter2 serviceWorkerState={state} />}>
+      <WaitUpdates wb={state.wb} waiter={state.waitingState} />
+    </Suspense>
+  );
+};
+const WaitUpdates: FC<{
+  wb: Workbox;
+  waiter: Fetcher<void>;
+}> = ({ wb, waiter }) => {
+  waiter.get();
+
   return (
     <p>
       An update is available.
       <button
         type="button"
         onClick={() => {
-          reloadToUpdate(state.wb);
+          reloadToUpdate(wb);
         }}
       >
         Update
       </button>
     </p>
   );
+};
+
+const UpdateNoticeWaiter2: FC<{
+  serviceWorkerState: Extract<ServiceWorkerState, { status: "supported" }>;
+}> = ({ serviceWorkerState: sw }) => {
+  if (!sw.checkingUpdateTimeout) {
+    return null;
+  }
+  return (
+    <Suspense fallback={<Checking />}>
+      <UpdateNoticeWaiter3 waiter={sw.checkingUpdateTimeout} />
+    </Suspense>
+  );
+};
+
+const UpdateNoticeWaiter3: FC<{
+  waiter: Fetcher<void>;
+}> = ({ waiter }) => {
+  waiter.get();
+  return null;
+};
+
+const Checking: FC = () => {
+  return <p>Checking updates...</p>;
 };
 
 const Wrapper = styled.div`

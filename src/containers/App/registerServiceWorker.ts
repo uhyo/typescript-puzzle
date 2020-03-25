@@ -8,6 +8,7 @@ export type ServiceWorkerState =
   | {
       status: "supported";
       wb: Workbox;
+      checkingUpdateTimeout?: Fetcher<void>;
       waitingState: Fetcher<void>;
     };
 
