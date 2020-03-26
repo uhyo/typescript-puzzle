@@ -1,3 +1,4 @@
+import levelBonus from "~/definitions/stages/level-bonus";
 import levelEasy1 from "~/definitions/stages/level-easy1";
 import levelEasy2 from "~/definitions/stages/level-easy2";
 import levelIntermediate from "~/definitions/stages/level-intermediate";
@@ -22,6 +23,7 @@ export class StageStore {
     this.loadStages(levels.easy, levelEasy1);
     this.loadStages(levels.easy2, levelEasy2);
     this.loadStages(levels.intermediate, levelIntermediate);
+    this.loadStages(levels.bonus, levelBonus);
   }
 
   /**

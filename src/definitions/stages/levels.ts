@@ -5,6 +5,7 @@ export const levels = {
   easy: 10,
   easy2: 11,
   intermediate: 20,
+  bonus: 9999,
 } as const;
 
 export type Level = typeof levels[keyof typeof levels];
@@ -37,10 +38,15 @@ export const levelMetadata: Record<Level, LevelMetadata> = {
     name: "INTERMEDIATE 1",
     numberOfStages: 2,
   },
+  [levels.bonus]: {
+    name: "BONUS STAGES",
+    numberOfStages: 4,
+  },
 };
 
 export const levelList: readonly Level[] = [
   levels.easy,
   levels.easy2,
   levels.intermediate,
+  levels.bonus,
 ];
