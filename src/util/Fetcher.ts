@@ -1,8 +1,5 @@
 type State<T> =
   | {
-      state: "none";
-    }
-  | {
       state: "fetching";
       promise: Promise<T>;
     }
@@ -18,36 +15,35 @@ type State<T> =
  * Adapter for suspense
  */
 export class Fetcher<T> {
-  private state: State<T> = { state: "none" };
-  constructor(private fetch: () => Promise<T>) {}
+  private state: State<T>;
+  constructor(fetch: () => Promise<T>) {
+    const promise = fetch()
+      .then(value => {
+        this.state = {
+          state: "fetched",
+          value,
+        };
+        return value;
+      })
+      .catch(error => {
+        this.state = {
+          state: "error",
+          error,
+        };
+        throw error;
+      });
+    this.state = {
+      state: "fetching",
+      promise,
+    };
+  }
 
   /**
    * Returns fetched data.
    * If data is not fetched yet, throw a promise.
    */
   public get(): T {
-    if (this.state.state === "none") {
-      const promise = this.fetch()
-        .then(value => {
-          this.state = {
-            state: "fetched",
-            value,
-          };
-          return value;
-        })
-        .catch(error => {
-          this.state = {
-            state: "error",
-            error,
-          };
-          throw error;
-        });
-      this.state = {
-        state: "fetching",
-        promise,
-      };
-      throw promise;
-    } else if (this.state.state === "fetching") {
+    if (this.state.state === "fetching") {
       throw this.state.promise;
     } else if (this.state.state === "error") {
       throw this.state.error;
