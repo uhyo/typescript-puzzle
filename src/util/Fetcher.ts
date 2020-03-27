@@ -1,14 +1,14 @@
 type State<T> =
   | {
-      state: "fetching";
+      state: "pending";
       promise: Promise<T>;
     }
   | {
-      state: "fetched";
+      state: "fulfilled";
       value: T;
     }
   | {
-      state: "error";
+      state: "rejected";
       error: unknown;
     };
 /**
@@ -17,23 +17,24 @@ type State<T> =
 export class Fetcher<T> {
   private state: State<T>;
   constructor(fetch: () => Promise<T>) {
-    const promise = fetch()
-      .then(value => {
+    const promise = fetch().then(
+      value => {
         this.state = {
-          state: "fetched",
+          state: "fulfilled",
           value,
         };
         return value;
-      })
-      .catch(error => {
+      },
+      error => {
         this.state = {
-          state: "error",
+          state: "rejected",
           error,
         };
         throw error;
-      });
+      },
+    );
     this.state = {
-      state: "fetching",
+      state: "pending",
       promise,
     };
   }
@@ -43,9 +44,9 @@ export class Fetcher<T> {
    * If data is not fetched yet, throw a promise.
    */
   public get(): T {
-    if (this.state.state === "fetching") {
+    if (this.state.state === "pending") {
       throw this.state.promise;
-    } else if (this.state.state === "error") {
+    } else if (this.state.state === "rejected") {
       throw this.state.error;
     } else {
       return this.state.value;
@@ -57,7 +58,7 @@ export class Fetcher<T> {
    * Returns undefined if not fetched yet.
    */
   public getOrUndefined(): T | undefined {
-    if (this.state.state === "fetched") {
+    if (this.state.state === "fulfilled") {
       return this.state.value;
     } else {
       return undefined;
