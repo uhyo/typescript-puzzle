@@ -19,7 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "comlink-loader": "^2.0.0",
-    "react": "0.0.0-experimental-aae83a4b9",
+    "react": "0.14.0",
     "react-dom": "0.0.0-experimental-aae83a4b9",
     "styled-components": "^5.0.1",
     "un": "0.0.0",
